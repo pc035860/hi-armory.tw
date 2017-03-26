@@ -5,14 +5,18 @@ initFBApp();
 
 $(() => {
   $('.js-check').on('click', function($evt) {
-    const char = $('#character').val();
+    const character = $('#character').val();
     const realm = $('#realm').val();
+    const region = 'tw';
 
-    const ref = getDB().ref('queue').push({
-      character: char,
-      realm: realm
+    const armoryKey = [region, realm, character, 'items'].join('-');
+
+    getDB().ref('queue').push({
+      region,
+      character,
+      realm,
+      fields: 'items',
+      timestamp: +new Date
     });
-
-    console.log(`key: ${ref.key}`);
   });
 });

@@ -1,6 +1,12 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "queue": {
+      ".read": false,
+      ".write": true
+    },
+    "results": {
+      ".read": true,
+      ".write": false
+    }
   }
 }
