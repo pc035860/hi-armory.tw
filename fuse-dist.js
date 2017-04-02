@@ -2,7 +2,7 @@
 
 const {
   FuseBox, BabelPlugin, PostCSS, CSSPlugin, RawPlugin,
-  SassPlugin, HTMLPlugin/* , UglifyJSPlugin */
+  SassPlugin, HTMLPlugin, UglifyJSPlugin, EnvPlugin
 } = require('fuse-box');
 
 const POST_CSS_PLUGINS = [
@@ -13,8 +13,8 @@ const POST_CSS_PLUGINS = [
 // Create FuseBox Instance
 const fuse = new FuseBox({
   homeDir: 'app/',
-  sourcemaps: true,
-  outFile: './public/bundle.js',
+  outFile: './public/bundle-dist.js',
+  sourceMaps: false,
   plugins: [
     [
       SassPlugin(),
@@ -25,19 +25,18 @@ const fuse = new FuseBox({
     RawPlugin(['.html']),
     HTMLPlugin({ useDefault: true }),
 
+    EnvPlugin({ NODE_ENV: process.env.NODE_ENV }),
     BabelPlugin({
       test: /\.js$/, // test is optional
       config: {
-        sourceMaps: true,
         presets: ['es2015', 'stage-2']
       },
     }),
-    // UglifyJSPlugin({
-    //   compress: {
-    //     warnings: false
-    //   },
-    //   sourceMap: true
-    // })
+    UglifyJSPlugin({
+      compress: {
+        warnings: false
+      }
+    })
   ],
   shim: {
     jquery: {
@@ -45,11 +44,8 @@ const fuse = new FuseBox({
     },
     angular: {
       exports: 'angular'
-    },
-    firebase: {
-      exports: 'firebase'
     }
   }
 });
 
-fuse.devServer('>index.js');
+fuse.bundle('>index.js');

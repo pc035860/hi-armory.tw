@@ -1,20 +1,29 @@
-import $ from 'jquery';
-import { init as initFBApp, getDB } from './firebase';
+import angular from 'angular';
+
+import { init as initFBApp } from './firebase';
+
+import configs from './configs';
+import services from './services';
+import controllers from './controllers';
+
+import './sass/index.scss';
+
+const ngAppName = 'wowApLevelApp';
+
+const ngModule = angular.module(ngAppName, [
+  'ngAnimate',
+  'ui.router',
+  'firebase',
+  'mui'
+]);
+
+configs(ngModule);
+services(ngModule);
+controllers(ngModule);
 
 initFBApp();
 
-$(() => {
-  $('.js-check').on('click', function ($evt) {
-    const character = $('#character').val();
-    const realm = $('#realm').val();
-    const region = 'tw';
+/* @ngInject */
+function run() { }
 
-    getDB().ref('queue').push({
-      region,
-      character,
-      realm,
-      fields: 'items',
-      timestamp: +new Date()
-    });
-  });
-});
+ngModule.run(run);

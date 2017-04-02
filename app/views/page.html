@@ -1,0 +1,60 @@
+<div class="r-page">
+  <mui-container>
+    <h1>台版英雄榜查查</h1>
+
+    <mui-form ng-submit="$ctrl.query($ctrl.region, $ctrl.realm, $ctrl.character)">
+      <div class="mui-row">
+        <div class="mui-col-xs-12 mui-col-md-6">
+          <mui-select ng-model="$ctrl.realm" name="realm" label="伺服器" use-default>
+            <mui-option value="" label="-"></mui-option>
+            <mui-option value="世界之樹" label="世界之樹"></mui-option>
+            <mui-option value="亞雷戈斯" label="亞雷戈斯"></mui-option>
+            <mui-option value="冰霜之刺" label="冰霜之刺"></mui-option>
+            <mui-option value="冰風崗哨" label="冰風崗哨"></mui-option>
+            <mui-option value="地獄吼" label="地獄吼"></mui-option>
+            <mui-option value="夜空之歌" label="夜空之歌"></mui-option>
+            <mui-option value="天空之牆" label="天空之牆"></mui-option>
+            <mui-option value="寒冰皇冠" label="寒冰皇冠"></mui-option>
+            <mui-option value="尖石" label="尖石"></mui-option>
+            <mui-option value="屠魔山谷" label="屠魔山谷"></mui-option>
+            <mui-option value="巨龍之喉" label="巨龍之喉"></mui-option>
+            <mui-option value="憤怒使者" label="憤怒使者"></mui-option>
+            <mui-option value="日落沼澤" label="日落沼澤"></mui-option>
+            <mui-option value="暗影之月" label="暗影之月"></mui-option>
+            <mui-option value="水晶之刺" label="水晶之刺"></mui-option>
+            <mui-option value="狂熱之刃" label="狂熱之刃"></mui-option>
+            <mui-option value="眾星之子" label="眾星之子"></mui-option>
+            <mui-option value="米奈希爾" label="米奈希爾"></mui-option>
+            <mui-option value="聖光之願" label="聖光之願"></mui-option>
+            <mui-option value="血之谷" label="血之谷"></mui-option>
+            <mui-option value="語風" label="語風"></mui-option>
+            <mui-option value="銀翼要塞" label="銀翼要塞"></mui-option>
+            <mui-option value="阿薩斯" label="阿薩斯"></mui-option>
+            <mui-option value="雲蛟衛" label="雲蛟衛"></mui-option>
+            <mui-option value="雷鱗" label="雷鱗"></mui-option>
+          </mui-select>
+        </div>
+        <div class="mui-col-xs-12 mui-col-md-6">
+          <mui-input ng-model="$ctrl.character" hint="" label="角色名稱"></mui-input>
+        </div>
+      </div>
+
+      <mui-button variant="raised" color="primary">查詢</mui-button>
+    </mui-form>
+  </mui-container>
+
+  <div class="c-results">
+    <mui-container>
+      <div class="c-results__content">
+<pre>
+實裝: {{$ctrl.parsedProfile.avgIlvEquipped}}    虛裝: {{$ctrl.parsedProfile.avgIlv}}
+
+新特質狀態: {{$ctrl.parsedProfile.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}
+總特質數: {{$ctrl.parsedProfile.totalTraits}}
+
+暗夜堡經驗: {{$ctrl.parsedProfile.nhExpStr}}
+</pre>
+      </div>
+    </mui-container>
+  </div>
+</div>

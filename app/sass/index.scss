@@ -1,0 +1,37 @@
+$ff: "Helvetica Neue", Arial, Helvetica, Geneva, "微軟正黑體", "Microsoft JhengHei", sans-serif;
+
+html {
+	font-size: 100%;
+}
+
+body {
+	font-family: $ff;
+
+	&.mopen {
+		overflow: hidden;
+	}
+}
+
+.r-page {
+	h1 {
+		margin-bottom: 30px;
+	}
+
+	.mui-container {
+		max-width: 600px;
+	}
+}
+
+.c-results {
+	margin-top: 30px;
+
+	&__content {
+		border-top: 1px solid rgba(0,0,0,.15);
+
+		pre {
+			font-family: $ff;
+			font-size: 1.1em;
+			line-height: 1.6;
+		}
+	}
+}

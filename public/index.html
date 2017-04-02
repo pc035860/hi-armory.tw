@@ -1,34 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="wowApLevelApp" ng-strict-di>
 <head>
   <meta charset="UTF-8">
-  <title>WOW AP LEVEL</title>
+  <title>台版英雄榜查查</title>
+
+  <link href="//cdn.muicss.com/mui-0.9.12/css/mui.min.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body ng-controller="AppCtrl as app" ng-cloak>
 
-  <main>
-    <h1>World Of Warcraft AP Level - TW</h1>
+  <div ui-view></div>
 
-    <form action="">
-      <label for="realm">
-        <div>
-          Realm
-        </div>
-        <input type="text" id="realm">
-      </label>
-
-      <label for="character">
-        <div>
-          Character
-        </div>
-        <input type="text" id="character">
-      </label>
-
-      <button type="button" class="js-check">Check</button>
-    </form>
-  </main>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-animate.min.js"></script>
+  <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="//cdn.muicss.com/mui-0.9.12/angular/mui-angular.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.3.0/angularfire.min.js"></script>
   <script src="bundle.js"></script>
 </body>
 </html>
