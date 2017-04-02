@@ -5,15 +5,15 @@ const createDequeueFn = require('./createDequeueFn');
 module.exports = function dequeueByQueue(admin) {
   const dequeue = createDequeueFn(admin);
 
-  return functions.database.ref('queue/{pushId}').onWrite(event => {
+  return functions.database.ref('queue/{pushId}').onWrite((event) => {
     // 只在第一次建立 dequeue
     if (event.data.previous.exists()) {
-      return;
+      return undefined;
     }
 
     // 被清掉的時候不動作
     if (!event.data.exists()) {
-      return;
+      return undefined;
     }
 
     const data = event.data.val();

@@ -5,27 +5,27 @@ const createDequeueFn = require('./createDequeueFn');
 module.exports = function dequeueByResource(admin) {
   const dequeue = createDequeueFn(admin);
 
-  return functions.database.ref('resource').onWrite(event => {
+  return functions.database.ref('resource').onWrite((event) => {
     if (!event.data.previous.exists()) {
-      return;
+      return undefined;
     }
 
     // 只在有 resource 回歸時動作
     if (event.data.previous.val() >= event.data.val()) {
-      return;
+      return undefined;
     }
 
     const firstOneRef = admin.database().ref('queue').limitToFirst(1);
     return firstOneRef.once('value')
-    .then(snapshot => {
+    .then((snapshot) => {
       if (!snapshot.exists()) {
-        return;
+        return undefined;
       }
 
       let data;
       let ref;
 
-      snapshot.forEach(s => {
+      snapshot.forEach((s) => {
         ref = s.ref;
         data = s.val();
       });

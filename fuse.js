@@ -1,11 +1,11 @@
-const { FuseBox, BabelPlugin } = require("fuse-box");
+const { FuseBox, BabelPlugin } = require('fuse-box');
 
 
 // Create FuseBox Instance
 const fuse = new FuseBox({
-  homeDir: "src/",
+  homeDir: 'src/',
   sourcemaps: true,
-  outFile: "./public/bundle.js",
+  outFile: './public/bundle.js',
   plugins: [
     BabelPlugin({
       test: /\.js$/, // test is optional
@@ -23,9 +23,9 @@ const fuse = new FuseBox({
   ],
   shim: {
     jquery: {
-      exports: '$'
+      exports: 'jQuery'
     }
   }
 });
 
-fuse.devServer(">index.js");
+fuse.devServer('>index.js');
