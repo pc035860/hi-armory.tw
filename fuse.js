@@ -3,7 +3,7 @@ const { FuseBox, BabelPlugin } = require('fuse-box');
 
 // Create FuseBox Instance
 const fuse = new FuseBox({
-  homeDir: 'src/',
+  homeDir: 'app/',
   sourcemaps: true,
   outFile: './public/bundle.js',
   plugins: [
