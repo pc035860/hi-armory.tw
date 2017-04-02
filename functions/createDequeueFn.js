@@ -1,9 +1,12 @@
+const functions = require('firebase-functions');
 const axios = require('axios');
 
 const createApiUrl = require('./utils/createApiUrl');
 const getArmoryKey = require('./utils/getArmoryKey');
 const createProfile = require('./queue/createProfile');
 const createResource = require('./queue/createResource');
+
+const rTotal = Number(functions.config().resource.total);
 
 function normalizeData(data) {
   return Object.assign({}, data, {
@@ -16,7 +19,7 @@ module.exports = function createDequeue(admin) {
   return (ref, data_) => {
     const db = admin.database();
     const data = normalizeData(data_);
-    const resource = createResource(db.ref('resource'));
+    const resource = createResource(db.ref('resource'), rTotal);
     const originProfile = createProfile(ref, data_);
 
     return resource.request()

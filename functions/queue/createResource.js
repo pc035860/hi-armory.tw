@@ -1,4 +1,4 @@
-const createResource = (resourceRef, max = 5) => {
+const createResource = (resourceRef, total = 5) => {
   let _requested = false;
 
   return {
@@ -8,7 +8,7 @@ const createResource = (resourceRef, max = 5) => {
       }
       return resourceRef.transaction((resource) => {
         if (resource === null) {
-          return max;
+          return total;
         }
         if (resource <= 0) {
           return undefined;

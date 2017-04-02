@@ -18,5 +18,5 @@ const apiKeys = retrieveKeys(R.range(1, 1 + maxKeyNumber));
 
 module.exports = function getApiKey() {
   const l = apiKeys.length;
-  return apiKeys[(+new Date) % l];
+  return apiKeys[(+new Date()) % l];
 };
