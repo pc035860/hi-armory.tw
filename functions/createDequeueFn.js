@@ -21,8 +21,9 @@ module.exports = function createDequeue(admin) {
 
     return resource.request()
     .then((ok) => {
+      console.log('[resource request]', ok);
       if (!ok) {
-        return Promise.reject();
+        return undefined;
       }
 
       originProfile.remove();

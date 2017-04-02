@@ -7,7 +7,6 @@ const createResource = (resourceRef, max = 5) => {
         return Promise.reject(new Error('Can\'t request more than one resource'));
       }
       return resourceRef.transaction((resource) => {
-        console.log('[transaction resource]', resource);
         if (resource === null) {
           return max;
         }
@@ -16,23 +15,28 @@ const createResource = (resourceRef, max = 5) => {
         }
         return resource - 1;
       })
-      .then((commited) => {
-        if (commited) {
+      .then(({ committed }) => {
+        if (committed) {
           _requested = true;
         }
-        return !!commited;
+        return !!committed;
       });
     },
     release() {
       if (!_requested) {
         return Promise.reject(new Error('Havent\'t request any resource yet'));
       }
-      return resourceRef.transaction(r => r + 1)
-      .then((commited) => {
-        if (commited) {
+      return resourceRef.transaction((resource) => {
+        if (resource === null) {
+          return 1;
+        }
+        return resource + 1;
+      })
+      .then(({ committed }) => {
+        if (committed) {
           _requested = false;
         }
-        return !!commited;
+        return !!committed;
       });
     }
   };
