@@ -3,6 +3,7 @@ const delay = require('../utils/delay');
 const MAX_RETRY = 3;
 
 const createProfile = (fbRef, initVal) => ({
+  STATUS_PENDING: 'pending',
   STATUS_PROCESSING: 'processing',
   STATUS_READY: 'ready',
   STATUS_NOT_FOUND: 'not found',

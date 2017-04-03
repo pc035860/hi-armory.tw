@@ -22,6 +22,11 @@ module.exports = function createDequeue(admin) {
     const resource = createResource(db.ref('resource'), rTotal);
     const originProfile = createProfile(ref, data_);
 
+    const armoryKey = getArmoryKey(data);
+    const newProfile = createProfile(db.ref(`results/${armoryKey}`));
+
+    newProfile.status(newProfile.STATUS_PENDING);
+
     return resource.request()
     .then((ok) => {
       console.log('[resource request]', ok);
@@ -30,13 +35,9 @@ module.exports = function createDequeue(admin) {
       }
 
       originProfile.remove();
-
-      const apiUrl = createApiUrl(data);
-      const armoryKey = getArmoryKey(data);
-      const newProfile = createProfile(db.ref(`results/${armoryKey}`));
-
       newProfile.status(newProfile.STATUS_PROCESSING);
 
+      const apiUrl = createApiUrl(data);
       return axios.get(apiUrl)
       .then((res) => {
         return resource.release()
