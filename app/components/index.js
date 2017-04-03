@@ -2,7 +2,8 @@
 
 export default (ngModule) => {
   const list = [
-    require('./AppCtrl'),
+    require('./timeAgo'),
+    require('./statusText'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

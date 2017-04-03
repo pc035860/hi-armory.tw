@@ -4,6 +4,8 @@ import { init as initFBApp } from './firebase';
 
 import configs from './configs';
 import services from './services';
+import filters from './filters';
+import components from './components';
 import controllers from './controllers';
 
 import './sass/index.scss';
@@ -14,11 +16,13 @@ const ngModule = angular.module(ngAppName, [
   'ngAnimate',
   'ui.router',
   'firebase',
-  'mui'
+  'ngMaterial'
 ]);
 
 configs(ngModule);
 services(ngModule);
+filters(ngModule);
+components(ngModule);
 controllers(ngModule);
 
 initFBApp();

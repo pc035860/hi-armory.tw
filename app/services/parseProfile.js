@@ -1,6 +1,22 @@
 import $ from 'jquery';
+import reverse from 'lodash/reverse';
 
 export const NAME = 'parseProfile';
+
+const CLASS_NAME = {
+  1: '戰士',
+  2: '聖騎士',
+  3: '獵人',
+  4: '盜賊',
+  5: '牧師',
+  6: '死騎',
+  7: '薩滿',
+  8: '法師',
+  9: '術士',
+  10: '武僧',
+  11: '德魯伊',
+  12: '惡魔獵人',
+};
 
 function findArtifact(d) {
   let artifact;
@@ -60,8 +76,33 @@ function getExpStr(progressionRaid, includes_) {
   return str.slice(0, -1);
 }
 
-function getNHExpStr(progression) {
-  return getExpStr(progression.raids[37]);
+function getExpStrList(progression) {
+  const raids = reverse(progression.raids.slice(-3));
+  return raids.map(raid => ({
+    name: raid.name,
+    str: getExpStr(raid)
+  }));
+}
+
+function toHumanTalentStr(talentStr) {
+  return talentStr.split('').map(v => Number(v) + 1).join('');
+}
+
+function findActiveTalent(talents) {
+  const talent = talents.filter(v => v.selected)[0];
+  return talent;
+}
+
+function getTalentCalculatorLink(d, talent) {
+  return `http://tw.battle.net/wow/zh/tool/talent-calculator#${d.calcClass}${talent.calcSpec}a!${talent.calcTalent}`;
+}
+
+function getPictureSrcs(d) {
+  const renderUrlBase = 'http://render-tw.worldofwarcraft.com/character/';
+  return {
+    thumbnail: `${renderUrlBase}${d.thumbnail}`,
+    profile: `${renderUrlBase}${d.thumbnail.replace(/avatar/, 'profilemain')}`
+  };
 }
 
 /* @ngInject */
@@ -70,17 +111,33 @@ function factory() {
     const d = profileData;
 
     const artifact = findArtifact(d);
+    const talent = findActiveTalent(d.talents);
 
-    return {
+    const base = {
+      talentName: talent.spec.name,
+      talentStr: toHumanTalentStr(talent.calcTalent),
+      talentCalcLink: getTalentCalculatorLink(d, talent),
+      className: CLASS_NAME[profileData.class],
+
       avgIlv: d.items.averageItemLevel,
       avgIlvEquipped: d.items.averageItemLevelEquipped,
 
-      newTraitsUnlocked: !!artifact.artifactTraits[17],
+      expStr: getExpStrList(d.progression),
 
-      totalTraits: calcTotalTraits(artifact),
-
-      nhExpStr: getNHExpStr(d.progression)
+      picture: getPictureSrcs(d)
     };
+
+    if (artifact) {
+      return {
+        ...base,
+
+        artifactIlv: artifact.itemLevel,
+        newTraitsUnlocked: !!artifact.artifactTraits[17],
+        totalTraits: calcTotalTraits(artifact),
+      };
+    }
+
+    return base;
   };
 }
 

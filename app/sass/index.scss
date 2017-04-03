@@ -1,37 +1,187 @@
-$ff: "Helvetica Neue", Arial, Helvetica, Geneva, "微軟正黑體", "Microsoft JhengHei", sans-serif;
+$ff: "Helvetica Neue", Arial, Helvetica, Geneva, "微軟雅黑", "Microsoft YaHei", sans-serif;
+$mq-xs: only screen and (max-width: 599px);
+$content-width: 600px;
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+$ease-in-back: cubic-bezier(0.600, -0.280, 0.735, 0.045);
+$ease-in-out-back: cubic-bezier(0.680, -0.550, 0.265, 1.550);
+
+@import "better-easing";
 
 html {
 	font-size: 100%;
 }
 
-body {
-	font-family: $ff;
+.r-page {
+	min-height: 100vh;
+	overflow: hidden;
 
-	&.mopen {
-		overflow: hidden;
+	h1 {
+		margin-bottom: 30px;
+		// font-family: $ff;
+
+		@media #{$mq-xs} {
+			text-align: center;
+		}
 	}
 }
 
-.r-page {
-	h1 {
-		margin-bottom: 30px;
-	}
+.c-container {
+	max-width: $content-width;
+	margin: 0 auto;
 
-	.mui-container {
-		max-width: 600px;
+	md-input-container {
+		.md-errors-spacer { display: none; }
 	}
 }
 
 .c-results {
-	margin-top: 30px;
+	position: relative;
+
+	&__loading {
+		position: absolute; z-index: 3;
+		left: 0; top: 50px;
+		width: 100%;
+	}
 
 	&__content {
-		border-top: 1px solid rgba(0,0,0,.15);
+		box-sizing: border-box;
+		max-width: $content-width;
+		padding: 20px 0;
+		margin: 0 auto;
 
 		pre {
 			font-family: $ff;
 			font-size: 1.1em;
 			line-height: 1.6;
 		}
+
+		md-content {
+			&.ng-enter {
+				animation: zoomIn .4s both easing(circOut);
+			}
+		}
 	}
+}
+
+.c-card {
+	$side-padding: 16px;
+
+	padding: 0;
+
+	md-card-content {
+		line-height: 1.8;
+	}
+
+	&__bg {
+		position: relative;
+		height: 200px;
+		overflow: hidden;
+
+		@media #{$mq-xs} {
+			height: 150px;
+		}
+
+		&__inner {
+			position: absolute;
+			left: 0; top: 0;
+			width: 100%;
+			height: 100%;
+
+			// filter: blur(2px);
+			background: black no-repeat center 32%;
+
+			@media #{$mq-xs} {
+				background-position: center 28%;
+			}
+		}
+
+		&__cover {
+			position: absolute;
+			left: 0; top: 0;
+			width: 100%;
+			height: 100%;
+
+			background-color: rgba(0,0,0,.4);
+		}
+
+		&__content {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+
+			padding: 0 $side-padding;
+		}
+	}
+	&__name {
+		position: relative;
+		z-index: 1;
+		line-height: 1;
+
+		color: white;
+	}
+	&__meta {
+		margin-bottom: 10px;
+	}
+
+	&__fname {
+		color: rgba(0,0,0,.54);  // mui secondary
+	}
+	&__fval {
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	&__progress-row {
+		.c-card__fname {
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	&__footer {
+		padding: 10px $side-padding;
+		font-size: 12px;
+		color: rgba(0,0,0,.38);
+		line-height: 1.6;
+	}
+
+	// 哥布林
+	&.r9 { .c-card__bg__inner { background-position-y: 40%; } }
+	// 血精靈
+	&.r10 { .c-card__bg__inner { background-position-y: 15%; } }
+	// 熊貓人
+	&.r26 { .c-card__bg__inner { background-position-y: 25%; } }
+}
+
+.c-refresh {
+	text-align: right;
+
+	status-text {
+		display: inline-block;
+		margin-right: 5px;
+
+		&.ng-hide-add {
+			animation: fadeOut .6s both .3s;
+		}
+	}
+
+	a {
+		color: rgba(0,0,0,.38) !important;
+	}
+}
+
+.s-class-color {
+	&.c1  { color: #c69b6d !important; }
+	&.c2  { color: #f48cba !important; }
+	&.c3  { color: #aad372 !important; }
+	&.c4  { color: #fff468 !important; }
+	&.c5  { color: #f0ebe0 !important; }
+	&.c6  { color: #c41e3b !important; }
+	&.c7  { color: #2359ff !important; }
+	&.c8  { color: #68ccef !important; }
+	&.c9  { color: #9382c9 !important; }
+	&.c10 { color: #00ffba !important; }
+	&.c11 { color: #ff7c0a !important; }
+	&.c12 { color: #a330c9 !important; }
 }

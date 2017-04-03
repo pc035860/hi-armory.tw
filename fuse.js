@@ -48,6 +48,9 @@ const fuse = new FuseBox({
     },
     firebase: {
       exports: 'firebase'
+    },
+    moment: {
+      exports: 'moment'
     }
   }
 });

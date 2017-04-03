@@ -46,14 +46,57 @@
   <div class="c-results">
     <mui-container>
       <div class="c-results__content">
+        <div class="c-card">
+          <div class="c-card__name">
+            {{$ctrl.pd.name}}
+          </div>
+          <div class="c-card__meta">
+            <a ng-href="{{$ctrl.pp.talentCalcLink}}" target="_blank">{{$ctrl.pp.talentName}}({{$ctrl.pp.talentStr}}) {{$ctrl.pp.className}}</a>
+          </div>
+          <div class="mui-row c-card__row">
+            <div class="mui-col-xs-12 mui-col-md-4">
+              <span class="c-card__fname">實裝</span>
+              <span class="c-card__fval">{{$ctrl.pp.avgIlvEquipped}}</span>
+            </div>
+            <div class="mui-col-xs-12 mui-col-md-4">
+              <span class="c-card__fname">虛裝</span>
+              <span class="c-card__fval">{{$ctrl.pp.avgIlv}}</span>
+            </div>
+            <div class="mui-col-xs-12 mui-col-md-4">
+              <span class="c-card__fname">神器裝等</span>
+              <span class="c-card__fval">{{$ctrl.pp.artifactIlv}}</span>
+            </div>
+          </div>
+          <div class="mui-row c-card__row">
+            <div class="mui-col-xs-12 mui-col-md-4">
+              <span class="c-card__fname">神器特質數</span>
+              <span class="c-card__fval">{{$ctrl.pp.totalTraits}}</span>
+            </div>
+            <div class="mui-col-xs-12 mui-col-md-8">
+              <span class="c-card__fname">新神器特質狀態</span>
+              <span class="c-card__fval">{{$ctrl.pp.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}</span>
+            </div>
+          </div>
+          <div class="mui-row c-card__row" ng-repeat="raid in $ctrl.pp.expStr track by $index">
+            <div class="mui-col-xs-12 mui-col-md-4">
+              <span class="c-card__fname">{{raid.name}}經驗</span>
+            </div>
+            <div class="mui-col-xs-12 mui-col-md-8">
+              <span class="c-card__fval">{{raid.str}}</span>
+            </div>
+          </div>
 <pre>
-實裝: {{$ctrl.parsedProfile.avgIlvEquipped}}    虛裝: {{$ctrl.parsedProfile.avgIlv}}
+實裝: {{$ctrl.pp.avgIlvEquipped}}    虛裝: {{$ctrl.pp.avgIlv}}
+神兵裝等: {{$ctrl.pp.artifactIlv}}
 
-新特質狀態: {{$ctrl.parsedProfile.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}
-總特質數: {{$ctrl.parsedProfile.totalTraits}}
+神器特質數: {{$ctrl.pp.totalTraits}}    新神器特質狀態: {{$ctrl.pp.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}
 
-暗夜堡經驗: {{$ctrl.parsedProfile.nhExpStr}}
+<span ng-repeat="raid in $ctrl.pp.expStr">{{raid.name}}經驗: {{raid.str}}<br></span>
 </pre>
+        </div>
+      </div>
+      <div>
+        <pre><code>{{$ctrl.profile|json}}</code></pre>
       </div>
     </mui-container>
   </div>

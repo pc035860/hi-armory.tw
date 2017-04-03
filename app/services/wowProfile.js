@@ -5,7 +5,7 @@ export const NAME = 'wowProfile';
 /* @ngInject */
 function factory(firebase, $firebaseObject, $state) {
   return {
-    queue(queryData) {
+    enqueue(queryData) {
       const ref = getFirebaseDB().ref('queue');
       ref.push({
         ...queryData,
@@ -18,7 +18,8 @@ function factory(firebase, $firebaseObject, $state) {
       return $firebaseObject(ref);
     },
     getArmoryKey({ region, realm, character, fields }) {
-      return [region, realm, character, fields].join('-');
+      return [region, realm, character, fields]
+      .map(v => v.toLowerCase()).join('-');
     },
     goToState({ region, realm, character }) {
       $state.go('index.page', { region, realm, character });

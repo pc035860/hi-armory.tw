@@ -1,13 +1,8 @@
-import pageTemplate from '../views/page.html';
-
 /* @ngInject */
 function config($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('index', {
-    url: '/_/',
-    controller: 'PageCtrl',
-    controllerAs: '$ctrl',
-    template: pageTemplate
+    url: '/_/'
   })
     .state('index.page', {
       url: ':region/:realm/:character'

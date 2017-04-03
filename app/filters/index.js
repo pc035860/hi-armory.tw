@@ -2,7 +2,7 @@
 
 export default (ngModule) => {
   const list = [
-    require('./AppCtrl'),
+    require('./fromNow'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };
