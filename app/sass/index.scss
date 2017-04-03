@@ -7,6 +7,22 @@ $ease-in-out-back: cubic-bezier(0.680, -0.550, 0.265, 1.550);
 
 @import "better-easing";
 
+@mixin fullscreen() {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	width: 100%;
+	height: 100%;
+
+	box-sizing: border-box;
+}
+
+%fullscreen {
+	@include fullscreen;
+}
+
 html {
 	font-size: 100%;
 }
@@ -41,6 +57,19 @@ html {
 		position: absolute; z-index: 3;
 		left: 0; top: 50px;
 		width: 100%;
+
+		@media #{$mq-xs} {
+			@include fullscreen;
+			position: fixed;
+
+			z-index: 11;
+
+			background-color: rgba(255, 255, 255, .85);
+
+			&.ng-enter {
+				animation: fadeIn .3s both;
+			}
+		}
 	}
 
 	&__content {
@@ -56,8 +85,18 @@ html {
 		}
 
 		md-content {
+			@media #{$mq-xs} {
+				@include fullscreen;
+				position: fixed;
+				z-index: 10;
+			}
+
 			&.ng-enter {
 				animation: zoomIn .4s both easing(circOut);
+
+				@media #{$mq-xs} {
+					animation-name: slideInRight;
+				}
 			}
 		}
 	}
@@ -82,10 +121,8 @@ html {
 		}
 
 		&__inner {
+			@extend %fullscreen;
 			position: absolute;
-			left: 0; top: 0;
-			width: 100%;
-			height: 100%;
 
 			// filter: blur(2px);
 			background: black no-repeat center 32%;
@@ -96,10 +133,8 @@ html {
 		}
 
 		&__cover {
+			@extend %fullscreen;
 			position: absolute;
-			left: 0; top: 0;
-			width: 100%;
-			height: 100%;
 
 			background-color: rgba(0,0,0,.4);
 		}
