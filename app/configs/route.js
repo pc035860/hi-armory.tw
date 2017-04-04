@@ -5,7 +5,7 @@ function config($stateProvider, $urlRouterProvider) {
     url: '/'
   })
     .state('index.page', {
-      url: ':region/:realm/:character'
+      url: ':realm/:character'
     });
 
   $urlRouterProvider.otherwise('/');

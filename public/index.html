@@ -27,7 +27,7 @@
       <md-content layout-padding>
         <h1 class="md-display-2">嗨... 英雄榜</h1>
 
-        <form ng-submit="$app.query($app.region, $app.realm, $app.character)">
+        <form ng-submit="$app.query()">
           <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
             <md-input-container flex>
               <label>伺服器</label>
@@ -133,10 +133,9 @@
                   <status-text status="$app.profile.status"
                     class="ng-anim"
                     ng-show="$app.profile.status !== 'ready'"></status-text>
-                  <md-button class="md-fab md-mini md-hue-2" ng-click="$app.query($app.region, $app.realm, $app.character, { enqueue: true })"
-                  ng-disabled="$app.profile.status !== 'ready'" aria-label="refresh"><i class="fa fa-refresh"
+                  <md-button class="md-fab md-mini md-hue-2" ng-click="$app.reload()" aria-label="refresh"><i class="fa fa-refresh"
                     ng-class="{
-                      'fa-spin': $app.profile.status !== 'ready'
+                      'fa-spin': $app.profile.status !== 'ready' || $app.reloading
                     }"></i></md-button>
                 </div>
               </div>

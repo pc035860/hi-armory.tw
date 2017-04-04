@@ -1,4 +1,4 @@
-$ff: "Helvetica Neue", Arial, Helvetica, Geneva, "微軟雅黑", "Microsoft YaHei", sans-serif;
+$ff: Roboto,SimSun,Helvetica Neue,sans-serif;
 $mq-xs: only screen and (max-width: 599px);
 $content-width: 600px;
 $ease-out-back: cubic-bezier(0.175, 0.885, 0.320, 1.275);
@@ -47,6 +47,7 @@ html {
 
 body {
 	touch-action: manipulation;
+	font-family: $ff;
 }
 
 .r-page {
@@ -55,7 +56,6 @@ body {
 
 	h1 {
 		margin: 0;
-		// font-family: $ff;
 
 		@media #{$mq-xs} {
 			text-align: center;
@@ -104,12 +104,6 @@ body {
 		max-width: $content-width;
 		// padding: 20px 0;
 		margin: 0 auto;
-
-		pre {
-			font-family: $ff;
-			font-size: 1.1em;
-			line-height: 1.6;
-		}
 
 		md-content {
 			overflow: visible;
@@ -266,7 +260,7 @@ body {
 
 	status-text {
 		display: inline-block;
-		margin-right: 5px;
+		margin-right: -5px;
 
 		&.ng-hide-add {
 			animation: fadeOut .6s both 1s;

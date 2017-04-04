@@ -4,6 +4,8 @@ import { realms as REALMS } from '../config';
 
 const AUTO_REQUERY_DIFF = 86400 * 1000;  // auto re-query
 
+const DEFAULT_REGION = 'tw';
+
 export const NAME = 'AppCtrl';
 
 class AppCtrl {
@@ -15,6 +17,7 @@ class AppCtrl {
   region;
   realm;
   character;
+  reloading;
   pp;  // parsedProfile
   pd;  // profile.data
 
@@ -24,12 +27,13 @@ class AppCtrl {
   ) {
     this.__deps = { $log, wowProfile };
 
-    this.region = 'tw';
+    this.region = DEFAULT_REGION;
     this.fields = 'items,progression,talents';
     this.REALMS = REALMS;
 
     $scope.$watch(() => $state.params, (val, oldVal) => {
-      const { region, realm, character } = val;
+      const region = this.region;
+      const { realm, character } = val;
 
       $log.debug('val', realm, character);
 
@@ -58,11 +62,11 @@ class AppCtrl {
           .then((obj) => {
             if (!obj.data && obj.status !== 'not found') {
               // no data, trigger first-time query
-              this.query(this.region, this.realm, this.character, { enqueue: true });
+              this.query({ enqueue: true });
             }
             else if ((+new Date()) - obj.dataUpdatedAt > AUTO_REQUERY_DIFF) {
               // auto re-query
-              this.query(this.region, this.realm, this.character, { enqueue: true });
+              this.query({ enqueue: true });
             }
           });
         }
@@ -72,7 +76,7 @@ class AppCtrl {
       }
     });
 
-    $scope.$watch(() => this.profile, (val) => {
+    $scope.$watch(() => this.profile, (val, oldVal) => {
       if (val && val.data && typeof val.data !== 'string') {
         this.pp = parseProfile(val.data);  // parsedProfile
         this.pd = val.data;
@@ -81,21 +85,26 @@ class AppCtrl {
         this.pp = null;
         this.pd = null;
       }
+
+      if (val && val.status && oldVal && oldVal.status) {
+        if (val.status === 'ready' && oldVal.status !== 'ready') {
+          this.reloading = false;
+        }
+      }
     }, true);
   }
 
   /**
    * Query
-   * @param  {string} region    region
-   * @param  {string} realm     realm
-   * @param  {string} character character
    * @param  {object} options   { bool: enqueue  }
    */
-  query(region, realm, character, options_) {
+  query(options_) {
     const options = {
       ...{ enqueue: false },
       ...(options_ || {})
     };
+
+    const { region, realm, character } = this;
 
     if (!region || !realm || !character) {
       return;
@@ -124,6 +133,11 @@ class AppCtrl {
     }
 
     wowProfile.goToState(srefParams);
+  }
+
+  reload() {
+    this.query({ enqueue: true });
+    this.reloading = true;
   }
 }
 
