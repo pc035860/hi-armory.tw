@@ -94,11 +94,11 @@ function findActiveTalent(talents) {
 }
 
 function getTalentCalculatorLink(d, talent) {
-  return `http://tw.battle.net/wow/zh/tool/talent-calculator#${d.calcClass}${talent.calcSpec}a!${talent.calcTalent}`;
+  return `https://tw.battle.net/wow/zh/tool/talent-calculator#${d.calcClass}${talent.calcSpec}a!${talent.calcTalent}`;
 }
 
 function getPictureSrcs(d) {
-  const renderUrlBase = 'http://render-tw.worldofwarcraft.com/character/';
+  const renderUrlBase = 'https://render-tw.worldofwarcraft.com/character/';
   return {
     thumbnail: `${renderUrlBase}${d.thumbnail}`,
     profile: `${renderUrlBase}${d.thumbnail.replace(/avatar/, 'profilemain')}`
