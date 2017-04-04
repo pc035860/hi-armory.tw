@@ -15,7 +15,7 @@ gulp.task('clean', function () {
   return gulp.src(myPath.clean).pipe(clean());
 });
 
-gulp.task('hash:bundle', function () {
+gulp.task('hash-bundle', function () {
   return gulp.src(path.join(myPath.dist, 'bundle.js'))
   .pipe(hash()) // Add hashes to the files' names
   .pipe(gulp.dest(myPath.dist)) // Write the renamed files
@@ -26,11 +26,19 @@ gulp.task('hash:bundle', function () {
   .pipe(gulp.dest(myPath.dist)); // Write the manifest file
 });
 
-gulp.task('index', ['hash:bundle'], function () {
+gulp.task('copy', ['hash-bundle'], function () {
+  return gulp.src([
+    path.join(myPath.public, 'images', '**'),
+    path.join(myPath.public, 'index.html')
+  ], { base: myPath.public })
+  .pipe(gulp.dest(myPath.dist));
+});
+
+gulp.task('update-index', ['copy'], function () {
   var assets = require(path.join(myPath.dist, 'assets.json'));
-  return gulp.src(path.join(myPath.public, 'index.html'))
+  return gulp.src(path.join(myPath.dist, 'index.html'))
   .pipe(replace('bundle.js', assets['bundle.js']))
   .pipe(gulp.dest(myPath.dist));
 });
 
-gulp.task('dist', ['hash:bundle', 'index']);
+gulp.task('dist', ['hash-bundle', 'copy', 'update-index']);
