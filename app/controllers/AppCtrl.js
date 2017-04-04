@@ -94,7 +94,8 @@ class AppCtrl {
 
     if (
       this.profile && this.profile.$resolved &&
-      this.profile.status !== 'ready' && this.profile.$value !== null) {
+      this.profile.status !== 'ready' && this.profile.status !== 'not found' &&
+      this.profile.$value !== null) {
       return;
     }
 

@@ -57,6 +57,9 @@
           <!-- 角色資訊 card -->
           <md-card class="c-card md-whiteframe-5dp" ng-if="$app.pd"
             ng-class="'r' + $app.pd.race">
+
+            <a ui-sref="index" class="c-card__close" hide show-xs><i class="fa fa-close"></i></a>
+
             <div class="md-card-image c-card__bg">
               <div class="c-card__bg__inner" ng-style="{backgroundImage: 'url('+ $app.pp.picture.profile +')'}"></div>
               <div class="c-card__bg__cover"></div>

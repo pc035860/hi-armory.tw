@@ -130,9 +130,21 @@ html {
 	}
 
 	&__close {
+		@include bigger-hotzone(before);
+
 		position: absolute;
-		right: 10px;
-		top: 10px;
+		right: 26px;
+		top: 24px;
+		z-index: 5;
+		font-size: 23px;
+		line-height: 1;
+
+		&, &:focus {
+			color: #fff;
+		}
+		&:active {
+			color: darken(#fff, 10%);
+		}
 	}
 
 	&__bg {
@@ -161,6 +173,11 @@ html {
 			position: absolute;
 
 			background-color: rgba(0,0,0,.3);
+			background: linear-gradient(
+				11deg,
+				rgba(0,0,0,.8), rgba(0,0,0,.3) 30%, rgba(0,0,0,0) 50%,
+				rgba(0,0,0,0) 70%, rgba(0,0,0,.3)
+			);
 		}
 
 		&__content {
@@ -168,6 +185,8 @@ html {
 			left: 0;
 			bottom: 0;
 			width: 100%;
+
+			box-sizing: border-box;
 
 			padding: 0 $side-padding;
 		}
@@ -205,10 +224,12 @@ html {
 		line-height: 1.6;
 	}
 
+	// 牛頭人
+	&.r6 { .c-card__bg__inner { background-position-y: 22%; } }
 	// 哥布林
 	&.r9 { .c-card__bg__inner { background-position-y: 40%; } }
 	// 血精靈
-	&.r10 { .c-card__bg__inner { background-position-y: 15%; } }
+	&.r10 { .c-card__bg__inner { background-position-y: 18%; } }
 	// 熊貓人
 	&.r26 { .c-card__bg__inner { background-position-y: 25%; } }
 }
