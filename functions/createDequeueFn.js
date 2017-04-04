@@ -56,7 +56,7 @@ module.exports = function createDequeue(admin) {
               status: newProfile.STATUS_NOT_FOUND
             });
           }
-          return originProfile.tryToRetry();
+          return originProfile.retry();
         });
       });
     })
