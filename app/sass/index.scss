@@ -112,10 +112,13 @@ body {
 		}
 
 		md-content {
+			overflow: visible;
+
 			@media #{$mq-xs} {
 				@include fullscreen;
 				position: fixed;
 				z-index: 10;
+				overflow: auto;
 			}
 
 			&.ng-enter {
