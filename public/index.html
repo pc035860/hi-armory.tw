@@ -47,7 +47,7 @@
               ($app.profile.status != 'ready' && $app.profile.status != 'not found')
             )">
         <md-progress-circular class="md-warn md-hue-2" md-diameter="70"></md-progress-circular>
-      </div>
+      </div> <!-- .c-results__loading -->
       <div class="c-results__content">
         <md-content layout-padding class="ng-anim"
           ng-if="
@@ -141,8 +141,8 @@
             </md-card-content>
           </md-card>
         </md-content>
-      </div>
-    </div>
+      </div> <!-- .c-results__content -->
+    </div> <!-- .c-results -->
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
@@ -152,7 +152,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-animate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-aria.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-messages.min.js"></script>
-  <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
