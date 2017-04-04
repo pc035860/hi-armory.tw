@@ -13,7 +13,7 @@ const POST_CSS_PLUGINS = [
 // Create FuseBox Instance
 const fuse = new FuseBox({
   homeDir: 'app/',
-  outFile: './public/bundle-dist.js',
+  outFile: './dist/bundle.js',
   sourceMaps: false,
   plugins: [
     [
@@ -44,6 +44,12 @@ const fuse = new FuseBox({
     },
     angular: {
       exports: 'angular'
+    },
+    firebase: {
+      exports: 'firebase'
+    },
+    moment: {
+      exports: 'moment'
     }
   }
 });

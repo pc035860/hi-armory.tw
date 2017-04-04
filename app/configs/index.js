@@ -4,10 +4,13 @@ import routeConfig from './route';
 function config(
   $compileProvider, $logProvider, $animateProvider
 ) {
-  if (process.env.NODE_ENV === 'production') {
-    $compileProvider.debugInfoEnabled(false);
-    $logProvider.debugEnabled(false);
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   $compileProvider.debugInfoEnabled(false);
+  //   $logProvider.debugEnabled(false);
+  // }
+
+  $compileProvider.debugInfoEnabled(false);
+  $logProvider.debugEnabled(false);
 
   /**
    * Boost animation performance
