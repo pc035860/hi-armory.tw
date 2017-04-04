@@ -227,6 +227,7 @@ body {
 	}
 
 	&__footer {
+		position: relative;
 		padding: 10px $side-padding;
 		font-size: 12px;
 		color: rgba(0,0,0,.38);
@@ -259,6 +260,11 @@ body {
 	right: 1px;
 	bottom: 1px;
 	text-align: right;
+
+	@media #{$mq-xs} {
+		right: -12px;
+		bottom: -12px;
+	}
 
 	status-text {
 		display: inline-block;
