@@ -102,11 +102,11 @@
                 </div>
               </div>
               <div class="c-card__progress-row" layout="row" layout-xs="column" ng-repeat="raid in $app.pp.expStr track by $index">
-                <div flex="33" flex-xs="100" layout="flex" layout-align="start center">
-                  <span class="md-body-1 c-card__fname">{{raid.name}}經驗</span>
+                <div flex="33" flex-xs="100" layout-gt-xs="row" layout-align-gt-xs="start center">
+                  <div class="md-body-1 c-card__fname" flex>{{raid.name}}經驗</div>
                 </div>
-                <div flex="66" flex-xs="100" layout="flex" layout-align="start center">
-                  <span class="c-card__fval">{{raid.str}}</span>
+                <div flex="66" flex-xs="100" layout-gt-xs="row" layout-align-gt-xs="start center">
+                  <div class="c-card__fval" flex>{{raid.str}}</div>
                 </div>
               </div>
             </md-card-content>
@@ -133,7 +133,8 @@
           </md-card>
 
           <!-- 查無角色 card -->
-          <md-card class="c-card md-whiteframe-5dp" ng-if="$app.profile.status == 'not found'">
+          <md-card class="c-card c-card--not-found md-whiteframe-5dp" ng-if="$app.profile.status == 'not found'">
+            <a ui-sref="index" class="c-card__close" hide show-xs><i class="fa fa-close"></i></a>
             <md-card-title>
               <md-card-title-text>
                 <span class="md-headline">查無此角色</span>

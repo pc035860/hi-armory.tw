@@ -88,6 +88,11 @@ body {
 
 			background-color: rgba(255, 255, 255, .85);
 
+			md-progress-circular {
+				transform: translateZ(0);
+				will-change: transform;
+			}
+
 			&.ng-enter {
 				animation: fadeIn .3s both;
 			}
@@ -236,6 +241,17 @@ body {
 	&.r10 { .c-card__bg__inner { background-position-y: 18%; } }
 	// 熊貓人
 	&.r26 { .c-card__bg__inner { background-position-y: 25%; } }
+
+	&--not-found {
+		.c-card__close {
+			&, &:focus {
+				color: lighten(black, 5%);
+			}
+			&:active {
+				color: black;
+			}
+		}
+	}
 }
 
 .c-refresh {

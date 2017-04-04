@@ -35,8 +35,8 @@ function findArtifact(d) {
 
 function calcTotalTraits(artifact) {
   const ranks = $.map(artifact.artifactTraits, v => v.rank);
-  // 需要減掉 3 點聖物給的點數
-  return ranks.reduce((a, b) => a + b, 0) - 3;
+  const relicsCount = artifact.relics ? artifact.relics.length : 0;
+  return Math.max(0, ranks.reduce((a, b) => a + b, 0) - relicsCount);
 }
 
 function getExpStr(progressionRaid, includes_) {
