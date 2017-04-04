@@ -19,6 +19,24 @@ $ease-in-out-back: cubic-bezier(0.680, -0.550, 0.265, 1.550);
 	box-sizing: border-box;
 }
 
+@mixin bigger-hotzone($pseudo, $width: 48px, $height: $width) {
+	position: relative;
+
+	&::#{$pseudo} {
+		content: '';
+
+		translate: -50% -50%;
+
+		position: absolute;
+		left: 50%; top: 50%;
+
+		width: $width;
+		height: $height;
+
+		// background-color: rgba(0, 0, 0, .5);
+	}
+}
+
 %fullscreen {
 	@include fullscreen;
 }
@@ -32,7 +50,7 @@ html {
 	overflow: hidden;
 
 	h1 {
-		margin-bottom: 30px;
+		margin: 0;
 		// font-family: $ff;
 
 		@media #{$mq-xs} {
@@ -75,7 +93,7 @@ html {
 	&__content {
 		box-sizing: border-box;
 		max-width: $content-width;
-		padding: 20px 0;
+		// padding: 20px 0;
 		margin: 0 auto;
 
 		pre {
@@ -109,6 +127,12 @@ html {
 
 	md-card-content {
 		line-height: 1.8;
+	}
+
+	&__close {
+		position: absolute;
+		right: 10px;
+		top: 10px;
 	}
 
 	&__bg {
@@ -202,7 +226,15 @@ html {
 	}
 
 	a {
-		color: rgba(0,0,0,.38) !important;
+		@include bigger-hotzone(before);
+		color: rgba(0,0,0,.38);
+
+		&:hover {
+			color: rgba(0,0,0,.28);
+		}
+		&:active {
+			color: rgba(0,0,0,.5);
+		}
 	}
 }
 

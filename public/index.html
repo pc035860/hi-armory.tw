@@ -17,7 +17,7 @@
       <md-content layout-padding>
         <h1 class="md-display-2">嗨... 英雄榜</h1>
 
-        <form ng-submit="$app.query(false, $app.region, $app.realm, $app.character)">
+        <form ng-submit="$app.query($app.region, $app.realm, $app.character)">
           <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
             <md-input-container flex>
               <label>伺服器</label>
@@ -120,7 +120,7 @@
                   <status-text status="$app.profile.status"
                     class="ng-anim"
                     ng-show="$app.profile.status !== 'ready'"></status-text>
-                  <a href="" ng-click="$app.query(true, $app.region, $app.realm, $app.character)"><i class="fa fa-refresh"
+                  <a href="" ng-click="$app.query($app.region, $app.realm, $app.character, { enqueue: true })"><i class="fa fa-refresh"
                     ng-class="{
                       'fa-spin': $app.profile.status !== 'ready'
                     }"></i></a>

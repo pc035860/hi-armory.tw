@@ -53,7 +53,7 @@ class AppCtrl {
           this.profile.$loaded()
           .then((obj) => {
             if (!obj.data && obj.status !== 'not found') {
-              this.query(true, this.region, this.realm, this.character);
+              this.query(this.region, this.realm, this.character, { enqueue: true });
             }
           });
         }
@@ -75,8 +75,26 @@ class AppCtrl {
     }, true);
   }
 
-  query(enqueue, region, realm, character) {
+  /**
+   * Query
+   * @param  {string} region    region
+   * @param  {string} realm     realm
+   * @param  {string} character character
+   * @param  {object} options   { bool: enqueue  }
+   */
+  query(region, realm, character, options_) {
+    const options = {
+      ...{ enqueue: false },
+      ...(options_ || {})
+    };
+
     if (!region || !realm || !character) {
+      return;
+    }
+
+    if (
+      this.profile && this.profile.$resolved &&
+      this.profile.status !== 'ready' && this.profile.$value !== null) {
       return;
     }
 
@@ -88,7 +106,7 @@ class AppCtrl {
       character
     };
 
-    if (enqueue) {
+    if (options.enqueue) {
       wowProfile.enqueue({
         ...srefParams,
         fields: this.fields
