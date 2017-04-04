@@ -7,12 +7,11 @@ var hash = require('gulp-hash');
 
 var myPath = {
   public: path.resolve(__dirname, 'public'),
-  dist: path.resolve(__dirname, 'dist'),
-  clean: ['build/*']
+  dist: path.resolve(__dirname, 'dist')
 };
 
 gulp.task('clean', function () {
-  return gulp.src(myPath.clean).pipe(clean());
+  return gulp.src(myPath.dist).pipe(clean());
 });
 
 gulp.task('hash-bundle', function () {
