@@ -260,14 +260,9 @@ body {
 
 .c-refresh {
 	position: absolute;
-	right: 1px;
-	bottom: 1px;
+	right: -12px;
+	bottom: -12px;
 	text-align: right;
-
-	@media #{$mq-xs} {
-		right: -12px;
-		bottom: -12px;
-	}
 
 	status-text {
 		display: inline-block;
