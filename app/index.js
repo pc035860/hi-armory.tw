@@ -31,3 +31,6 @@ initFBApp();
 function run() { }
 
 ngModule.run(run);
+
+console.info('%cSource code available at\n%chttps://github.com/pc035860/wow-ap-level', 'font-size: 16px;', 'font-size: 16px; color: blue;');
+
