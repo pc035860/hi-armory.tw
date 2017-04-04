@@ -2,9 +2,13 @@ import angular from 'angular';
 
 import { realms as REALMS } from '../config';
 
+const AUTO_REQUERY_DIFF = 86400 * 1000;  // auto re-query
+
 export const NAME = 'AppCtrl';
 
 class AppCtrl {
+  static $inject = ['$log', '$scope', '$state', 'wowProfile', 'parseProfile'];
+
   __deps;
   REALMS;
   profile;
@@ -53,6 +57,11 @@ class AppCtrl {
           this.profile.$loaded()
           .then((obj) => {
             if (!obj.data && obj.status !== 'not found') {
+              // no data, trigger first-time query
+              this.query(this.region, this.realm, this.character, { enqueue: true });
+            }
+            else if ((+new Date()) - obj.dataUpdatedAt > AUTO_REQUERY_DIFF) {
+              // auto re-query
               this.query(this.region, this.realm, this.character, { enqueue: true });
             }
           });
@@ -117,7 +126,6 @@ class AppCtrl {
     wowProfile.goToState(srefParams);
   }
 }
-AppCtrl.$inject = ['$log', '$scope', '$state', 'wowProfile', 'parseProfile'];
 
 export default function configure(ngModule) {
   ngModule.controller(NAME, AppCtrl);
