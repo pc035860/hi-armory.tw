@@ -2,13 +2,13 @@
 function config($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('index', {
-    url: '/_/'
+    url: '/'
   })
     .state('index.page', {
       url: ':region/:realm/:character'
     });
 
-  $urlRouterProvider.otherwise('/_/');
+  $urlRouterProvider.otherwise('/');
 }
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
