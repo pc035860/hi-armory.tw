@@ -27,7 +27,7 @@
       <md-content layout-padding>
         <h1 class="md-display-2">嗨... 英雄榜</h1>
 
-        <form ng-submit="$app.query()">
+        <form ng-submit="$app.query(); ga.event('Query Button', 'click');">
           <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
             <md-input-container flex>
               <label>伺服器</label>
@@ -68,7 +68,7 @@
           <md-card class="c-card md-whiteframe-15dp" ng-if="$app.pd"
             ng-class="'r' + $app.pd.race">
 
-            <a ui-sref="index" class="c-card__close" hide show-xs><i class="fa fa-close"></i></a>
+            <a ui-sref="index" class="c-card__close" hide show-xs ng-click="ga.event('Close Button', 'click', 'profile');"><i class="fa fa-close"></i></a>
 
             <div class="md-card-image c-card__bg">
               <div class="c-card__bg__inner" ng-style="{backgroundImage: 'url('+ $app.pp.picture.profile +')'}"></div>
@@ -81,7 +81,8 @@
                 <div class="c-card__meta">
                   <a ng-href="{{$app.pp.talentCalcLink}}" target="_blank"
                     class="s-class-color"
-                    ng-class="'c' + $app.pd.class">{{$app.pp.talentName}}({{$app.pp.talentStr}}) {{$app.pp.className}}</a>
+                    ng-class="'c' + $app.pd.class"
+                    ng-click="ga.event('Talent Calc Link', 'click');">{{$app.pp.talentName}}({{$app.pp.talentStr}}) {{$app.pp.className}}</a>
                 </div>
               </div>
             </div> <!-- .c-card__bg -->
@@ -133,7 +134,9 @@
                   <status-text status="$app.profile.status"
                     class="ng-anim"
                     ng-show="$app.profile.status !== 'ready'"></status-text>
-                  <md-button class="md-fab md-mini md-hue-2" ng-click="$app.reload()" aria-label="refresh"><i class="fa fa-refresh"
+                  <md-button class="md-fab md-mini md-hue-2"
+                    ng-click="$app.reload(); ga.event('Reload Button', 'click');"
+                    aria-label="refresh"><i class="fa fa-refresh"
                     ng-class="{
                       'fa-spin': $app.profile.status !== 'ready' || $app.reloading
                     }"></i></md-button>
@@ -144,7 +147,7 @@
 
           <!-- 查無角色 card -->
           <md-card class="c-card c-card--not-found md-whiteframe-15dp" ng-if="$app.profile.status == 'not found'">
-            <a ui-sref="index" class="c-card__close" hide show-xs><i class="fa fa-close"></i></a>
+            <a ui-sref="index" class="c-card__close" hide show-xs ng-click="ga.event('Close Button', 'click', 'not found');"><i class="fa fa-close"></i></a>
             <md-card-title>
               <md-card-title-text>
                 <span class="md-headline">查無此角色</span>
@@ -157,6 +160,13 @@
         </md-content>
       </div> <!-- .c-results__content -->
     </div> <!-- .c-results -->
+
+    <div class="r-page__footer">
+      <div class="md-caption">
+        由 <a href="https://github.com/pc035860" target="_blank">@pc035860</a> 製作與維護
+        <a class="github-button" href="https://github.com/pc035860/wow-ap-level" data-count-href="/pc035860/wow-ap-level/stargazers" data-count-api="/repos/pc035860/wow-ap-level#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star pc035860/wow-ap-level on GitHub">Star</a>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
@@ -173,5 +183,16 @@
   <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.3.0/angularfire.min.js"></script>
   <script src="bundle.js"></script>
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-96758980-1', 'auto');
+  </script>
 </body>
 </html>

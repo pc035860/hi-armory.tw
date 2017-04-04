@@ -61,6 +61,27 @@ body {
 			text-align: center;
 		}
 	}
+
+	&__footer {
+		position: absolute;
+		bottom: 5px;
+		left: 0;
+		width: 100%;
+		text-align: center;
+		line-height: 32px;
+		color: gray;
+
+		a {
+			color: black;
+		}
+
+		iframe {
+			position: relative;
+			top: -2px;
+			margin-left: 10px;
+			vertical-align: middle;
+		}
+	}
 }
 
 .c-container {

@@ -9,7 +9,9 @@ const DEFAULT_REGION = 'tw';
 export const NAME = 'AppCtrl';
 
 class AppCtrl {
-  static $inject = ['$log', '$scope', '$state', 'wowProfile', 'parseProfile'];
+  static $inject = [
+    '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location'
+  ];
 
   __deps;
   REALMS;
@@ -23,9 +25,11 @@ class AppCtrl {
 
   /* @ngInject */
   constructor(
-    $log, $scope, $state, wowProfile, parseProfile
+    $log, $scope, $state, wowProfile, parseProfile, ga, $location
   ) {
-    this.__deps = { $log, wowProfile };
+    this.__deps = { $log, wowProfile, ga };
+
+    $scope.ga = ga;
 
     this.region = DEFAULT_REGION;
     this.fields = 'items,progression,talents';
@@ -92,6 +96,10 @@ class AppCtrl {
         }
       }
     }, true);
+
+    $scope.$on('$stateChangeSuccess', () => {
+      ga.pageview($location.path());
+    });
   }
 
   /**
