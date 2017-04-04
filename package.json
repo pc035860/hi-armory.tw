@@ -1,5 +1,5 @@
 {
-  "name": "wow-ap-level",
+  "name": "hi-armory.tw",
   "version": "1.0.0",
   "description": "",
   "main": "fuse.js",
@@ -39,12 +39,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pc035860/wow-ap-level.git"
+    "url": "git+https://github.com/pc035860/hi-armory.tw.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pc035860/wow-ap-level/issues"
+    "url": "https://github.com/pc035860/hi-armory.tw/issues"
   },
-  "homepage": "https://github.com/pc035860/wow-ap-level#readme"
+  "homepage": "https://github.com/pc035860/hi-armory.tw#readme"
 }
