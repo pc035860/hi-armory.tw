@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const NAME = 'timeAgo';
 
-const template = '<span>{{$ctrl.relativeTime}}</span>';
+const template = '<span ng-attr-title="{{$ctrl.time|date:\'yyyy/M/d H:m:s\'}}">{{$ctrl.relativeTime}}</span>';
 
 class TimeAgoCtrl {
   static $inject = ['$scope', '$interval'];

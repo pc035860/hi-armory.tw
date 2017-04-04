@@ -7,8 +7,8 @@ class StatusTextCtrl {
 
   $onInit() {
     this.STATUS = {
-      pending: '正在排隊',
-      processing: '開始查詢',
+      pending: '排隊中',
+      processing: '查詢中',
       'not found': '沒有資料',
       ready: '完成'
     };

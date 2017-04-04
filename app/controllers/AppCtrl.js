@@ -73,7 +73,7 @@ class AppCtrl {
     });
 
     $scope.$watch(() => this.profile, (val) => {
-      if (val && val.data) {
+      if (val && val.data && typeof val.data !== 'string') {
         this.pp = parseProfile(val.data);  // parsedProfile
         this.pd = val.data;
       }

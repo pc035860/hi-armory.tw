@@ -33,7 +33,7 @@
               <label>角色名稱</label>
               <input ng-model="$app.character">
             </md-input-container>
-            <md-button class="md-raised md-primary" type="submit">查詢</md-button>
+            <md-button class="md-raised md-primary" type="search">查詢</md-button>
           </div>
         </form>
       </md-content>
@@ -112,7 +112,7 @@
                 </div>
               </div>
             </md-card-content>
-            <md-divider></md-divider>
+            <!-- <md-divider></md-divider> -->
             <div class="c-card__footer" layout="row" layout-xs="column">
               <div flex="33" flex-xs="50">
                 英雄榜更新: <time-ago time="$app.pd.lastModified"></time-ago>
@@ -125,10 +125,11 @@
                   <status-text status="$app.profile.status"
                     class="ng-anim"
                     ng-show="$app.profile.status !== 'ready'"></status-text>
-                  <a href="" ng-click="$app.query($app.region, $app.realm, $app.character, { enqueue: true })"><i class="fa fa-refresh"
+                  <md-button class="md-fab md-mini md-hue-2" ng-click="$app.query($app.region, $app.realm, $app.character, { enqueue: true })"
+                  ng-disabled="$app.profile.status !== 'ready'" aria-label="refresh"><i class="fa fa-refresh"
                     ng-class="{
                       'fa-spin': $app.profile.status !== 'ready'
-                    }"></i></a>
+                    }"></i></md-button>
                 </div>
               </div>
             </div>
