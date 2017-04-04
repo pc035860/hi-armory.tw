@@ -45,6 +45,10 @@ html {
 	font-size: 100%;
 }
 
+body {
+	touch-action: manipulation;
+}
+
 .r-page {
 	min-height: 100vh;
 	overflow: hidden;
