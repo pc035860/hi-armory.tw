@@ -5,3 +5,5 @@ public/bundle.js
 public/bundle.js.map
 
 dist/
+
+firebase-debug.log
