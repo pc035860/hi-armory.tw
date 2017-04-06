@@ -15,6 +15,14 @@ function normalizeData(data) {
   });
 }
 
+function addIndex(db, key) {
+  return db.ref(`index/${key}`).set(true);
+}
+
+function removeIndex(db, key) {
+  return db.ref(`index/${key}`).remove();
+}
+
 module.exports = function createDequeue(admin) {
   return (ref, data_) => {
     const db = admin.database();
@@ -29,7 +37,7 @@ module.exports = function createDequeue(admin) {
 
     return resource.request()
     .then((ok) => {
-      console.log('[resource request]', ok);
+      console.log('[resource request]', armoryKey, ok);
       if (!ok) {
         return undefined;
       }
@@ -45,6 +53,10 @@ module.exports = function createDequeue(admin) {
           return newProfile.update({
             data: res.data,
             status: newProfile.STATUS_READY
+          })
+          .then(() => {
+            const key = getArmoryKey(data, /* noFields */true);
+            return addIndex(db, key);
           });
         });
       }, (err) => {
@@ -54,6 +66,10 @@ module.exports = function createDequeue(admin) {
             return newProfile.update({
               data: null,
               status: newProfile.STATUS_NOT_FOUND
+            })
+            .then(() => {
+              const key = getArmoryKey(data, /* noFields */true);
+              return removeIndex(db, key);
             });
           }
           return originProfile.retry();
