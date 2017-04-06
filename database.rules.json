@@ -1,5 +1,9 @@
 {
   "rules": {
+    "index": {
+      ".read": true,
+      ".write": false
+    },
     "queue": {
       ".read": false,
       ".write": true
