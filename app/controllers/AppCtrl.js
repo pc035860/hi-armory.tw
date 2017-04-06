@@ -91,7 +91,8 @@ class AppCtrl {
       }
 
       if (val && val.status && oldVal && oldVal.status) {
-        if (val.status === 'ready' && oldVal.status !== 'ready') {
+        if (val.status !== oldVal.status) {
+          // 只是介面上的 reloading 意味
           this.reloading = false;
         }
       }
