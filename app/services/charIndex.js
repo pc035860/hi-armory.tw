@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: 0 */
+
 import memoize from 'memoizee';
 import keyBy from 'lodash/keyBy';
 import uniqBy from 'lodash/uniqBy';
@@ -6,12 +8,30 @@ import { indexStorageUrl } from '../config';
 export const NAME = 'charIndex';
 
 const HISTORY_MAX = 5;
+// key: charIndex.history
+const KEY_HISTORY = '9e8942c88669e3d480ad683f7fa85ad4';
 
 /* @ngInject */
-function factory(firebase, $q, $http, $log) {
+function factory(firebase, $q, $http, $log, $window) {
+  const readHistory = () => {
+    let res;
+    try {
+      res = JSON.parse($window.localStorage[KEY_HISTORY] || null);
+    }
+    catch (e) { /* do nothing */ }
+    return res;
+  };
+
+  const saveHistory = (history) => {
+    try {
+      $window.localStorage[KEY_HISTORY] = JSON.stringify(history);
+    }
+    catch (e) { /* do nothing */ }
+  };
+
   const self = {
     data: null,
-    history: [],
+    history: readHistory() || [],
 
     _createItem(key_) {
       const key = key_.toLowerCase();
@@ -94,6 +114,8 @@ function factory(firebase, $q, $http, $log) {
       }
 
       this.history = newHistory;
+
+      saveHistory(this.history);
     }
   };
 
@@ -102,7 +124,7 @@ function factory(firebase, $q, $http, $log) {
 
   return self;
 }
-factory.$inject = ['firebase', '$q', '$http', '$log'];
+factory.$inject = ['firebase', '$q', '$http', '$log', '$window'];
 
 export default function configure(ngModule) {
   ngModule.factory(NAME, factory);
