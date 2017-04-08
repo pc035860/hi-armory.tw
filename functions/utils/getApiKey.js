@@ -1,12 +1,12 @@
 const R = require('ramda');
 const functions = require('firebase-functions');
 
-const config = functions.config();
+const BATTLE_NET_API = functions.config().bnetapi;
 
 const maxKeyNumber = 9;
 
 const getKeyFromConfig = (n) => {
-  return config.bnetapi[`key${n}`];
+  return BATTLE_NET_API[`key${n}`];
 };
 
 const retrieveKeys = R.pipe(

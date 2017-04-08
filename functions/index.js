@@ -5,3 +5,4 @@ admin.initializeApp(functions.config().firebase);
 
 exports.dequeueByQueue = require('./dequeueByQueue')(admin);
 exports.dequeueByResource = require('./dequeueByResource')(admin);
+exports.saveIndexToStorage = require('./saveIndexToStorage')(admin);

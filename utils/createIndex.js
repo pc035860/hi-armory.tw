@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 const admin = require('firebase-admin');
 
 const serviceAccount = require('../firebase-adminsdk.json');
@@ -16,7 +18,7 @@ db.ref('results').once('value', (snapshot) => {
   let count = 0;
 
   forEach(snapshot.val(), (v, k) => {
-    const simpleKey = k.split(/-/).slice(0, 3).join('-');
+    const simpleKey = k.split(/-/).slice(0, -1).join('-');
 
     count += 1;
     console.log(count, 'simpleKey', simpleKey);
