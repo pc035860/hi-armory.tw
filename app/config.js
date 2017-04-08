@@ -4,6 +4,8 @@ export const firebase = {
   databaseURL: 'https://wow-ap-level.firebaseio.com'
 };
 
+export const indexStorageUrl = 'gs://hi-armory-tw/index.json';
+
 export const realms = {
   tw: [
     '世界之樹',

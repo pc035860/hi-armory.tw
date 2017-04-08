@@ -37,10 +37,24 @@
                 </md-option>
               </md-select>
             </md-input-container>
-            <md-input-container flex>
-              <label>角色名稱</label>
-              <input ng-model="$app.character">
-            </md-input-container>
+            <md-autocomplete flex
+                md-input-name="character"
+                md-input-minlength="0"
+                md-input-maxlength="18"
+                md-min-length="0"
+                md-selected-item="$app.autocompleteItem"
+                md-selected-item-change="$app.handleSelectedItemChange(item)"
+                md-search-text="$app.character"
+                md-no-cache="true"
+                md-items="item in $app.indexSearch($app.character)"
+                md-item-text="item.character"
+                md-floating-label="角色名稱"
+                md-menu-class="c-autocomplete-item">
+              <md-item-template>
+                <i class="fa fa-history c-autocomplete-item__history-icon" ng-show="item.isHistory"></i><span md-highlight-text="$app.character"
+                  md-highlight-flags="i">{{item.display}}</span>
+              </md-item-template>
+            </md-autocomplete>
             <md-button class="md-raised md-primary" type="search">查詢</md-button>
           </div>
         </form>
@@ -202,6 +216,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-storage.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angularFire/2.3.0/angularfire.min.js"></script>
   <script src="bundle.js"></script>
 
