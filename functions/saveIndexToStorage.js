@@ -6,14 +6,16 @@ const storage = require('@google-cloud/storage');
 const Readable = require('stream').Readable;
 const serviceAccount = require('./firebase-adminsdk.json');
 
-const gcs = storage({
-  projectId: 'wow-ap-level',
-  credentials: serviceAccount
-});
-
 const INDEX_FILE_UPDATE_INTERVAL = 300 * 1000;
+const PROJECT_ID = functions.config().project.id;
+const BUCKET_NAME = functions.config().project.bucket;
 
 const updatedAtKey = 'lastIndexFileUpdatedAt';
+
+const gcs = storage({
+  projectId: PROJECT_ID,
+  credentials: serviceAccount
+});
 
 function createReadStream(str) {
   const stream = new Readable();
@@ -76,7 +78,7 @@ module.exports = function saveIndexToStorage(admin) {
           gzip: true
         };
 
-        return writeToBucket('hi-armory-tw', 'index.json', json, writeOptions)
+        return writeToBucket(BUCKET_NAME, 'index.json', json, writeOptions)
         .then(() => {
           console.log('[index file] write finish');
         }, (err) => {

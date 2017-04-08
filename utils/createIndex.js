@@ -6,35 +6,50 @@ const serviceAccount = require('../firebase-adminsdk.json');
 
 const forEach = require('lodash/forEach');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://wow-ap-level.firebaseio.com'
-});
+function usage() {
+  console.log('Usage: node createIndex.js <projectid>');
+}
 
-const db = admin.database();
+function main() {
+  const projectId = process.argv[2];
 
-db.ref('results').once('value', (snapshot) => {
-  const updates = {};
-  let count = 0;
+  if (!projectId) {
+    usage();
+    return;
+  }
 
-  forEach(snapshot.val(), (v, k) => {
-    const simpleKey = k.split(/-/).slice(0, -1).join('-');
-
-    count += 1;
-    console.log(count, 'simpleKey', simpleKey);
-
-    if (v.status === 'not found') {
-      updates[simpleKey] = null;
-    }
-    else if (v.data) {
-      updates[simpleKey] = true;
-    }
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: `https://${projectId}.firebaseio.com`
   });
 
-  db.ref('index').update(updates)
-  .then(() => {
-    console.log('done!');
+  const db = admin.database();
 
-    db.goOffline();
+  db.ref('results').once('value', (snapshot) => {
+    const updates = {};
+    let count = 0;
+
+    forEach(snapshot.val(), (v, k) => {
+      const simpleKey = k.split(/-/).slice(0, -1).join('-');
+
+      count += 1;
+      console.log(count, 'simpleKey', simpleKey);
+
+      if (v.status === 'not found') {
+        updates[simpleKey] = null;
+      }
+      else if (v.data) {
+        updates[simpleKey] = true;
+      }
+    });
+
+    db.ref('index').update(updates)
+    .then(() => {
+      console.log('done!');
+
+      db.goOffline();
+    });
   });
-});
+}
+
+main();

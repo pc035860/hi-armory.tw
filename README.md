@@ -12,6 +12,8 @@ __不一樣的英雄榜__
 npm install -g firebase-tools
 ```
 
+以及 [Google Cloud SDK](https://cloud.google.com/sdk/docs/)。
+
 初次使用可能會提示你下一些登入用的指令，照做就好囉！
 
 ### Firebase
@@ -40,10 +42,13 @@ export const firebase = {
 
 ### Cloud Functions for Firebase
 
-有兩項 cloud functions 的環境設定必須完成才能運作
+有 3 項 cloud functions 的環境設定必須完成才能運作
 
 ```json
 {
+  "project": {
+	"id": "{project id}"
+  },
   "resource": {
     "total": "10"
   },
@@ -54,6 +59,12 @@ export const firebase = {
     ...
   }
 }
+```
+
+設定 `project.id` 的方法
+
+```sh
+firebase functions:config:set project.id="your project id"
 ```
 
 設定 `resource.total` 的方法
@@ -72,6 +83,17 @@ battle.net API 申請請前往 https://dev.battle.net/。
 
 設定相關文件可以看 [Cloud Functions: Environment Configuration](https://firebase.google.com/docs/functions/config-env)。
 
+
+### Google Cloud Storage
+
+因為 Firebase Storage 其實就是 Google Cloud Storage，所有一些 Firebase console 下沒有提供的操作，我們需要透過 `gsutil` 來進行。
+
+#### 設定 `gs://hi-armory-tw` 的 CORS
+
+```sh
+# 在專案根目錄下
+gsutil cors set cors-json-file.json gs://hi-armory-tw
+```
 
 ## Install
 
