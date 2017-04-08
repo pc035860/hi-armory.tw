@@ -18,7 +18,7 @@ npm install -g firebase-tools
 
 修改 `app/config.js` 的內容，換成你的設定。
 
-`apiKey` 可以在 [專案 console -> [設定] -> [一般]](https://console.firebase.google.com/project/wow-ap-level/settings/general/) 裡面找到。
+`apiKey` 可以在 [專案 console -> [設定] -> [一般]](https://console.firebase.google.com/project/_/settings/general/) 裡面找到。
 
 ```js app/config.js
 export const firebase = {
@@ -27,6 +27,16 @@ export const firebase = {
   databaseURL: 'https://{你的專案名稱}.firebaseio.com'
 };
 ```
+
+### Firebase Admin SDK
+
+為了在 server 或是 本地 使用某些 admin 權限的操作，需要透過這個 SDK JSON 認證為服務帳戶。
+
+產生方法是到 [專案 console -> [設定] -> 服務帳戶](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk)，透過 `產生新的私密金鑰` 取得 JSON 檔案。
+
+- 目前 Cloud Functions 上操作 Firebase Storage 的部分需要透過此 SDK 認證才能操作，因此需要擺一個在 `./functions/firebase-adminsdk.json`
+- 再來如果你有需要使用到 `utils/createIndex.js`，需要擺一個在專案目錄底下 `./firebase-adminsdk.json`
+
 
 ### Cloud Functions for Firebase
 
@@ -117,3 +127,11 @@ firebase deploy --only functions
 firebase deploy --only hosting
 ```
 
+
+## 工具
+
+### `createIndex.js`
+
+用目前現有 `results` 內的資料，重新建立一次 `index`。
+
+一般來說是在 `results` 跟 `index` 沒有同步的時候使用。
