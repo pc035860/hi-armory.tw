@@ -91,6 +91,11 @@ body {
 	md-input-container {
 		.md-errors-spacer { display: none; }
 	}
+
+	md-autocomplete {
+		position: relative;
+		top: -1px;
+	}
 }
 
 .c-results {
@@ -309,4 +314,27 @@ body {
 	&.c10 { color: #00ffba !important; }
 	&.c11 { color: #ff7c0a !important; }
 	&.c12 { color: #a330c9 !important; }
+}
+
+
+.c-autocomplete-item {
+	&__history-icon {
+		position: absolute;
+		right: 13px;
+		top: 18px;
+		display: inline-block;
+		margin-right: 3px;
+		font-size: 12px;
+		color: fade-out(rgb(117, 117, 117), .5);
+	}
+
+	li {
+		position: relative;
+		color: rgb(117,117,117);
+
+		.highlight {
+			color: rgb(33,33,33);
+			font-weight: bold;
+		}
+	}
 }

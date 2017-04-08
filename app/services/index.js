@@ -5,6 +5,7 @@ export default (ngModule) => {
     require('./wowProfile'),
     require('./parseProfile'),
     require('./ga'),
+    require('./charIndex'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

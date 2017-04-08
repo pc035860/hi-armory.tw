@@ -10,7 +10,8 @@ export const NAME = 'AppCtrl';
 
 class AppCtrl {
   static $inject = [
-    '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location'
+    '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location',
+    'charIndex'
   ];
 
   __deps;
@@ -19,15 +20,16 @@ class AppCtrl {
   region;
   realm;
   character;
+  autocompleteItem;
   reloading;
   pp;  // parsedProfile
   pd;  // profile.data
 
   /* @ngInject */
   constructor(
-    $log, $scope, $state, wowProfile, parseProfile, ga, $location
+    $log, $scope, $state, wowProfile, parseProfile, ga, $location, charIndex
   ) {
-    this.__deps = { $log, wowProfile, ga };
+    this.__deps = { $log, wowProfile, ga, charIndex };
 
     $scope.ga = ga;
 
@@ -91,9 +93,14 @@ class AppCtrl {
       }
 
       if (val && val.status && oldVal && oldVal.status) {
-        if (val.status === 'ready' && oldVal.status !== 'ready') {
+        if (val.status !== oldVal.status) {
+          // 只是介面上的 reloading 意味
           this.reloading = false;
         }
+      }
+
+      if (val && val.status && val.status === 'ready') {
+        charIndex.addHistory(`${this.region}-${this.realm}-${this.character}`);
       }
     }, true);
 
@@ -146,6 +153,20 @@ class AppCtrl {
   reload() {
     this.query({ enqueue: true });
     this.reloading = true;
+  }
+
+  indexSearch(str) {
+    const { charIndex } = this.__deps;
+    return charIndex.search(str);
+  }
+
+  handleSelectedItemChange(item) {
+    if (!item) {
+      return;
+    }
+    const { region, realm } = item;
+    Object.assign(this, { region, realm });
+    this.query();
   }
 }
 

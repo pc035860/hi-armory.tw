@@ -7,3 +7,4 @@ public/bundle.js.map
 dist/
 
 firebase-debug.log
+firebase-adminsdk.json

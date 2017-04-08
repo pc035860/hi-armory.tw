@@ -19,7 +19,7 @@ const fuse = new FuseBox({
     [
       SassPlugin(),
       PostCSS(POST_CSS_PLUGINS),
-      CSSPlugin({ minify: false })
+      CSSPlugin({ minify: true })
     ],
 
     RawPlugin(['.html']),

@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 const functions = require('firebase-functions');
 const axios = require('axios');
 
@@ -6,7 +8,7 @@ const getArmoryKey = require('./utils/getArmoryKey');
 const createProfile = require('./queue/createProfile');
 const createResource = require('./queue/createResource');
 
-const rTotal = Number(functions.config().resource.total);
+const RESOURCE_TOTAL = Number(functions.config().resource.total);
 
 function normalizeData(data) {
   return Object.assign({}, data, {
@@ -15,11 +17,19 @@ function normalizeData(data) {
   });
 }
 
+function addIndex(db, key) {
+  return db.ref(`index/${key}`).set(true);
+}
+
+function removeIndex(db, key) {
+  return db.ref(`index/${key}`).remove();
+}
+
 module.exports = function createDequeue(admin) {
   return (ref, data_) => {
     const db = admin.database();
     const data = normalizeData(data_);
-    const resource = createResource(db.ref('resource'), rTotal);
+    const resource = createResource(db.ref('resource'), RESOURCE_TOTAL);
     const originProfile = createProfile(ref, data_);
 
     const armoryKey = getArmoryKey(data);
@@ -29,7 +39,7 @@ module.exports = function createDequeue(admin) {
 
     return resource.request()
     .then((ok) => {
-      console.log('[resource request]', ok);
+      console.log('[resource request]', armoryKey, ok);
       if (!ok) {
         return undefined;
       }
@@ -45,6 +55,10 @@ module.exports = function createDequeue(admin) {
           return newProfile.update({
             data: res.data,
             status: newProfile.STATUS_READY
+          })
+          .then(() => {
+            const key = getArmoryKey(data, /* noFields */true);
+            return addIndex(db, key);
           });
         });
       }, (err) => {
@@ -54,6 +68,10 @@ module.exports = function createDequeue(admin) {
             return newProfile.update({
               data: null,
               status: newProfile.STATUS_NOT_FOUND
+            })
+            .then(() => {
+              const key = getArmoryKey(data, /* noFields */true);
+              return removeIndex(db, key);
             });
           }
           return originProfile.retry();
