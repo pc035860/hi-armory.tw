@@ -183,15 +183,17 @@ class AppCtrl {
     const { $window, rn } = this.__deps;
 
     const enRealmName = rn.toEn(this.realm);
+    const realm = encodeURIComponent(this.realm);
+    const character = encodeURIComponent(this.character);
 
     let link;
 
     switch (target) {
       case 'armory':
-        link = `http://${this.region}.battle.net/wow/zh/character/${enRealmName}/${this.character}/advanced`;
+        link = `http://${this.region}.battle.net/wow/zh/character/${realm}/${character}/advanced`;
         break;
       case 'wowprogress':
-        link = `https://www.wowprogress.com/character/${this.region}/${enRealmName}/${this.character}`;
+        link = `https://www.wowprogress.com/character/${this.region}/${enRealmName}/${character}`;
         break;
       default:
         break;

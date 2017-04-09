@@ -26,6 +26,8 @@ export const realms = {
     ['狂熱之刃', 'zealot-blade'],
     ['眾星之子', 'quel-dorei'],
     ['米奈希爾', 'menethil'],
+    // 官方 armory 用的英文是 lights-hope
+    // wowprogress 是 light-s-hope
     ['聖光之願', 'light-s-hope'],
     ['血之谷', 'bleeding-hollow'],
     ['語風', 'whisperwind'],
