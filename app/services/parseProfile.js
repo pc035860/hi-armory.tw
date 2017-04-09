@@ -85,7 +85,12 @@ function getExpStrList(progression) {
 }
 
 function toHumanTalentStr(talentStr) {
-  return talentStr.split('').map(v => Number(v) + 1).join('');
+  return talentStr.split('').map((v) => {
+    if (v === '.') {
+      return v;
+    }
+    return Number(v) + 1;
+  }).join('');
 }
 
 function findActiveTalent(talents) {

@@ -1,4 +1,5 @@
 import angular from 'angular';
+import $ from 'jquery';
 
 import { realms as REALMS } from '../config';
 
@@ -11,7 +12,7 @@ export const NAME = 'AppCtrl';
 class AppCtrl {
   static $inject = [
     '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location',
-    'charIndex'
+    'charIndex', '$mdMedia', 'closeKeyboard'
   ];
 
   __deps;
@@ -27,7 +28,8 @@ class AppCtrl {
 
   /* @ngInject */
   constructor(
-    $log, $scope, $state, wowProfile, parseProfile, ga, $location, charIndex
+    $log, $scope, $state, wowProfile, parseProfile, ga, $location,
+    charIndex, $mdMedia, closeKeyboard
   ) {
     this.__deps = { $log, wowProfile, ga, charIndex };
 
@@ -57,6 +59,8 @@ class AppCtrl {
         });
 
         if (requireNewProfile) {
+          closeKeyboard();
+
           this.profile = wowProfile.getFirebaseObject({
             region,
             realm,
@@ -103,6 +107,10 @@ class AppCtrl {
         charIndex.addHistory(`${this.region}-${this.realm}-${this.character}`);
       }
     }, true);
+
+    $scope.$watch(() => $mdMedia('xs'), (xs) => {
+      this.mqXS = xs;
+    });
 
     $scope.$on('$stateChangeSuccess', () => {
       ga.pageview($location.path());

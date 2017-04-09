@@ -6,6 +6,7 @@ export default (ngModule) => {
     require('./parseProfile'),
     require('./ga'),
     require('./charIndex'),
+    require('./closeKeyboard'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

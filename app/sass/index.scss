@@ -1,9 +1,11 @@
 $ff: Roboto,SimSun,Helvetica Neue,sans-serif;
 $mq-xs: only screen and (max-width: 599px);
-$content-width: 600px;
 $ease-out-back: cubic-bezier(0.175, 0.885, 0.320, 1.275);
 $ease-in-back: cubic-bezier(0.600, -0.280, 0.735, 0.045);
 $ease-in-out-back: cubic-bezier(0.680, -0.550, 0.265, 1.550);
+
+$content-width: 600px;
+$autocomplete-item-height: 48px;
 
 @import "better-easing";
 
@@ -316,7 +318,6 @@ body {
 	&.c12 { color: #a330c9 !important; }
 }
 
-
 .c-autocomplete-item {
 	&__history-icon {
 		position: absolute;
@@ -336,5 +337,13 @@ body {
 			color: rgb(33,33,33);
 			font-weight: bold;
 		}
+	}
+}
+
+// autocomplete 下拉選單高度
+.md-virtual-repeat-container.md-autocomplete-suggestions-container {
+	@media #{$mq-xs} {
+		$max-height: 3 * $autocomplete-item-height;
+		max-height: $max-height !important;
 	}
 }
