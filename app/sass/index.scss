@@ -282,9 +282,15 @@ body {
 	}
 }
 
-.c-refresh {
+.c-outbound {
 	position: absolute;
 	right: -12px;
+	bottom: -12px;
+}
+
+.c-reload {
+	position: absolute;
+	right: 38px;
 	bottom: -12px;
 	text-align: right;
 

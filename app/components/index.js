@@ -4,6 +4,7 @@ export default (ngModule) => {
   const list = [
     require('./timeAgo'),
     require('./statusText'),
+    require('./haReload'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

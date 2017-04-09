@@ -7,6 +7,7 @@ export default (ngModule) => {
     require('./ga'),
     require('./charIndex'),
     require('./closeKeyboard'),
+    require('./realmName'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

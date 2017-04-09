@@ -1,5 +1,4 @@
 import angular from 'angular';
-import $ from 'jquery';
 
 import { realms as REALMS } from '../config';
 
@@ -12,7 +11,7 @@ export const NAME = 'AppCtrl';
 class AppCtrl {
   static $inject = [
     '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location',
-    'charIndex', '$mdMedia', 'closeKeyboard'
+    'charIndex', '$mdMedia', 'closeKeyboard', '$window', 'realmName'
   ];
 
   __deps;
@@ -29,21 +28,23 @@ class AppCtrl {
   /* @ngInject */
   constructor(
     $log, $scope, $state, wowProfile, parseProfile, ga, $location,
-    charIndex, $mdMedia, closeKeyboard
+    charIndex, $mdMedia, closeKeyboard, $window, realmName
   ) {
-    this.__deps = { $log, wowProfile, ga, charIndex };
-
     $scope.ga = ga;
 
     this.region = DEFAULT_REGION;
     this.fields = 'items,progression,talents';
     this.REALMS = REALMS;
 
+    const rn = realmName(this.region);
+
+    this.__deps = { $log, wowProfile, ga, charIndex, $window, rn };
+
     $scope.$watch(() => $state.params, (val, oldVal) => {
       const region = this.region;
-      const { realm, character } = val;
+      const { realm: rawRealm, character } = val;
 
-      $log.debug('val', realm, character);
+      $log.debug('val', rawRealm, character);
 
       const requireNewProfile = !angular.equals(val, oldVal);
 
@@ -51,7 +52,8 @@ class AppCtrl {
         this.profile.$destroy();
       }
 
-      if (region && realm && character) {
+      if (region && rawRealm && character) {
+        const realm = rn.isEn(rawRealm) ? rn.toLocaled(rawRealm) : rawRealm;
         Object.assign(this, {
           region,
           realm,
@@ -175,6 +177,27 @@ class AppCtrl {
     const { region, realm } = item;
     Object.assign(this, { region, realm });
     this.query();
+  }
+
+  outbound(target) {
+    const { $window, rn } = this.__deps;
+
+    const enRealmName = rn.toEn(this.realm);
+
+    let link;
+
+    switch (target) {
+      case 'armory':
+        link = `http://${this.region}.battle.net/wow/zh/character/${enRealmName}/${this.character}/advanced`;
+        break;
+      case 'wowprogress':
+        link = `https://www.wowprogress.com/character/${this.region}/${enRealmName}/${this.character}`;
+        break;
+      default:
+        break;
+    }
+
+    $window.open(link);
   }
 }
 

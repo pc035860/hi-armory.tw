@@ -32,8 +32,8 @@
             <md-input-container flex>
               <label>伺服器</label>
               <md-select ng-model="$app.realm">
-                <md-option ng-repeat="realm in $app.REALMS[$app.region]" value="{{realm}}">
-                  {{realm}}
+                <md-option ng-repeat="realm in $app.REALMS[$app.region]" value="{{realm[0]}}">
+                  {{realm[0]}}
                 </md-option>
               </md-select>
             </md-input-container>
@@ -149,17 +149,31 @@
                 資料抓取: <time-ago time="$app.profile.dataUpdatedAt"></time-ago>
               </div>
               <div flex="33" flex-xs="100">
-                <div class="c-refresh">
-                  <status-text status="$app.profile.status"
-                    class="ng-anim"
-                    ng-show="$app.profile.status !== 'ready'"></status-text>
-                  <md-button class="md-fab md-mini md-hue-2"
-                    ng-click="$app.reload(); ga.event('Reload Button', 'click');"
-                    aria-label="refresh"><i class="fa fa-refresh"
-                    ng-class="{
-                      'fa-spin': $app.profile.status !== 'ready' || $app.reloading
-                    }"></i></md-button>
-                </div>
+                <md-fab-speed-dial md-direction="up" class="md-scale ng-anim c-outbound">
+                  <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-warn md-mini" title="其它連結">
+                      <i class="fa fa-external-link-square"></i>
+                    </md-button>
+                  </md-fab-trigger>
+
+                  <md-fab-actions>
+                    <md-button aria-label="英雄榜" class="md-fab md-raised md-mini"
+                      ng-click="$app.outbound('armory')" title="前往 英雄榜">
+                      <span>英雄</span>
+                    </md-button>
+                    <md-button aria-label="WoWProgress" class="md-fab md-raised md-mini"
+                      ng-click="$app.outbound('wowprogress')" title="前往 WoWProgress">
+                      <span>WP</span>
+                    </md-button>
+                  </md-fab-actions>
+                </md-fab-speed-dial>
+                <ha-reload class="c-reload"
+                  status="$app.profile.status"
+                  show-status="$app.profile.status !== 'ready'"
+                  on-click="$app.reload(); ga.event('Reload Button', 'click');"
+                  spin="$app.profile.status !== 'ready' || $app.reloading"
+                  title="重新抓取資料"
+                ></ha-reload>
               </div>
             </div>
           </md-card>
@@ -180,20 +194,17 @@
                 資料抓取: <time-ago time="$app.profile.statusUpdatedAt"></time-ago>
               </div>
               <div flex="50" flex-xs="100">
-                <div class="c-refresh">
-                  <status-text status="$app.profile.status"
-                    class="ng-anim"
-                    ng-show="
-                      $app.profile.status !== 'ready' &&
-                      $app.profile.status !== 'not found'
-                    "></status-text>
-                  <md-button class="md-fab md-mini md-hue-2"
-                    ng-click="$app.reload(); ga.event('Reload Button', 'click');"
-                    aria-label="refresh"><i class="fa fa-refresh"
-                    ng-class="{
-                      'fa-spin': $app.profile.status == 'pending' || $app.profile.status == 'processing' || $app.reloading
-                    }"></i></md-button>
-                </div>
+                <ha-reload class="c-reload"
+                  status="$app.profile.status"
+                  show-status="
+                    $app.profile.status !== 'ready' &&
+                    $app.profile.status !== 'not found'
+                  "
+                  on-click="$app.reload(); ga.event('Reload Button', 'click');"
+                  spin="
+                    $app.profile.status == 'pending' || $app.profile.status == 'processing' || $app.reloading
+                  "
+                ></ha-reload>
               </div>
             </div>
           </md-card>
