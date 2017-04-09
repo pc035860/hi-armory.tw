@@ -259,6 +259,8 @@ body {
 		line-height: 1.6;
 	}
 
+	// 人類
+	&.r1 { .c-card__bg__inner { background-position-y: 23%; } }
 	// 牛頭人
 	&.r6 { .c-card__bg__inner { background-position-y: 22%; } }
 	// 哥布林
