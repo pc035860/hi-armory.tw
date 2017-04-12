@@ -242,6 +242,20 @@ body {
 	&__fval {
 		font-size: 20px;
 		font-weight: bold;
+
+		> a {
+			$color: rgb(76,158,241);
+
+			&, &:focus {
+				color: $color;
+			}
+			&:hover {
+				color: lighten($color, 5%);
+			}
+			&:active {
+				color: darken($color, 3%);
+			}
+		}
 	}
 
 	&__progress-row {

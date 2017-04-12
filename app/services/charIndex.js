@@ -98,10 +98,19 @@ function factory(firebase, $q, $http, $log, $window) {
     addHistory(keyOrItem) {
       let item;
       if (typeof keyOrItem === 'string') {
-        item = this._createItem(keyOrItem);
+        try {
+          item = this._createItem(keyOrItem);
+        }
+        catch (e) {
+          $log.warn('add history item fail');
+        }
       }
       else {
         item = { ...keyOrItem };
+      }
+
+      if (!item) {
+        return;
       }
 
       item.isHistory = true;

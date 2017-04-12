@@ -1,22 +1,14 @@
 import $ from 'jquery';
 import reverse from 'lodash/reverse';
+import memoize from 'memoizee';
+
+import createArtifactStruct from '../utils/wowhead/createArtifactStruct';
+import artifactCalculatorHash from '../utils/wowhead/artifactCalculatorHash';
+import { CHR_SPECS } from '../utils/wowhead/constants';
+
+import { classNames as CLASS_NAMES } from '../config';
 
 export const NAME = 'parseProfile';
-
-const CLASS_NAME = {
-  1: '戰士',
-  2: '聖騎士',
-  3: '獵人',
-  4: '盜賊',
-  5: '牧師',
-  6: '死騎',
-  7: '薩滿',
-  8: '法師',
-  9: '術士',
-  10: '武僧',
-  11: '德魯伊',
-  12: '惡魔獵人',
-};
 
 function findArtifact(d) {
   let artifact;
@@ -110,9 +102,23 @@ function getPictureSrcs(d) {
   };
 }
 
+function getArtifactCalculatorLink(artifact) {
+  const base = 'http://www.wowhead.com/artifact-calc';
+  const s = createArtifactStruct(artifact);
+  const hash = artifactCalculatorHash(artifact);
+
+  if (s.spec === 0 && s.classs === 0) {
+    return `${base}/${hash}`;
+  }
+
+  const enClassName = CLASS_NAMES[s.classs][1];  // wowhead class name actually
+  const enSpecName = CHR_SPECS[s.spec].toLowerCase();
+  return `${base}/${enClassName}/${enSpecName}/${hash}`;
+}
+
 /* @ngInject */
 function factory() {
-  return function parseProfile(profileData) {
+  const parseProfile = (profileData) => {
     const d = profileData;
 
     const artifact = findArtifact(d);
@@ -122,7 +128,7 @@ function factory() {
       talentName: talent.spec.name,
       talentStr: toHumanTalentStr(talent.calcTalent),
       talentCalcLink: getTalentCalculatorLink(d, talent),
-      className: CLASS_NAME[profileData.class],
+      className: CLASS_NAMES[profileData.class][0],
 
       avgIlv: d.items.averageItemLevel,
       avgIlvEquipped: d.items.averageItemLevelEquipped,
@@ -139,11 +145,14 @@ function factory() {
         artifactIlv: artifact.itemLevel,
         newTraitsUnlocked: !!artifact.artifactTraits[17],
         totalTraits: calcTotalTraits(artifact),
+        artifactCalcLink: getArtifactCalculatorLink(artifact)
       };
     }
 
     return base;
   };
+
+  return memoize(parseProfile);
 }
 
 export default function configure(ngModule) {

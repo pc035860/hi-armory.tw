@@ -37,3 +37,18 @@ export const realms = {
     ['雷鱗', 'stormscale'],
   ]
 };
+
+export const classNames = {
+  1: ['戰士', 'warrior'],
+  2: ['聖騎士', 'paladin'],
+  3: ['獵人', 'hunter'],
+  4: ['盜賊', 'rogue'],
+  5: ['牧師', 'priest'],
+  6: ['死騎', 'death-knight'],
+  7: ['薩滿', 'shaman'],
+  8: ['法師', 'mage'],
+  9: ['術士', 'warlock'],
+  10: ['武僧', 'monk'],
+  11: ['德魯伊', 'druid'],
+  12: ['惡魔獵人', 'demon-hunter']
+};
