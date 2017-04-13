@@ -11,6 +11,14 @@
     "results": {
       ".read": true,
       ".write": false
+    },
+    "queueWcl": {
+      ".read": false,
+      ".write": true
+    },
+    "wclId": {
+      ".read": true,
+      ".write": false
     }
   }
 }
