@@ -8,6 +8,7 @@ export default (ngModule) => {
     require('./charIndex'),
     require('./closeKeyboard'),
     require('./realmName'),
+    require('./wclId'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

@@ -302,6 +302,12 @@ body {
 	position: absolute;
 	right: -12px;
 	bottom: -12px;
+
+	.md-fab-action-item .md-button {
+		&.ng-enter {
+			animation: zoomIn .4s both easing(circOut);
+		}
+	}
 }
 
 .c-reload {

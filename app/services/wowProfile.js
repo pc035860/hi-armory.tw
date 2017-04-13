@@ -1,12 +1,10 @@
-import { getDB as getFirebaseDB } from '../firebase';
-
 export const NAME = 'wowProfile';
 
 /* @ngInject */
 function factory(firebase, $firebaseObject, $state) {
   return {
     enqueue(queryData) {
-      const ref = getFirebaseDB().ref('queue');
+      const ref = firebase.database().ref('queue');
       ref.push({
         ...queryData,
         addedAt: +new Date()
@@ -14,7 +12,7 @@ function factory(firebase, $firebaseObject, $state) {
     },
     getFirebaseObject(queryData) {
       const armoryKey = this.getArmoryKey(queryData);
-      const ref = getFirebaseDB().ref(`results/${armoryKey}`);
+      const ref = firebase.database().ref(`results/${armoryKey}`);
       return $firebaseObject(ref);
     },
     getArmoryKey({ region, realm, character, fields }) {

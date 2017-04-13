@@ -165,6 +165,10 @@
                       ng-click="$app.outbound('wowprogress')" title="前往 WoWProgress">
                       <span>WP</span>
                     </md-button>
+                    <md-button ng-if="$app.wclId.$value" aria-label="Warcraft Logs" class="md-fab md-raised md-mini ng-anim"
+                      ng-click="$app.outbound('warcraftlogs')" title="前往 Warcraft Logs">
+                      <span>WCL</span>
+                    </md-button>
                   </md-fab-actions>
                 </md-fab-speed-dial>
                 <ha-reload class="c-reload"

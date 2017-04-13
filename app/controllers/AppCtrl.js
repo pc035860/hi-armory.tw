@@ -11,12 +11,13 @@ export const NAME = 'AppCtrl';
 class AppCtrl {
   static $inject = [
     '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location',
-    'charIndex', '$mdMedia', 'closeKeyboard', '$window', 'realmName'
+    'charIndex', '$mdMedia', 'closeKeyboard', '$window', 'realmName', 'wclId'
   ];
 
   __deps;
   REALMS;
   profile;
+  wclId;
   region;
   realm;
   character;
@@ -28,7 +29,7 @@ class AppCtrl {
   /* @ngInject */
   constructor(
     $log, $scope, $state, wowProfile, parseProfile, ga, $location,
-    charIndex, $mdMedia, closeKeyboard, $window, realmName
+    charIndex, $mdMedia, closeKeyboard, $window, realmName, wclId
   ) {
     $scope.ga = ga;
 
@@ -79,6 +80,19 @@ class AppCtrl {
             else if ((+new Date()) - obj.dataUpdatedAt > AUTO_REQUERY_DIFF) {
               // auto re-query
               this.query({ enqueue: true });
+            }
+          });
+
+          this.wclId = wclId.getFirebaseObject({ region, realm, character });
+
+          this.wclId.$loaded()
+          .then((obj) => {
+            if (!obj.$value) {
+              wclId.enqueue({
+                region,
+                realm,
+                character
+              });
             }
           });
         }
@@ -195,11 +209,16 @@ class AppCtrl {
       case 'wowprogress':
         link = `https://www.wowprogress.com/character/${this.region}/${enRealmName}/${character}`;
         break;
+      case 'warcraftlogs':
+        link = `https://www.warcraftlogs.com/rankings/character/${this.wclId.$value}/latest/`;
+        break;
       default:
         break;
     }
 
-    $window.open(link);
+    if (link) {
+      $window.open(link);
+    }
   }
 }
 
