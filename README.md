@@ -42,12 +42,13 @@ export const firebase = {
 
 ### Cloud Functions for Firebase
 
-有 3 項 cloud functions 的環境設定必須完成才能運作
+以下的 cloud functions 的環境設定必須完成才能運作
 
 ```json
 {
   "project": {
-	"id": "{project id}"
+    "id": "{project id}",
+    "bucket": "{bucket name}"
   },
   "resource": {
     "total": "10"
@@ -57,29 +58,30 @@ export const firebase = {
     "key2": "{key2}",
     "key3": "{key3}",
     ...
+  },
+  "wclapi": {
+  	"key": "{key}"
   }
 }
 ```
 
-設定 `project.id` 的方法
+| 設定名稱       | 敘述                                           |
+|----------------|------------------------------------------------|
+| project.id     | firebase project id                            |
+| project.bucket | firebase storage bucket name                   |
+| resource.total | 同時可以運行的 bnet api request 數量           |
+| bnetapi.key{n} | n = 1..10。至多可以設定10組 battle.net API key |
+| wclapi.key     | Warcraft Logs API key                          |
+
+設定方法
 
 ```sh
 firebase functions:config:set project.id="your project id"
 ```
 
-設定 `resource.total` 的方法
-
-```sh
-firebase functions:config:set resource.total=10
-```
-
-設定 `bnetapi.key{n}` 的方法 (`n` 至多為 `10`)
-
-```sh
-firebase functions:config:set bnetapi.key1="aaa" bnetapi.key1="bbb"
-```
-
 battle.net API 申請請前往 https://dev.battle.net/。
+
+WCL API 申請請前往 https://www.warcraftlogs.com/accounts/changeuser (需登入)。
 
 設定相關文件可以看 [Cloud Functions: Environment Configuration](https://firebase.google.com/docs/functions/config-env)。
 
