@@ -194,7 +194,7 @@ class AppCtrl {
   }
 
   outbound(target) {
-    const { $window, rn } = this.__deps;
+    const { $window, rn, ga } = this.__deps;
 
     const enRealmName = rn.toEn(this.realm);
     const realm = encodeURIComponent(this.realm);
@@ -219,6 +219,8 @@ class AppCtrl {
     if (link) {
       $window.open(link);
     }
+
+    ga.event('Outbound Link', 'click', target);
   }
 }
 
