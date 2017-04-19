@@ -61,7 +61,7 @@ function factory(firebase, $q, $http, $log, $window) {
       }
 
       if (str === '') {
-        return history;
+        return [...history];
       }
 
       const historyM = keyBy(history, v => v.key);
