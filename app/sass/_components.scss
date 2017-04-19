@@ -14,7 +14,7 @@
 
 .c-loading {
 	position: absolute; z-index: 3;
-	left: 0; top: 300px;
+	left: 0; top: 380px;
 	width: 100%;
 
 	@media #{$mq-xs} {
@@ -29,10 +29,10 @@
 			transform: translateZ(0);
 			will-change: transform;
 		}
+	}
 
-		&.ng-enter {
-			animation: fadeIn .3s both;
-		}
+	&.ng-enter {
+		animation: fadeIn .3s both;
 	}
 }
 
@@ -51,7 +51,7 @@
 	}
 
 	&.ng-enter {
-		animation: zoomIn .3s both easing(circOut);
+		animation: fadeIn .6s both;
 
 		@media #{$mq-xs} {
 			animation-name: slideInRight;
@@ -113,7 +113,7 @@
 
 		&__inner {
 			@extend %fullscreen;
-			position: absolute;
+			position: absolute; z-index: 0;
 
 			// filter: blur(2px);
 			background: black no-repeat center 32%;
@@ -125,7 +125,7 @@
 
 		&__cover {
 			@extend %fullscreen;
-			position: absolute;
+			position: absolute; z-index: 1;
 
 			background-color: rgba(0,0,0,.3);
 			background: linear-gradient(
@@ -136,7 +136,7 @@
 		}
 
 		&__content {
-			position: absolute;
+			position: absolute; z-index: 2;
 			left: 0;
 			bottom: 0;
 			width: 100%;
@@ -212,6 +212,8 @@
 	&.r9 { .c-card__bg__inner { background-position-y: 40%; } }
 	// 血精靈
 	&.r10 { .c-card__bg__inner { background-position-y: 18%; } }
+	// 德萊尼
+	&.r11 { .c-card__bg__inner { background-position-y: 16%; } }
 	// 狼人
 	&.r22 { .c-card__bg__inner { background-position-y: 20%; } }
 	// 熊貓人

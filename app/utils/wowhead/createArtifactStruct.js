@@ -18,13 +18,13 @@ function getArtifactForCurrent(artifactId) {
             continue
         }
         if (ARTIFACT_SPEC_LOOKUP[aw] == artifactId) {
-            ax.spec = aw;
+            ax.spec = Number(aw);
             for (var av in CHR_SPECS_BY_CLASS) {
                 if (!CHR_SPECS_BY_CLASS.hasOwnProperty(av)) {
                     continue
                 }
                 if (CHR_SPECS_BY_CLASS[av].indexOf(aw) >= 0) {
-                    ax.classs = av
+                    ax.classs = Number(av)
                 }
             }
         }
