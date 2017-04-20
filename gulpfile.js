@@ -32,7 +32,8 @@ gulp.task('hash-bundle', function () {
 gulp.task('copy-public', ['hash-bundle'], function () {
   return gulp.src([
     path.join(myPath.public, 'images', '**'),
-    path.join(myPath.public, 'index.html')
+    path.join(myPath.public, 'index.html'),
+    path.join(myPath.public, 'manifest.json'),
   ], { base: myPath.public })
   .pipe(gulp.dest(myPath.dist))
 });

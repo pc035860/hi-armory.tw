@@ -1,0 +1,31 @@
+{
+  "lang": "zh-TW",
+  "background_color": "#ffffff",
+  "name": "嗨... 英雄榜",
+  "short_name": "嗨... 英雄榜",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-216.png",
+      "sizes": "216x216",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait",
+  "start_url": "/?utm_source=homescreen"
+}
