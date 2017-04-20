@@ -35,6 +35,7 @@
 
   <link rel="apple-touch-startup-image" href="images/iphone-7-launch.png">
 
+  <meta name="theme-color" content="white">
   <link rel="manifest" href="/manifest.json">
 </head>
 <body ng-controller="AppCtrl as $app" ng-cloak
@@ -122,6 +123,7 @@
                   </div>
                   <div class="c-card__meta">
                     <a ng-href="{{$app.pp.talentCalcLink}}" target="_blank"
+                      rel="noopener"
                       class="s-class-color"
                       ng-class="'c' + $app.pd.class"
                       ng-click="ga.event('Talent Calc Link', 'click');">{{$app.pp.talentName}}({{$app.pp.talentStr}}) {{$app.pp.className}}</a>
@@ -147,7 +149,7 @@
                 <div layout="row" layout-xs="column" ng-show="$app.pp.artifactIlv">
                   <div flex="33" flex-xs="100">
                     <span class="md-body-1 c-card__fname">神器特質數</span>
-                    <span class="c-card__fval"><a ng-href="{{$app.pp.artifactCalcLink}}" target="_blank" ng-click="ga.event('Artifact Calc Link', 'click');">{{$app.pp.totalTraits}}</a></span>
+                    <span class="c-card__fval"><a ng-href="{{$app.pp.artifactCalcLink}}" target="_blank" rel="noopener" ng-click="ga.event('Artifact Calc Link', 'click');">{{$app.pp.totalTraits}}</a></span>
                   </div>
                   <div flex="66" flex-xs="100">
                     <span class="md-body-1 c-card__fname">7.2 新神器特質</span>
@@ -244,7 +246,7 @@
 
     <div class="r-page__footer">
       <div class="md-caption">
-        由 <a href="https://github.com/pc035860" target="_blank">@pc035860</a> 製作與維護
+        由 <a href="https://github.com/pc035860" target="_blank" rel="noopener">@pc035860</a> 製作與維護
         <a class="github-button" href="https://github.com/pc035860/hi-armory.tw" data-count-href="/pc035860/hi-armory.tw/stargazers" data-count-api="/repos/pc035860/hi-armory.tw#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star pc035860/hi-armory.tw on GitHub">Star</a>
       </div>
     </div>
