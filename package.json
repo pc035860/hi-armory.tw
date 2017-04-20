@@ -25,11 +25,14 @@
     "gulp-clean": "^0.3.2",
     "gulp-hash": "^4.1.0",
     "gulp-replace": "^0.5.4",
+    "merge-stream": "^1.0.1",
     "node-sass": "^4.5.2",
     "npm-run-all": "^4.0.2",
     "path": "^0.12.7",
     "postcss": "^5.2.16",
     "postcss-transform-shortcut": "^2.0.1",
+    "sw-precache": "^5.1.0",
+    "sw-toolbox": "^3.6.0",
     "uglify-js": "^2.8.16"
   },
   "scripts": {

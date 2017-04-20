@@ -1,3 +1,6 @@
+/* global navigator */
+/* eslint no-console: 0 */
+
 import angular from 'angular';
 
 import { init as initFBApp } from './firebase';
@@ -31,3 +34,20 @@ initFBApp();
 function run() { }
 
 ngModule.run(run);
+
+(function () {
+  // Check for browser support of serviceWorker
+  if (!('serviceWorker' in navigator)) {
+    console.log('Service worker not supported');
+    return;
+  }
+  navigator.serviceWorker.register('/sw.js')
+  .then(function (registration) {
+    // Successful registration
+    console.log('Registration successful, scope is:', registration.scope);
+  })
+  .catch(function (error) {
+    // Failed registration, service worker won't be installed
+    console.log('Service worker registration failed, error:', error);
+  });
+}());
