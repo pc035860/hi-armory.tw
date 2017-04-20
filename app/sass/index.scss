@@ -13,6 +13,10 @@ html {
 body {
 	touch-action: manipulation;
 	font-family: $ff;
+
+	&.body-overflow-hidden {
+		overflow: hidden;
+	}
 }
 
 .r-page {
@@ -42,7 +46,10 @@ body {
 		margin-bottom: 5px;
 		text-align: center;
 		line-height: 32px;
+		max-height: 32px;
 		color: gray;
+
+		overflow: hidden;
 
 		a {
 			color: black;

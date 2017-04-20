@@ -11,7 +11,8 @@ export const NAME = 'AppCtrl';
 class AppCtrl {
   static $inject = [
     '$log', '$scope', '$state', 'wowProfile', 'parseProfile', 'ga', '$location',
-    'charIndex', '$mdMedia', 'closeKeyboard', '$window', 'realmName', 'wclId'
+    'charIndex', '$mdMedia', 'closeKeyboard', '$window', 'realmName', 'wclId',
+    '$timeout'
   ];
 
   __deps;
@@ -25,11 +26,13 @@ class AppCtrl {
   reloading;
   pp;  // parsedProfile
   pd;  // profile.data
+  resetOverflow;
 
   /* @ngInject */
   constructor(
     $log, $scope, $state, wowProfile, parseProfile, ga, $location,
-    charIndex, $mdMedia, closeKeyboard, $window, realmName, wclId
+    charIndex, $mdMedia, closeKeyboard, $window, realmName, wclId,
+    $timeout
   ) {
     $scope.ga = ga;
 
@@ -131,6 +134,11 @@ class AppCtrl {
     $scope.$on('$stateChangeSuccess', () => {
       ga.pageview($location.path());
     });
+
+    // reset overflow here to prevent scrollbar flash
+    $timeout(() => {
+      this.resetOverflow = true;
+    }, 800);
   }
 
   /**
