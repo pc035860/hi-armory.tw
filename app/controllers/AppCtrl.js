@@ -26,7 +26,6 @@ class AppCtrl {
   reloading;
   pp;  // parsedProfile
   pd;  // profile.data
-  resetOverflow;
 
   /* @ngInject */
   constructor(
@@ -134,11 +133,6 @@ class AppCtrl {
     $scope.$on('$stateChangeSuccess', () => {
       ga.pageview($location.path());
     });
-
-    // reset overflow here to prevent scrollbar flash
-    $timeout(() => {
-      this.resetOverflow = true;
-    }, 800);
   }
 
   /**

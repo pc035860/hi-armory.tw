@@ -14,8 +14,12 @@ body {
 	touch-action: manipulation;
 	font-family: $ff;
 
-	&.body-overflow-hidden {
-		overflow: hidden;
+	// the github button scripting iframe
+	> iframe {
+		visibility: hidden;
+		position: absolute;
+		top: 0;
+		left: -10px;
 	}
 }
 
