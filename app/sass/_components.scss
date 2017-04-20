@@ -55,7 +55,14 @@
 
 		@media #{$mq-xs} {
 			animation-name: slideInRight;
-			animation-duration: .3s;
+			animation-duration: .4s;
+			animation-easing-function: easing(circOut);
+		}
+	}
+
+	&.ng-leave {
+		@media #{$mq-xs} {
+			animation: slideOutRight .4s both;
 		}
 	}
 
