@@ -33,6 +33,15 @@
     origin: /fonts\.googleapis\.com/
   });
 
+  // github buttons cdn
+  toolbox.router.get('/(.*)', toolbox.cacheFirst, {
+    cache: {
+      name: 'github-buttons-cdn-600',
+      maxAgeSeconds: 600
+    },
+    origin: /buttons\.github\.io/
+  });
+
 
   /**
    * Fastest
