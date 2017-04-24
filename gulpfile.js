@@ -43,7 +43,13 @@ gulp.task('copy-sw', function () {
       .pipe(gulp.dest(myPath.dist));
 
   var script = gulp.src(path.join(myPath.app, 'sw-toolbox-script.js'))
-      .pipe(gulp.dest(myPath.dist));
+      .pipe(hash()) // Add hashes to the files' names
+      .pipe(gulp.dest(myPath.dist)) // Write the renamed files
+      .pipe(hash.manifest('assets-sw-toolbox.json', {
+        deleteOld: true,
+        sourceDir: myPath.dist
+      })) // Switch to the manifest file
+      .pipe(gulp.dest(myPath.dist)); // Write the manifest file
 
   return mergeStream(vendor, script);
 });
@@ -56,6 +62,8 @@ gulp.task('update-index', ['copy'], function () {
 });
 
 gulp.task('generate-service-worker', ['update-index'], function (callback) {
+  var swtAssets = require(path.join(myPath.dist, 'assets-sw-toolbox.json'));
+
   var staticFileGlobs = [
     'images/*.{svg,png,jpg,gif}',
     'index.html',
@@ -64,7 +72,7 @@ gulp.task('generate-service-worker', ['update-index'], function (callback) {
 
   var importScripts = [
     'sw-toolbox.js',
-    'sw-toolbox-script.js'
+    swtAssets['sw-toolbox-script.js']
   ];
 
   swPrecache.write(path.join(myPath.dist, 'sw.js'), {
