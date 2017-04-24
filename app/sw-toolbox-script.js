@@ -24,14 +24,6 @@
     origin: /\.gstatic\.com$/
   });
 
-  // github buttons cdn
-  toolbox.router.get('/(.*)', toolbox.cacheFirst, {
-    cache: {
-      name: 'github-buttons-cdn'
-    },
-    origin: /buttons\.github\.io/
-  });
-
   // googleapis fonts cdn
   // - google fonts css
   toolbox.router.get('/(.*)', toolbox.cacheFirst, {
