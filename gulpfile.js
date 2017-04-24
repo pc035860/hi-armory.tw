@@ -6,6 +6,7 @@ var replace = require('gulp-replace');
 var hash = require('gulp-hash');
 var swPrecache = require('sw-precache');
 var mergeStream = require('merge-stream');
+var htmlmin = require('gulp-htmlmin');
 
 var myPath = {
   app: path.resolve(__dirname, 'app'),
@@ -30,12 +31,28 @@ gulp.task('hash-bundle', function () {
 });
 
 gulp.task('copy-public', ['hash-bundle'], function () {
-  return gulp.src([
-    path.join(myPath.public, 'images', '**'),
-    path.join(myPath.public, 'index.html'),
-    path.join(myPath.public, 'manifest.json'),
-  ], { base: myPath.public })
-  .pipe(gulp.dest(myPath.dist))
+  var index = gulp.src(path.join(myPath.public, 'index.html'))
+      .pipe(htmlmin({
+        collapseBooleanAttributes:      true,
+        collapseWhitespace:             true,
+        removeAttributeQuotes:          true,
+        removeComments:                 true, // Only if you don't use comment directives!
+        removeEmptyAttributes:          true,
+        // removeRedundantAttributes:      true,
+        removeScriptTypeAttributes:     true,
+        removeStyleLinkTypeAttributes:  true,
+        keepClosingSlash:               true,
+        customAttrCollapse:             /ng-class|ng-show|ng-if|show-status|spin/
+      }))
+      .pipe(gulp.dest(myPath.dist));
+
+  var others = gulp.src([
+        path.join(myPath.public, 'images', '**'),
+        path.join(myPath.public, 'manifest.json'),
+      ], { base: myPath.public })
+      .pipe(gulp.dest(myPath.dist));
+
+  return mergeStream(index, others);
 });
 
 gulp.task('copy-sw', function () {
