@@ -334,6 +334,25 @@
 		margin: 0 0 10px;
 		font-size: 22px;
 		text-align: center;
+
+		> span {
+			position: relative;
+
+			&::before {
+				content: 'Beta';
+
+				display: inline-block;
+
+				position: absolute;
+				z-index: 1;
+				right: -20px;
+				top: -6px;
+
+				color: fade-out(#9b59b6, .3);
+				font-size: 14px;
+				rotate: 28deg;
+			}
+		}
 	}
 
 	&__current {
