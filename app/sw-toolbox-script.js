@@ -42,6 +42,15 @@
     origin: /buttons\.github\.io/
   });
 
+  // cloud functions legion assult api
+  toolbox.router.get(/\/legionAssultTime/, toolbox.cacheFirst, {
+    cache: {
+      name: 'cloud-functions-legion-assults-time',
+      maxAgeSeconds: 86400
+    },
+    origin: /us-central1-wow-ap-level\.cloudfunctions\.net/
+  });
+
 
   /**
    * Fastest

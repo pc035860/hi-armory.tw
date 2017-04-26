@@ -2,9 +2,10 @@
 
 export default (ngModule) => {
   const list = [
-    require('./timeAgo'),
+    require('./timeDiff'),
     require('./statusText'),
     require('./haReload'),
+    require('./legionAssults')
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

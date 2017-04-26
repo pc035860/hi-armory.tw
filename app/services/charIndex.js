@@ -3,7 +3,7 @@
 import memoize from 'memoizee';
 import keyBy from 'lodash/keyBy';
 import uniqBy from 'lodash/uniqBy';
-import { indexStorageUrl } from '../config';
+import { indexStorageUrl as INDEX_STORAGE_URL } from '../config';
 
 export const NAME = 'charIndex';
 
@@ -85,7 +85,7 @@ function factory(firebase, $q, $http, $log, $window) {
     },
 
     update() {
-      const ref = firebase.storage().refFromURL(indexStorageUrl);
+      const ref = firebase.storage().refFromURL(INDEX_STORAGE_URL);
 
       return $q.when(ref.getDownloadURL())
       .then(url => $http.get(url))

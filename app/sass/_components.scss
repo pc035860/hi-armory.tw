@@ -38,6 +38,7 @@
 
 .c-results {
 	position: relative;
+	z-index: 1;
 
 	@media #{$mq-xs} {
 		@include fullscreen;
@@ -296,6 +297,81 @@
 		.highlight {
 			color: rgb(33,33,33);
 			font-weight: bold;
+		}
+	}
+}
+
+.c-legion-assults-wrap {
+	position: absolute;
+
+	width: 100%;
+
+	left: 0;
+	bottom: 0;
+
+	@media only screen and (max-height: 630px) {
+		position: relative;
+	}
+
+	&.ng-hide-add {
+		animation: fadeOut .3s both;
+	}
+	&.ng-hide-remove {
+		animation: fadeIn .3s both;
+	}
+}
+.c-legion-assults {
+	&.ng-hide-remove {
+		animation: fadeIn .3s both;
+	}
+
+	&__content {
+		max-width: 320px;
+		margin: 0 auto;
+	}
+
+	&__heading {
+		margin: 0 0 10px;
+		font-size: 22px;
+		text-align: center;
+	}
+
+	&__current {
+		padding: 20px 0;
+		margin: 0 0 10px;
+		text-align: center;
+		color: gray;
+
+		time-diff {
+			font-size: 28px;
+		}
+	}
+
+	&__upcoming {
+		font-size: 14px;
+		text-align: center;
+
+		> p {
+			margin: 0 0 10px;
+		}
+
+		&__list {
+			box-sizing: border-box;
+			max-width: 240px;
+			margin: 0 auto;
+			padding: 0 0 0 25px;
+			text-align: left;
+			list-style-type: square;
+
+			li {
+				line-height: 1.6;
+			}
+		}
+	}
+
+	&--is-assulting {
+		.c-legion-assults__current {
+			color: #e74c3c;
 		}
 	}
 }

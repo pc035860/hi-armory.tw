@@ -52,3 +52,5 @@ export const classNames = {
   11: ['德魯伊', 'druid'],
   12: ['惡魔獵人', 'demon-hunter']
 };
+
+export const assultsApi = 'https://us-central1-wow-ap-level.cloudfunctions.net/legionAssultTime';

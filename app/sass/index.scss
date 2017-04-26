@@ -38,9 +38,15 @@ body {
 		@media #{$mq-xs} {
 			text-align: center;
 		}
+
+		> a {
+			color: black !important;
+			text-decoration: none !important;
+		}
 	}
 
 	&__content {
+		position: relative;
 		flex: 1 0;
 		margin-bottom: 36px;
 	}

@@ -44,7 +44,7 @@
     <div class="r-page__content">
       <div class="c-container">
         <md-content layout-padding>
-          <h1 class="md-display-2">嗨... 英雄榜</h1>
+          <h1 class="md-display-2"><a href="/">嗨... 英雄榜</a></h1>
 
           <form ng-submit="$app.query(); ga.event('Query Button', 'click');">
             <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
@@ -169,10 +169,10 @@
               <!-- <md-divider></md-divider> -->
               <div class="c-card__footer" layout="row" layout-xs="column">
                 <div flex="33" flex-xs="50">
-                  英雄榜更新: <time-ago time="$app.pd.lastModified"></time-ago>
+                  英雄榜更新: <time-diff time="$app.pd.lastModified"></time-diff>
                 </div>
                 <div flex="33" flex-xs="50">
-                  資料抓取: <time-ago time="$app.profile.dataUpdatedAt"></time-ago>
+                  資料抓取: <time-diff time="$app.profile.dataUpdatedAt"></time-diff>
                 </div>
                 <div flex="33" flex-xs="100">
                   <md-fab-speed-dial md-direction="up" class="md-scale ng-anim c-outbound">
@@ -221,7 +221,7 @@
               </md-card-content>
               <div class="c-card__footer" layout="row" layout-xs="column">
                 <div flex="50" flex-xs="50">
-                  資料抓取: <time-ago time="$app.profile.statusUpdatedAt"></time-ago>
+                  資料抓取: <time-diff time="$app.profile.statusUpdatedAt"></time-diff>
                 </div>
                 <div flex="50" flex-xs="100">
                   <ha-reload class="c-reload"
@@ -241,6 +241,11 @@
           </md-content>
         </div> <!-- .c-results__content -->
       </div> <!-- .c-results -->
+
+      <!-- 軍團入侵 -->
+      <div class="c-legion-assults-wrap ng-anim" ng-show="!$app.profile">
+        <legion-assults></legion-assults>
+      </div>
     </div>
 
     <div class="r-page__footer">
@@ -253,6 +258,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/zh-tw.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-duration-format/1.3.0/moment-duration-format.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-animate.min.js"></script>
