@@ -50,7 +50,7 @@ class AppCtrl {
 
       $log.debug('val', rawRealm, character);
 
-      const requireNewProfile = !angular.equals(val, oldVal);
+      const requireNewProfile = !angular.equals(val, oldVal) || !this.profile;
 
       if (this.profile && requireNewProfile) {
         this.profile.$destroy();
