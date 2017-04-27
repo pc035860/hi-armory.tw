@@ -23,7 +23,7 @@ body {
 	}
 }
 
-.r-page {
+.r-app {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -55,8 +55,7 @@ body {
 		flex: 0 0;
 		margin-bottom: 5px;
 		text-align: center;
-		line-height: 32px;
-		max-height: 32px;
+		line-height: 26px;
 		color: gray;
 
 		overflow: hidden;

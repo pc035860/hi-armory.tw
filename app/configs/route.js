@@ -2,7 +2,8 @@
 function config($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('index', {
-    url: '/'
+    url: '/',
+    template: '<app></app>'
   })
     .state('index.page', {
       url: ':realm/:character'

@@ -1,12 +1,13 @@
 import angular from 'angular';
 
 import { realms as REALMS } from '../config';
+import template from './app.html';
+
+export const NAME = 'app';
 
 const AUTO_REQUERY_DIFF = 86400 * 1000;  // auto re-query
 
 const DEFAULT_REGION = 'tw';
-
-export const NAME = 'AppCtrl';
 
 class AppCtrl {
   static $inject = [
@@ -226,6 +227,12 @@ class AppCtrl {
   }
 }
 
+const component = {
+  controller: AppCtrl,
+  controllerAs: '$app',
+  template
+};
+
 export default function configure(ngModule) {
-  ngModule.controller(NAME, AppCtrl);
+  ngModule.component(NAME, component);
 }

@@ -5,7 +5,9 @@ export default (ngModule) => {
     require('./timeDiff'),
     require('./statusText'),
     require('./haReload'),
-    require('./legionAssults')
+    require('./legionAssults'),
+
+    require('./app')
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };
