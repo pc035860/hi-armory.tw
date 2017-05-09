@@ -44,19 +44,18 @@
     origin: /buttons\.github\.io/
   });
 
-  // cloud functions legion assult api
-  toolbox.router.get(/\/legionAssultTime/, toolbox.cacheFirst, {
-    cache: {
-      name: 'legion-assults-time-86400',
-      maxAgeSeconds: 86400
-    },
-    origin: /us-central1-wow-ap-level\.cloudfunctions\.net/
-  });
-
-
   /**
    * Fastest
    */
+
+  // cloud functions legion assult api
+  toolbox.router.get(/\/legionAssultTime/, toolbox.fastest, {
+    cache: {
+      name: 'legion-assults-time-86400-fastest',
+      maxAgeSeconds: 86400
+    },
+    origin: /wow-ap-level\.cloudfunctions\.net/
+  });
 
   // worldofwarcraft character render
   toolbox.router.get(/character\/(.*?)\.jpg/, toolbox.fastest, {
