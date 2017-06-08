@@ -18,11 +18,11 @@ function normalizeData(data) {
 }
 
 function addIndex(db, key) {
-  return db.ref(`index/${key}`).set(true);
+  return db.ref(`index/${key}`).set(true).then(() => true);
 }
 
 function removeIndex(db, key) {
-  return db.ref(`index/${key}`).remove();
+  return db.ref(`index/${key}`).remove().then(() => true);
 }
 
 module.exports = function createDequeue(admin) {
@@ -74,7 +74,11 @@ module.exports = function createDequeue(admin) {
               return removeIndex(db, key);
             });
           }
-          return originProfile.retry();
+          return originProfile.retry()
+          .catch(() => {
+            // retry failed, fallback to ready
+            return newProfile.status(newProfile.STATUS_READY);
+          });
         });
       });
     })

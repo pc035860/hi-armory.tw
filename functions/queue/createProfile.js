@@ -1,5 +1,7 @@
 const delay = require('../utils/delay');
 
+const maxRetryCount = 10;
+
 const createProfile = (fbRef, initVal) => ({
   STATUS_PENDING: 'pending',
   STATUS_PROCESSING: 'processing',
@@ -32,11 +34,11 @@ const createProfile = (fbRef, initVal) => ({
     if (buf.data) {
       buf.dataUpdatedAt = +new Date();
     }
-    return fbRef.update(buf);
+    return fbRef.update(buf).then(() => true);
   },
 
   remove() {
-    return fbRef.remove();
+    return fbRef.remove().then(() => true);
   },
 
   retry() {
@@ -44,12 +46,17 @@ const createProfile = (fbRef, initVal) => ({
       return Promise.reject(new Error('Can\'t retry without init value'));
     }
     const retryCount = initVal.retryCount || 0;
+
+    if ((retryCount + 1) > maxRetryCount) {
+      return Promise.reject();
+    }
+
     return delay(1000)
     .then(() => {
       const retryData = Object.assign({}, initVal, {
         retryCount: retryCount + 1
       });
-      return fbRef.set(retryData);
+      return fbRef.set(retryData).then(() => true);
     });
   }
 });
