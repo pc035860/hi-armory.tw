@@ -6,6 +6,34 @@ export const firebase = {
 
 export const indexStorageUrl = 'gs://hi-armory-tw/index.json';
 
+export const enRealmNames = {
+  'world-tree': 'World Tree',
+  arygos: 'Arygos',
+  frostmane: 'Frostmane',
+  'chillwind-point': 'Chillwind Point',
+  hellscream: 'Hellscream',
+  nightsong: 'Nightsong',
+  skywall: 'Skywall',
+  icecrown: 'Icecrown',
+  spirestone: 'Spirestone',
+  'demon-fall-canyon': 'Demon Fall Canyon',
+  dragonmaw: 'Dragonmaw',
+  wrathbringer: 'Wrathbringer',
+  'sundown-marsh': 'Sundown Marsh',
+  shadowmoon: 'Shadowmoon',
+  'crystalpine-stinger': 'Crystalpine Stinger',
+  'zealot-blade': 'Zealot Blade',
+  'quel-dorei': 'Quel\'dorei',
+  menethil: 'Menethil',
+  'light-s-hope': 'Light\'s Hope',
+  'bleeding-hollow': 'Bleeding Hollow',
+  whisperwind: 'Whisperwind',
+  'silverwing-hold': 'Silverwing Hold',
+  arthas: 'Arthas',
+  'order-of-the-cloud-serpent': 'Order of the Cloud Serpent',
+  stormscale: 'Stormscale'
+};
+
 export const realms = {
   tw: [
     ['世界之樹', 'world-tree'],

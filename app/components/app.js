@@ -1,6 +1,11 @@
 import angular from 'angular';
 
-import { realms as REALMS } from '../config';
+import find from 'lodash/find';
+
+import {
+  realms as REALMS,
+  enRealmNames as EN_REALM_NAMES
+} from '../config';
 import template from './app.html';
 
 export const NAME = 'app';
@@ -17,13 +22,17 @@ class AppCtrl {
   ];
 
   __deps;
+  _realmSearchList = {};
   REALMS;
   profile;
   wclId;
   region;
   realm;
   character;
-  autocompleteItem;
+  autocompleteItem = {
+    realm: null,
+    character: null
+  };
   reloading;
   pp;  // parsedProfile
   pd;  // profile.data
@@ -42,7 +51,7 @@ class AppCtrl {
 
     const rn = realmName(this.region);
 
-    this.__deps = { $log, wowProfile, ga, charIndex, $window, rn };
+    this.__deps = { $log, wowProfile, ga, charIndex, $window, rn, $scope, $timeout };
 
     $scope.$watch(() => $state.params, (val, oldVal) => {
       const region = this.region;
@@ -141,10 +150,11 @@ class AppCtrl {
    * @param  {object} options   { bool: enqueue  }
    */
   query(options_) {
-    const options = {
-      ...{ enqueue: false },
-      ...(options_ || {})
-    };
+    const { $scope, wowProfile } = this.__deps;
+
+    if ($scope.armoryForm.$invalid) {
+      return;
+    }
 
     const { region, realm, character } = this;
 
@@ -159,7 +169,10 @@ class AppCtrl {
       return;
     }
 
-    const { wowProfile } = this.__deps;
+    const options = {
+      ...{ enqueue: false },
+      ...(options_ || {})
+    };
 
     const srefParams = {
       region: 'tw',
@@ -182,18 +195,55 @@ class AppCtrl {
     this.reloading = true;
   }
 
+  _updateSelectedRealmItem(region, realm) {
+    const [local, preEn] = find(this.REALMS[this.region], v => v[0] === realm);
+    this.autocompleteItem.realm = AppCtrl.getRealmItem(local, preEn);
+  }
+
+  realmSearch(str) {
+    const realms = this.REALMS[this.region];
+    // 建立內部搜尋用的 map
+    if (!this._realmSearchList[this.region]) {
+      this._realmSearchList[this.region] = realms.map(([local, preEn]) => {
+        const en = EN_REALM_NAMES[preEn].split(' ').join('');
+        return `${local}${en}`;
+      });
+    }
+
+    const re = new RegExp(str, 'i');
+    return realms
+    .filter((v, i) => re.test(this._realmSearchList[this.region][i]))
+    .map(([local, preEn]) => {
+      return AppCtrl.getRealmItem(local, preEn);
+    });
+  }
+
   indexSearch(str) {
     const { charIndex } = this.__deps;
     return charIndex.search(str);
   }
 
-  handleSelectedItemChange(item) {
+  handleSelectedRealmItemChange(item) {
     if (!item) {
       return;
     }
+    const realm = item.local;
+    Object.assign(this, { realm });
+  }
+
+  handleSelectedCharacterItemChange(item) {
+    if (!item) {
+      return;
+    }
+    const { $timeout } = this.__deps;
     const { region, realm } = item;
     Object.assign(this, { region, realm });
-    this.query();
+
+    this._updateSelectedRealmItem(region, realm);
+
+    $timeout(() => {
+      this.query();
+    });
   }
 
   outbound(target) {
@@ -224,6 +274,13 @@ class AppCtrl {
     }
 
     ga.event('Outbound Link', 'click', target);
+  }
+
+  static getRealmItem(local, preEn) {
+    const en = EN_REALM_NAMES[preEn];
+    return {
+      local, en
+    };
   }
 }
 

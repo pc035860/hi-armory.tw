@@ -4,23 +4,35 @@
       <md-content layout-padding>
         <h1 class="md-display-2"><a href="/">嗨... 英雄榜</a></h1>
 
-        <form ng-submit="$app.query(); ga.event('Query Button', 'click');">
+        <form ng-submit="$app.query(); ga.event('Query Button', 'click');" name="armoryForm">
           <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
-            <md-input-container flex>
-              <label>伺服器</label>
-              <md-select ng-model="$app.realm">
-                <md-option ng-repeat="realm in $app.REALMS[$app.region]" value="{{realm[0]}}">
-                  {{realm[0]}}
-                </md-option>
-              </md-select>
-            </md-input-container>
+            <md-autocomplete flex
+                md-input-name="realm"
+                md-input-minlength="0"
+                md-input-maxlength="18"
+                md-min-length="0"
+                md-selected-item="$app.autocompleteItem.realm"
+                md-selected-item-change="$app.handleSelectedRealmItemChange(item)"
+                md-require-match="true"
+                md-autoselect="true"
+                md-search-text="$app.realm"
+                md-no-cache="true"
+                md-clear-button="true"
+                md-items="item in $app.realmSearch($app.realm)"
+                md-item-text="item.local"
+                md-floating-label="伺服器"
+                md-menu-class="c-autocomplete-item">
+              <md-item-template>
+                <span md-highlight-text="$app.realm" md-highlight-flags="i">{{item.local}} {{item.en}}</span>
+              </md-item-template>
+            </md-autocomplete>
             <md-autocomplete flex
                 md-input-name="character"
                 md-input-minlength="0"
                 md-input-maxlength="18"
                 md-min-length="0"
-                md-selected-item="$app.autocompleteItem"
-                md-selected-item-change="$app.handleSelectedItemChange(item)"
+                md-selected-item="$app.autocompleteItem.character"
+                md-selected-item-change="$app.handleSelectedCharacterItemChange(item)"
                 md-search-text="$app.character"
                 md-no-cache="true"
                 md-clear-button="true"
@@ -207,9 +219,6 @@
   </div>
 
   <div class="r-app__footer">
-    <div class="md-caption">
-      <a href="https://www.ptt.cc/bbs/WOW/M.1492662639.A.F1C.html" target="_blank" rel="noopener">[徵人] 憤水-傳奇暗夜堡微妙休閒團-5/10M-徵補、DD</a>
-    </div>
     <div class="md-caption">
       由 <a href="https://github.com/pc035860" target="_blank" rel="noopener">@pc035860</a> 製作與維護
       <a class="github-button" href="https://github.com/pc035860/hi-armory.tw" data-show-count="true" aria-label="Star pc035860/hi-armory.tw on GitHub">Star</a>
