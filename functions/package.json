@@ -4,11 +4,12 @@
   "dependencies": {
     "@google-cloud/storage": "^1.0.0",
     "axios": "^0.15.3",
+    "cheerio": "^1.0.0-rc.1",
     "cors": "^2.8.3",
     "firebase": "^3.1",
     "firebase-admin": "^4.2.1",
     "firebase-functions": "^0.5.6",
-    "lodash.get": "^4.4.2",
+    "lodash": "^4.17.4",
     "ramda": "^0.23.0"
   }
 }

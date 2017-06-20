@@ -8,3 +8,4 @@ exports.dequeueByResource = require('./dequeueByResource')(admin);
 exports.saveIndexToStorage = require('./saveIndexToStorage')(admin);
 exports.dequeueWcl = require('./dequeueWcl')(admin);
 exports.legionAssultTime = require('./legionAssultTime')();
+exports.armoryQuery = require('./armoryQuery')(admin);

@@ -2,7 +2,7 @@
 
 const functions = require('firebase-functions');
 const axios = require('axios');
-const get = require('lodash.get');
+const _ = require('lodash');
 
 const getArmoryKey = require('./utils/getArmoryKey');
 const delay = require('./utils/delay');
@@ -53,7 +53,7 @@ module.exports = function dequeueWcl(admin) {
     return apiWclParses(region, realm, character)
     .then((res) => {
       console.log('[wcl response]', res);
-      const wclCharacterId = get(res, 'data[0].specs[0].data[0].character_id', null);
+      const wclCharacterId = _.get(res, 'data[0].specs[0].data[0].character_id', null);
 
       if (wclCharacterId === null) {
         return undefined;
