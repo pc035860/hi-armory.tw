@@ -1,0 +1,36 @@
+<app>
+  <app-content>
+    <div class="c-container">
+      <md-content layout-padding>
+        <h1 class="md-display-2 c-app-heading">
+          <a href="/search">茶。英雄榜</a>
+          <a href="/" class="c-app-heading__switch-link">前往 <u>嗨... 英雄榜</u></a>
+        </h1>
+
+        <form ng-submit="$ctrl.query(); ga.event('Query Button', 'click');" name="armoryForm">
+          <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
+            <md-autocomplete flex
+                md-input-name="character"
+                md-input-minlength="0"
+                md-input-maxlength="18"
+                md-min-length="0"
+                md-selected-item="$ctrl.autocompleteItem"
+                md-search-text="$ctrl.character"
+                md-no-cache="true"
+                md-clear-button="true"
+                md-items="item in $ctrl.indexSearch($ctrl.character)"
+                md-item-text="item.character"
+                md-floating-label="角色名稱"
+                md-menu-class="c-autocomplete-item">
+              <md-item-template>
+                <i class="fa fa-history c-autocomplete-item__history-icon" ng-show="item.isHistory"></i><span md-highlight-text="$ctrl.character"
+                  md-highlight-flags="i">{{item.display}}</span>
+              </md-item-template>
+            </md-autocomplete>
+            <md-button class="md-raised md-primary" type="search">茶</md-button>
+          </div>
+        </form>
+      </md-content>
+    </div>
+  </app-content>
+</app>

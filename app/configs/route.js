@@ -1,9 +1,13 @@
 /* @ngInject */
 function config($stateProvider, $urlRouterProvider) {
   $stateProvider
+  .state('search', {
+    url: '/search',
+    template: '<route-search></route-search>'
+  })
   .state('index', {
     url: '/',
-    template: '<app></app>'
+    template: '<route-app></route-app>'
   })
     .state('index.page', {
       url: ':realm/:character'

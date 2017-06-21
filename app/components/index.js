@@ -6,8 +6,10 @@ export default (ngModule) => {
     require('./statusText'),
     require('./haReload'),
     require('./legionAssults'),
+    require('./app'),
 
-    require('./app')
+    require('./routeApp'),
+    require('./routeSearch'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };
