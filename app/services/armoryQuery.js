@@ -3,7 +3,7 @@ export const NAME = 'armoryQuery';
 const expireDuration = 86400 * 1000;
 
 /* @ngInject */
-function factory(firebase, $q) {
+function factory(firebase, $q, $timeout) {
   const ns = (refPath) => {
     return `armoryQuery/${refPath}`;
   };
@@ -18,10 +18,14 @@ function factory(firebase, $q) {
     const resultsRef = db.ref(ns('results')).child(key);
 
     const onResultsValue = (snapshot) => {
+      if (!snapshot.exists()) {
+        return;
+      }
+
       const val = snapshot.val();
 
       if (val.status === 'ready') {
-        dfd.resolve(val);
+        $timeout(() => dfd.resolve(val));
         resultsRef.off('value', onResultsValue);
       }
     };
@@ -45,7 +49,7 @@ function factory(firebase, $q) {
       if (val.status === 'ready' &&
           val.dataUpdatedAt + expireDuration > now
       ) {
-        dfd.resolve(val);
+        $timeout(() => dfd.resolve(val));
         return;
       }
 
@@ -56,10 +60,10 @@ function factory(firebase, $q) {
       }
     });
 
-    return dfd;
+    return dfd.promise;
   };
 }
-factory.$inject = ['firebase', '$q'];
+factory.$inject = ['firebase', '$q', '$timeout'];
 
 export default function configure(ngModule) {
   ngModule.factory(NAME, factory);

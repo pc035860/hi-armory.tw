@@ -6,7 +6,7 @@ const DEFAULT_REGION = 'tw';
 
 class Ctrl {
   static $inject = [
-    '$log', '$scope', 'ga', 'armoryCharIndex'
+    '$log', '$scope', 'ga', 'armoryCharIndex', 'armoryQuery'
   ];
 
   autocompleteItem;
@@ -16,11 +16,11 @@ class Ctrl {
 
   /* @ngInject */
   constructor(
-    $log, $scope, ga, armoryCharIndex
+    $log, $scope, ga, armoryCharIndex, armoryQuery
   ) {
     $scope.ga = ga;
 
-    this.__deps = { armoryCharIndex };
+    this.__deps = { $log, armoryCharIndex, armoryQuery };
 
     this.region = DEFAULT_REGION;
   }
@@ -28,6 +28,23 @@ class Ctrl {
   indexSearch(str) {
     const { armoryCharIndex } = this.__deps;
     return armoryCharIndex.search(str);
+  }
+
+  search() {
+    if (this.loading) {
+      return;
+    }
+
+    const { armoryQuery, $log } = this.__deps;
+
+    this.loading = true;
+
+    armoryQuery(this.region, this.character)
+    .then((data) => {
+      this.loading = false;
+
+      $log.log('@query results', data);
+    });
   }
 }
 

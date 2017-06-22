@@ -9,6 +9,8 @@ export default (ngModule) => {
     require('./closeKeyboard'),
     require('./realmName'),
     require('./wclId'),
+    require('./armoryCharIndex'),
+    require('./armoryQuery')
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };

@@ -60,4 +60,4 @@ function fetchArmoryData(region, character) {
   });
 }
 
-export default fetchArmoryData;
+module.exports = fetchArmoryData;

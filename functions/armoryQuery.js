@@ -32,7 +32,7 @@ function removeIndex(db, key) {
 }
 
 module.exports = function armoryQuery(admin) {
-  return functions.database.ref(ns('queue')).onWrite((event) => {
+  return functions.database.ref(ns('queue/{key}')).onWrite((event) => {
     // 只在第一次建立 dequeue
     if (event.data.previous.exists()) {
       return undefined;

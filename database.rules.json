@@ -19,6 +19,20 @@
     "wclId": {
       ".read": true,
       ".write": false
+    },
+    "armoryQuery": {
+      "queue": {
+        ".read": false,
+        ".write": true
+      },
+      "running": {
+        ".read": true,
+        ".write": false
+      },
+      "results": {
+        ".read": true,
+        ".write": false
+      }
     }
   }
 }
