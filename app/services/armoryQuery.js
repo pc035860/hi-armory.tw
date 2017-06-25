@@ -3,15 +3,22 @@ export const NAME = 'armoryQuery';
 const expireDuration = 86400 * 1000;
 
 /* @ngInject */
-function factory(firebase, $q, $timeout) {
+function factory(firebase, $q, $timeout, $cacheFactory) {
   const ns = (refPath) => {
     return `armoryQuery/${refPath}`;
   };
+  const cache = $cacheFactory('armoryQuery');
 
   return function (region, character) {
+    const key = `${region}-${character}`;
+
+    const cached = cache.get(key);
+    if (cached) {
+      return $q.resolve(cached);
+    }
+
     const now = +new Date();
     const db = firebase.database();
-    const key = `${region}-${character}`;
 
     const dfd = $q.defer();
 
@@ -25,6 +32,7 @@ function factory(firebase, $q, $timeout) {
       const val = snapshot.val();
 
       if (val.status === 'ready') {
+        cache.put(key, val);
         $timeout(() => dfd.resolve(val));
         resultsRef.off('value', onResultsValue);
       }
@@ -49,6 +57,7 @@ function factory(firebase, $q, $timeout) {
       if (val.status === 'ready' &&
           val.dataUpdatedAt + expireDuration > now
       ) {
+        cache.put(key, val);
         $timeout(() => dfd.resolve(val));
         return;
       }
@@ -63,7 +72,7 @@ function factory(firebase, $q, $timeout) {
     return dfd.promise;
   };
 }
-factory.$inject = ['firebase', '$q', '$timeout'];
+factory.$inject = ['firebase', '$q', '$timeout', '$cacheFactory'];
 
 export default function configure(ngModule) {
   ngModule.factory(NAME, factory);

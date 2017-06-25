@@ -32,5 +32,25 @@
         </form>
       </md-content>
     </div>
+
+    <div class="c-loading ng-anim" layout="row" layout-align="space-around"
+      layout-align-xs="center center"
+      ng-if="$ctrl.loading">
+      <md-progress-circular class="md-warn md-hue-2" md-diameter="70"></md-progress-circular>
+    </div> <!-- .c-loading -->
+
+    <div class="c-search-results">
+      <md-list>
+        <md-list-item class="md-2-line" ng-repeat="char in $ctrl.results"
+          ng-href="{{'/' + char.realm + '/' + char.name}}"
+        >
+          <img ng-src="{{char.pictures.avatar}}" class="md-avatar" alt="{{char.name}}" />
+          <div class="md-list-item-text">
+            <h3>{{char.name}}</h3>
+            <p>{{char.realm + ' ' + 'Lv' + char.level}}</p>
+          </div>
+        </md-list-item>
+      </md-list>
+    </div>
   </app-content>
 </app>

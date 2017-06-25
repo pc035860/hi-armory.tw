@@ -2,7 +2,7 @@
 function config($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('search', {
-    url: '/search',
+    url: '/search?q',
     template: '<route-search></route-search>'
   })
   .state('index', {

@@ -426,3 +426,13 @@
 		font-size: 18px;
 	}
 }
+
+.c-search-results {
+	max-width: $content-width;
+	margin: 0 auto;
+}
+
+.c-list-item-link {
+	display: block;
+	text-decoration: none;
+}

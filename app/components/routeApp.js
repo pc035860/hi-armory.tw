@@ -57,8 +57,6 @@ class Ctrl {
       const region = this.region;
       const { realm: rawRealm, character } = val;
 
-      $log.debug('val', rawRealm, character);
-
       const requireNewProfile = !angular.equals(val, oldVal) || !this.profile;
 
       if (this.profile && requireNewProfile) {
@@ -152,7 +150,7 @@ class Ctrl {
   query(options_) {
     const { $scope, wowProfile } = this.__deps;
 
-    if ($scope.armoryForm.$invalid) {
+    if ($scope.armoryForm && $scope.armoryForm.$invalid) {
       return;
     }
 

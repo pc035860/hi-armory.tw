@@ -2,6 +2,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
+const timeout = 5000;
+
 function fetchArmoryData(region, character) {
   const localeMap = {
     tw: 'zh-tw',
@@ -53,7 +55,7 @@ function fetchArmoryData(region, character) {
     };
   };
 
-  return axios.get(url).then((res) => {
+  return axios.get(url, { timeout }).then((res) => {
     const $ = cheerio.load(res.data);
 
     return $('.SortTable-body a').map((i, elm) => parseChar($(elm))).toArray();

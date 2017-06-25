@@ -70,12 +70,12 @@ module.exports = function armoryQuery(admin) {
         status: resultsProfile.STATUS_READY
       })
       .then(() => {
-        const indexKey = getArmoryKey({
-          region,
-          realm: data.realm,
-          character: data.character
-        }, /* noFields */true);
-        return addIndex(db, indexKey);
+        if (data.length > 0) {
+          // 查詢有結果才加一筆 index
+          const indexKey = `${region}-${character}`;
+          return addIndex(db, indexKey);
+        }
+        return true;
       });
     })
     .catch((err) => {
