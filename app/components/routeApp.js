@@ -108,6 +108,9 @@ class Ctrl {
         }
       }
       else {
+        if (this.profile) {
+          this.profile.$destroy();
+        }
         this.profile = null;
       }
     });
@@ -141,6 +144,12 @@ class Ctrl {
     $scope.$on('$stateChangeSuccess', () => {
       ga.pageview($location.path());
     });
+  }
+
+  $onDestroy() {
+    if (this.profile) {
+      this.profile.$destroy();
+    }
   }
 
   /**
