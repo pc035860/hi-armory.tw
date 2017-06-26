@@ -27,7 +27,7 @@
                   md-highlight-flags="i">{{item.display}}</span>
               </md-item-template>
             </md-autocomplete>
-            <md-button class="md-raised md-primary" type="search">茶</md-button>
+            <!--<md-button class="md-raised md-primary" type="search">茶</md-button>-->
           </div>
         </form>
       </md-content>
@@ -39,7 +39,7 @@
       <md-progress-circular class="md-warn md-hue-2" md-diameter="70"></md-progress-circular>
     </div> <!-- .c-loading -->
 
-    <div class="c-search-results">
+    <div class="c-search-results" ng-if="$ctrl.searched && !$ctrl.loading && !$ctrl.noResults">
       <md-list>
         <md-list-item class="md-2-line" ng-repeat="char in $ctrl.results"
           ng-href="{{'/' + char.realm + '/' + char.name}}"
@@ -51,6 +51,10 @@
           </div>
         </md-list-item>
       </md-list>
+    </div>
+
+    <div class="c-empty-results" ng-if="$ctrl.searched && !$ctrl.loading && $ctrl.noResults">
+      查不到「{{::$ctrl.character}}」的角色資訊喔！
     </div>
   </app-content>
 </app>

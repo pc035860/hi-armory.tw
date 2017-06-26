@@ -313,12 +313,12 @@
 		position: relative;
 	}
 
-	&.ng-hide-add {
-		animation: fadeOut .3s both;
-	}
-	&.ng-hide-remove {
-		animation: fadeIn .3s both;
-	}
+	// &.ng-hide-add {
+	// 	animation: fadeOut .3s both;
+	// }
+	// &.ng-hide-remove {
+	// 	animation: fadeIn .3s both;
+	// }
 }
 .c-legion-assults {
 	&.ng-hide-remove {
@@ -435,4 +435,13 @@
 .c-list-item-link {
 	display: block;
 	text-decoration: none;
+}
+
+.c-empty-results {
+	padding: 80px 0;
+
+	text-align: center;
+
+	color: grey;
+	font-size: 18px;
 }

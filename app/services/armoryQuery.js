@@ -1,6 +1,6 @@
 export const NAME = 'armoryQuery';
 
-const expireDuration = 86400 * 1000;
+const expireDuration = 2 * 86400 * 1000;
 
 /* @ngInject */
 function factory(firebase, $q, $timeout, $cacheFactory) {
@@ -12,9 +12,16 @@ function factory(firebase, $q, $timeout, $cacheFactory) {
   return function (region, character) {
     const key = `${region}-${character}`;
 
+    const bundleQueryParams = (v) => {
+      return {
+        ...v,
+        _query: { region, character }
+      };
+    };
+
     const cached = cache.get(key);
     if (cached) {
-      return $q.resolve(cached);
+      return $q.resolve(bundleQueryParams(cached));
     }
 
     const now = +new Date();
@@ -55,7 +62,10 @@ function factory(firebase, $q, $timeout, $cacheFactory) {
       const val = snapshot.val();
 
       if (val.status === 'ready' &&
-          val.dataUpdatedAt + expireDuration > now
+          (
+            val.data &&
+            val.dataUpdatedAt + expireDuration > now
+          )
       ) {
         cache.put(key, val);
         $timeout(() => dfd.resolve(val));
@@ -69,7 +79,7 @@ function factory(firebase, $q, $timeout, $cacheFactory) {
       }
     });
 
-    return dfd.promise;
+    return dfd.promise.then(data => bundleQueryParams(data));
   };
 }
 factory.$inject = ['firebase', '$q', '$timeout', '$cacheFactory'];
