@@ -430,6 +430,15 @@
 .c-search-results {
 	max-width: $content-width;
 	margin: 0 auto;
+
+	md-list-item .md-avatar {
+		width: 50px;
+		height: 50px;
+	}
+
+	.level {
+		color: lighten(grey, 10%);
+	}
 }
 
 .c-list-item-link {

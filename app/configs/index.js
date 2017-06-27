@@ -4,8 +4,8 @@ import routeConfig from './route';
 function config(
   $compileProvider, $logProvider, $animateProvider, $locationProvider
 ) {
-  // $compileProvider.debugInfoEnabled(false);
-  // $logProvider.debugEnabled(false);
+  $compileProvider.debugInfoEnabled(false);
+  $logProvider.debugEnabled(false);
 
   $locationProvider.html5Mode(true);
 

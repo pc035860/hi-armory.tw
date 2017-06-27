@@ -13,13 +13,19 @@ const BUCKET_NAME = functions.config().project.bucket;
 
 const updatedAtKey = 'lastIndexFileUpdatedAt';
 
+const dbNS = 'armoryQuery';
+
 const gcs = storage({
   projectId: PROJECT_ID,
   credentials: serviceAccount
 });
 
+function ns(refPath) {
+  return `${dbNS}/${refPath}`;
+}
+
 module.exports = function saveIndexToStorage(admin) {
-  return functions.database.ref('index/{key}').onWrite((event) => {
+  return functions.database.ref(ns('index/{key}')).onWrite((event) => {
     if (event.params.key === updatedAtKey) {
       return undefined;
     }
@@ -29,7 +35,7 @@ module.exports = function saveIndexToStorage(admin) {
 
     console.log('[index file] try to update');
 
-    return db.ref(`index/${updatedAtKey}`).transaction((time) => {
+    return db.ref(ns(`index/${updatedAtKey}`)).transaction((time) => {
       if (time === null) {
         return 0;
       }
@@ -45,7 +51,7 @@ module.exports = function saveIndexToStorage(admin) {
 
       console.log('[index file] committed');
 
-      return db.ref('index').once('value')
+      return db.ref(ns('index')).once('value')
       .then((snapshot) => {
         const createKeysArray = R.pipe(
           R.dissoc(updatedAtKey),
@@ -61,7 +67,7 @@ module.exports = function saveIndexToStorage(admin) {
           gzip: true
         };
 
-        return writeToBucket(gcs, BUCKET_NAME, 'index.json', json, writeOptions)
+        return writeToBucket(gcs, BUCKET_NAME, 'armoryIndex.json', json, writeOptions)
         .then(() => {
           console.log('[index file] write finish');
         }, (err) => {

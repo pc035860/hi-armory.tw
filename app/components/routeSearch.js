@@ -2,15 +2,26 @@ import $ from 'jquery';
 
 import trim from 'lodash/trim';
 import debounce from 'lodash/debounce';
+import findKey from 'lodash/findKey';
 import template from './routeSearch.html';
+
+import { classNames as CLASS_NAMES } from '../config';
+
 
 export const NAME = 'routeSearch';
 
 const DEFAULT_REGION = 'tw';
 
+const getClassNo = (klassName) => {
+  return findKey(CLASS_NAMES, (v) => {
+    return v[0] === klassName || v[1] === klassName;
+  });
+};
+
 class Ctrl {
   static $inject = [
-    '$log', '$scope', 'ga', 'armoryCharIndex', 'armoryQuery', '$state', '$stateParams', '$timeout'
+    '$log', '$scope', 'ga', 'armoryCharIndex', 'armoryQuery', '$state', '$stateParams',
+    '$timeout', 'closeKeyboard', '$document'
   ];
 
   autocompleteItem;
@@ -23,22 +34,34 @@ class Ctrl {
 
   /* @ngInject */
   constructor(
-    $log, $scope, ga, armoryCharIndex, armoryQuery, $state, $stateParams, $timeout
+    $log, $scope, ga, armoryCharIndex, armoryQuery, $state, $stateParams,
+    $timeout, closeKeyboard, $document
   ) {
     $scope.ga = ga;
 
-    this.__deps = { $log, armoryCharIndex, armoryQuery, $state, $scope, $stateParams, $timeout };
+    this.__deps = {
+      $log,
+      armoryCharIndex,
+      armoryQuery,
+      $state,
+      $scope,
+      $stateParams,
+      $timeout,
+      closeKeyboard,
+      $document
+    };
 
     this.region = DEFAULT_REGION;
-    this.search = debounce(this._search, 200);
+    this.search = debounce(this._search, 400);
+    this.onKeydown = this.onKeydown.bind(this);
   }
 
   $onInit() {
-    const { $scope, $stateParams, $timeout } = this.__deps;
+    const { $scope, $stateParams, $timeout, $document } = this.__deps;
 
     if ($stateParams.q) {
       this.character = $stateParams.q;
-      this.search(true);
+      this._search(true);
     }
     else {
       $timeout(() => {
@@ -51,11 +74,33 @@ class Ctrl {
         this.search();
       }
     });
+
+    $document.on('keydown', this.onKeydown);
+  }
+
+  $onDestroy() {
+    const { $document } = this.__deps;
+    $document.off('keydown', this.onKeydown);
+  }
+
+  onKeydown($evt) {  // eslint-disable-line
+    // "/" to focus
+    if ($evt.which === 191 ||
+        $evt.which === 111
+    ) {
+      $evt.preventDefault();
+      $('input').focus().select();
+    }
   }
 
   indexSearch(str) {
     const { armoryCharIndex } = this.__deps;
     return armoryCharIndex.search(str);
+  }
+
+  closeKeyboard() {
+    const { closeKeyboard } = this.__deps;
+    closeKeyboard();
   }
 
   _search(noUpdateHistory = false) {
@@ -65,7 +110,7 @@ class Ctrl {
       return;
     }
 
-    const { armoryQuery, $state, $log } = this.__deps;
+    const { armoryQuery, $state, $log, armoryCharIndex } = this.__deps;
 
     if (!noUpdateHistory) {
       $state.go('search', { q: this.character }, { notify: false });
@@ -95,7 +140,15 @@ class Ctrl {
         this.noResults = true;
         return;
       }
-      this.results = data.data;
+
+      armoryCharIndex.addHistory(`${this.region}-${this.character}`);
+      this.results = data.data.map((v) => {
+        return {
+          ...v,
+          // add classNo
+          classNo: getClassNo(v.class)
+        };
+      });
     });
   }
 

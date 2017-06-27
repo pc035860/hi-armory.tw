@@ -7,7 +7,11 @@
           <a href="/" class="c-app-heading__switch-link">前往 <u>嗨... 英雄榜</u></a>
         </h1>
 
-        <form ng-submit="$ctrl.search(); ga.event('Search Button', 'click');" name="armoryForm">
+        <form ng-submit="
+          $ctrl.search();
+          $ctrl.closeKeyboard();
+          ga.event('Search Button', 'click');
+        " name="armoryForm">
           <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
             <md-autocomplete flex
                 md-input-name="character"
@@ -46,8 +50,12 @@
         >
           <img ng-src="{{char.pictures.avatar}}" class="md-avatar" alt="{{char.name}}" />
           <div class="md-list-item-text">
-            <h3>{{char.name}}</h3>
-            <p>{{char.realm + ' ' + 'Lv' + char.level}}</p>
+            <h4>
+              <span class="level">{{char.level}}</span>
+              {{char.race}}
+              <span>{{char.class}}</span>
+            </h4>
+            <p>{{char.realm}}</p>
           </div>
         </md-list-item>
       </md-list>
