@@ -313,12 +313,12 @@
 		position: relative;
 	}
 
-	&.ng-hide-add {
-		animation: fadeOut .3s both;
-	}
-	&.ng-hide-remove {
-		animation: fadeIn .3s both;
-	}
+	// &.ng-hide-add {
+	// 	animation: fadeOut .3s both;
+	// }
+	// &.ng-hide-remove {
+	// 	animation: fadeIn .3s both;
+	// }
 }
 .c-legion-assults {
 	&.ng-hide-remove {
@@ -393,4 +393,64 @@
 			color: #e74c3c;
 		}
 	}
+}
+
+.c-app-heading {
+	position: relative;
+
+	&__switch-link {
+		$layout-padding: 8px;
+
+		@include bigger-hotzone(before, 100px, 36px);
+
+		position: absolute;
+		right: $layout-padding;
+		bottom: $layout-padding + 10px;
+
+		font-size: 14px;
+		line-height: 1;
+		color: #ff6f00 !important;
+
+		@media #{$mq-xs} {
+			bottom: -5px;
+		}
+	}
+}
+
+.c-footer-info {
+	.fa {
+		position: relative;
+		top: -1px;
+		margin-right: 3px;
+		vertical-align: middle;
+		font-size: 18px;
+	}
+}
+
+.c-search-results {
+	max-width: $content-width;
+	margin: 0 auto;
+
+	md-list-item .md-avatar {
+		width: 50px;
+		height: 50px;
+	}
+
+	.level {
+		color: lighten(grey, 10%);
+	}
+}
+
+.c-list-item-link {
+	display: block;
+	text-decoration: none;
+}
+
+.c-empty-results {
+	padding: 80px 0;
+
+	text-align: center;
+
+	color: grey;
+	font-size: 18px;
 }

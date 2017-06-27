@@ -1,0 +1,68 @@
+<app>
+  <app-content>
+    <div class="c-container">
+      <md-content layout-padding>
+        <h1 class="md-display-2 c-app-heading">
+          <a href="/search">茶。英雄榜</a>
+          <a href="/" class="c-app-heading__switch-link">前往 <u>嗨... 英雄榜</u></a>
+        </h1>
+
+        <form ng-submit="
+          $ctrl.search();
+          $ctrl.closeKeyboard();
+          ga.event('Search Button', 'click');
+        " name="armoryForm">
+          <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
+            <md-autocomplete flex
+                md-input-name="character"
+                md-input-minlength="0"
+                md-input-maxlength="18"
+                md-min-length="0"
+                md-selected-item="$ctrl.autocompleteItem"
+                md-search-text="$ctrl.character"
+                md-no-cache="true"
+                md-clear-button="true"
+                md-items="item in $ctrl.indexSearch($ctrl.character)"
+                md-item-text="item.character"
+                md-floating-label="角色名稱"
+                md-menu-class="c-autocomplete-item">
+              <md-item-template>
+                <i class="fa fa-history c-autocomplete-item__history-icon" ng-show="item.isHistory"></i><span md-highlight-text="$ctrl.character"
+                  md-highlight-flags="i">{{item.display}}</span>
+              </md-item-template>
+            </md-autocomplete>
+            <!--<md-button class="md-raised md-primary" type="search">茶</md-button>-->
+          </div>
+        </form>
+      </md-content>
+    </div>
+
+    <div class="c-loading ng-anim" layout="row" layout-align="space-around"
+      layout-align-xs="center center"
+      ng-if="$ctrl.loading">
+      <md-progress-circular class="md-warn md-hue-2" md-diameter="70"></md-progress-circular>
+    </div> <!-- .c-loading -->
+
+    <div class="c-search-results" ng-if="$ctrl.searched && !$ctrl.loading && !$ctrl.noResults">
+      <md-list>
+        <md-list-item class="md-2-line" ng-repeat="char in $ctrl.results"
+          ng-href="{{'/' + char.realm + '/' + char.name}}"
+        >
+          <img ng-src="{{char.pictures.avatar}}" class="md-avatar" alt="{{char.name}}" />
+          <div class="md-list-item-text">
+            <h4>
+              <span class="level">{{char.level}}</span>
+              {{char.race}}
+              <span>{{char.class}}</span>
+            </h4>
+            <p>{{char.realm}}</p>
+          </div>
+        </md-list-item>
+      </md-list>
+    </div>
+
+    <div class="c-empty-results" ng-if="$ctrl.searched && !$ctrl.loading && $ctrl.noResults">
+      查不到「{{::$ctrl.character}}」的角色資訊喔！
+    </div>
+  </app-content>
+</app>

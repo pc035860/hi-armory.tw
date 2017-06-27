@@ -1,29 +1,32 @@
-<div class="r-app">
-  <div class="r-app__content">
+<app>
+  <app-content>
     <div class="c-container">
       <md-content layout-padding>
-        <h1 class="md-display-2"><a href="/">嗨... 英雄榜</a></h1>
+        <h1 class="md-display-2 c-app-heading">
+          <a href="/">嗨... 英雄榜</a>
+          <a href="/search" class="c-app-heading__switch-link">前往 <u>茶。英雄榜</u></a>
+        </h1>
 
-        <form ng-submit="$app.query(); ga.event('Query Button', 'click');" name="armoryForm">
+        <form ng-submit="$ctrl.query(); ga.event('Query Button', 'click');" name="armoryForm">
           <div layout="row" layout-xs="column" layout-align="center center" layout-align-xs="start stretch">
             <md-autocomplete flex
                 md-input-name="realm"
                 md-input-minlength="0"
                 md-input-maxlength="18"
                 md-min-length="0"
-                md-selected-item="$app.autocompleteItem.realm"
-                md-selected-item-change="$app.handleSelectedRealmItemChange(item)"
+                md-selected-item="$ctrl.autocompleteItem.realm"
+                md-selected-item-change="$ctrl.handleSelectedRealmItemChange(item)"
                 md-require-match="true"
                 md-autoselect="true"
-                md-search-text="$app.realm"
+                md-search-text="$ctrl.realm"
                 md-no-cache="true"
                 md-clear-button="true"
-                md-items="item in $app.realmSearch($app.realm)"
+                md-items="item in $ctrl.realmSearch($ctrl.realm)"
                 md-item-text="item.local"
                 md-floating-label="伺服器"
                 md-menu-class="c-autocomplete-item">
               <md-item-template>
-                <span md-highlight-text="$app.realm" md-highlight-flags="i">{{item.local}} {{item.en}}</span>
+                <span md-highlight-text="$ctrl.realm" md-highlight-flags="i">{{item.local}} {{item.en}}</span>
               </md-item-template>
             </md-autocomplete>
             <md-autocomplete flex
@@ -31,17 +34,17 @@
                 md-input-minlength="0"
                 md-input-maxlength="18"
                 md-min-length="0"
-                md-selected-item="$app.autocompleteItem.character"
-                md-selected-item-change="$app.handleSelectedCharacterItemChange(item)"
-                md-search-text="$app.character"
+                md-selected-item="$ctrl.autocompleteItem.character"
+                md-selected-item-change="$ctrl.handleSelectedCharacterItemChange(item)"
+                md-search-text="$ctrl.character"
                 md-no-cache="true"
                 md-clear-button="true"
-                md-items="item in $app.indexSearch($app.character)"
+                md-items="item in $ctrl.indexSearch($ctrl.character)"
                 md-item-text="item.character"
                 md-floating-label="角色名稱"
                 md-menu-class="c-autocomplete-item">
               <md-item-template>
-                <i class="fa fa-history c-autocomplete-item__history-icon" ng-show="item.isHistory"></i><span md-highlight-text="$app.character"
+                <i class="fa fa-history c-autocomplete-item__history-icon" ng-show="item.isHistory"></i><span md-highlight-text="$ctrl.character"
                   md-highlight-flags="i">{{item.display}}</span>
               </md-item-template>
             </md-autocomplete>
@@ -54,48 +57,48 @@
     <div class="c-loading ng-anim" layout="row" layout-align="space-around"
       layout-align-xs="center center"
       ng-if="
-        $app.profile &&
+        $ctrl.profile &&
         (
-          !$app.profile.$resolved ||
+          !$ctrl.profile.$resolved ||
             (
-              !$app.profile.data &&
-              ($app.profile.status != 'ready' && $app.profile.status != 'not found')
+              !$ctrl.profile.data &&
+              ($ctrl.profile.status != 'ready' && $ctrl.profile.status != 'not found')
             )
         )">
       <md-progress-circular class="md-warn md-hue-2" md-diameter="70"></md-progress-circular>
     </div> <!-- .c-loading -->
 
     <div class="c-results ng-anim" ng-if="
-      $app.profile.$resolved &&
-        ($app.pd || $app.profile.status == 'not found')
+      $ctrl.profile.$resolved &&
+        ($ctrl.pd || $ctrl.profile.status == 'not found')
     ">
       <div class="c-results__content">
         <md-content layout-padding>
           <!-- 角色資訊 card -->
-          <md-card class="c-card" ng-if="$app.pd"
-            ng-class="'r' + $app.pd.race"
-            md-whiteframe="{{$app.mqXS ? 3 : 15}}">
+          <md-card class="c-card" ng-if="$ctrl.pd"
+            ng-class="'r' + $ctrl.pd.race"
+            md-whiteframe="{{$ctrl.mqXS ? 3 : 15}}">
 
             <a ui-sref="index" class="c-card__close" hide show-xs ng-click="ga.event('Close Button', 'click', 'profile');"><i class="fa fa-close"></i></a>
 
             <div class="md-card-image c-card__bg">
-              <div class="c-card__bg__inner" ng-style="{backgroundImage: 'url('+ $app.pp.picture.profile +')'}"></div>
+              <div class="c-card__bg__inner" ng-style="{backgroundImage: 'url('+ $ctrl.pp.picture.profile +')'}"></div>
               <div class="c-card__bg__cover"></div>
 
               <div class="c-card__bg__content">
                 <div class="c-card__name"
                   ng-class="{
-                    'md-display-3': !$app.mqXS,
-                    'md-display-2': $app.mqXS
+                    'md-display-3': !$ctrl.mqXS,
+                    'md-display-2': $ctrl.mqXS
                   }">
-                  {{$app.pd.name}}
+                  {{$ctrl.pd.name}}
                 </div>
                 <div class="c-card__meta">
-                  <a ng-href="{{$app.pp.talentCalcLink}}" target="_blank"
+                  <a ng-href="{{$ctrl.pp.talentCalcLink}}" target="_blank"
                     rel="noopener"
                     class="s-class-color"
-                    ng-class="'c' + $app.pd.class"
-                    ng-click="ga.event('Talent Calc Link', 'click');">{{$app.pp.talentName}}({{$app.pp.talentStr}}) {{$app.pp.className}}</a>
+                    ng-class="'c' + $ctrl.pd.class"
+                    ng-click="ga.event('Talent Calc Link', 'click');">{{$ctrl.pp.talentName}}({{$ctrl.pp.talentStr}}) {{$ctrl.pp.className}}</a>
                 </div>
               </div>
             </div> <!-- .c-card__bg -->
@@ -104,29 +107,29 @@
               <div layout="row" layout-xs="column">
                 <div flex="33" flex-xs="100">
                   <span class="md-body-1 c-card__fname">實裝</span>
-                  <span class="c-card__fval">{{$app.pp.avgIlvEquipped}}</span>
+                  <span class="c-card__fval">{{$ctrl.pp.avgIlvEquipped}}</span>
                 </div>
                 <div flex="33" flex-xs="100">
                   <span class="md-body-1 c-card__fname">虛裝</span>
-                  <span class="c-card__fval">{{$app.pp.avgIlv}}</span>
+                  <span class="c-card__fval">{{$ctrl.pp.avgIlv}}</span>
                 </div>
                 <div flex="33" flex-xs="100">
                   <span class="md-body-1 c-card__fname">神器裝等</span>
-                  <span class="c-card__fval">{{$app.pp.artifactIlv || '-'}}</span>
+                  <span class="c-card__fval">{{$ctrl.pp.artifactIlv || '-'}}</span>
                 </div>
               </div>
-              <div layout="row" layout-xs="column" ng-show="$app.pp.artifactIlv">
+              <div layout="row" layout-xs="column" ng-show="$ctrl.pp.artifactIlv">
                 <div flex="33" flex-xs="100">
                   <span class="md-body-1 c-card__fname">神器特質數</span>
-                  <span class="c-card__fval"><a ng-href="{{$app.pp.artifactCalcLink}}" target="_blank" rel="noopener" ng-click="ga.event('Artifact Calc Link', 'click');">{{$app.pp.totalTraits}}</a></span>
+                  <span class="c-card__fval"><a ng-href="{{$ctrl.pp.artifactCalcLink}}" target="_blank" rel="noopener" ng-click="ga.event('Artifact Calc Link', 'click');">{{$ctrl.pp.totalTraits}}</a></span>
                 </div>
                 <div flex="66" flex-xs="100">
                   <span class="md-body-1 c-card__fname">7.2 新神器特質</span>
-                  <span class="c-card__fval">{{$app.pp.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}</span>
+                  <span class="c-card__fval">{{$ctrl.pp.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}</span>
                 </div>
               </div>
               <div class="c-card__progress-section">
-                <div class="c-card__progress-row" layout="row" layout-xs="column" ng-repeat="raid in $app.pp.expStr track by $index">
+                <div class="c-card__progress-row" layout="row" layout-xs="column" ng-repeat="raid in $ctrl.pp.expStr track by $index">
                   <div flex="33" flex-xs="100" layout-gt-xs="row" layout-align-gt-xs="start center">
                     <div class="md-body-1 c-card__fname" flex>{{raid.name}}經驗</div>
                   </div>
@@ -139,10 +142,10 @@
             <!-- <md-divider></md-divider> -->
             <div class="c-card__footer" layout="row" layout-xs="column">
               <div flex="33" flex-xs="50">
-                英雄榜更新: <time-diff time="$app.pd.lastModified"></time-diff>
+                英雄榜更新: <time-diff time="$ctrl.pd.lastModified"></time-diff>
               </div>
               <div flex="33" flex-xs="50">
-                資料抓取: <time-diff time="$app.profile.dataUpdatedAt"></time-diff>
+                資料抓取: <time-diff time="$ctrl.profile.dataUpdatedAt"></time-diff>
               </div>
               <div flex="33" flex-xs="100">
                 <md-fab-speed-dial md-direction="up" class="md-scale ng-anim c-outbound">
@@ -154,24 +157,24 @@
 
                   <md-fab-actions>
                     <md-button aria-label="英雄榜" class="md-fab md-raised md-mini"
-                      ng-click="$app.outbound('armory')" title="前往 英雄榜">
+                      ng-click="$ctrl.outbound('armory')" title="前往 英雄榜">
                       <span>英雄</span>
                     </md-button>
                     <md-button aria-label="WoWProgress" class="md-fab md-raised md-mini"
-                      ng-click="$app.outbound('wowprogress')" title="前往 WoWProgress">
+                      ng-click="$ctrl.outbound('wowprogress')" title="前往 WoWProgress">
                       <span>WP</span>
                     </md-button>
-                    <md-button ng-if="$app.wclId.$value" aria-label="Warcraft Logs" class="md-fab md-raised md-mini ng-anim"
-                      ng-click="$app.outbound('warcraftlogs')" title="前往 Warcraft Logs">
+                    <md-button ng-if="$ctrl.wclId.$value" aria-label="Warcraft Logs" class="md-fab md-raised md-mini ng-anim"
+                      ng-click="$ctrl.outbound('warcraftlogs')" title="前往 Warcraft Logs">
                       <span>WCL</span>
                     </md-button>
                   </md-fab-actions>
                 </md-fab-speed-dial>
                 <ha-reload class="c-reload"
-                  status="$app.profile.status"
-                  show-status="$app.profile.status !== 'ready'"
-                  on-click="$app.reload(); ga.event('Reload Button', 'click');"
-                  spin="$app.profile.status !== 'ready' || $app.reloading"
+                  status="$ctrl.profile.status"
+                  show-status="$ctrl.profile.status !== 'ready'"
+                  on-click="$ctrl.reload(); ga.event('Reload Button', 'click');"
+                  spin="$ctrl.profile.status !== 'ready' || $ctrl.reloading"
                   title="重新抓取資料"
                 ></ha-reload>
               </div>
@@ -179,7 +182,7 @@
           </md-card>
 
           <!-- 查無角色 card -->
-          <md-card class="c-card c-card--not-found" ng-if="$app.profile.status == 'not found'" md-whiteframe="{{$app.mqXS ? 3 : 15}}">
+          <md-card class="c-card c-card--not-found" ng-if="$ctrl.profile.status == 'not found'" md-whiteframe="{{$ctrl.mqXS ? 3 : 15}}">
             <a ui-sref="index" class="c-card__close" hide show-xs ng-click="ga.event('Close Button', 'click', 'not found');"><i class="fa fa-close"></i></a>
             <md-card-title>
               <md-card-title-text>
@@ -191,18 +194,18 @@
             </md-card-content>
             <div class="c-card__footer" layout="row" layout-xs="column">
               <div flex="50" flex-xs="50">
-                資料抓取: <time-diff time="$app.profile.statusUpdatedAt"></time-diff>
+                資料抓取: <time-diff time="$ctrl.profile.statusUpdatedAt"></time-diff>
               </div>
               <div flex="50" flex-xs="100">
                 <ha-reload class="c-reload"
-                  status="$app.profile.status"
+                  status="$ctrl.profile.status"
                   show-status="
-                    $app.profile.status !== 'ready' &&
-                    $app.profile.status !== 'not found'
+                    $ctrl.profile.status !== 'ready' &&
+                    $ctrl.profile.status !== 'not found'
                   "
-                  on-click="$app.reload(); ga.event('Reload Button', 'click');"
+                  on-click="$ctrl.reload(); ga.event('Reload Button', 'click');"
                   spin="
-                    $app.profile.status == 'pending' || $app.profile.status == 'processing' || $app.reloading
+                    $ctrl.profile.status == 'pending' || $ctrl.profile.status == 'processing' || $ctrl.reloading
                   "
                 ></ha-reload>
               </div>
@@ -213,15 +216,8 @@
     </div> <!-- .c-results -->
 
     <!-- 軍團入侵 -->
-    <div class="c-legion-assults-wrap ng-anim" ng-show="!$app.profile">
+    <div class="c-legion-assults-wrap" ng-show="!$ctrl.profile">
       <legion-assults></legion-assults>
     </div>
-  </div>
-
-  <div class="r-app__footer">
-    <div class="md-caption">
-      由 <a href="https://github.com/pc035860" target="_blank" rel="noopener">@pc035860</a> 製作與維護
-      <a class="github-button" href="https://github.com/pc035860/hi-armory.tw" data-show-count="true" aria-label="Star pc035860/hi-armory.tw on GitHub">Star</a>
-    </div>
-  </div>
-</div>
+  </app-content>
+</app>

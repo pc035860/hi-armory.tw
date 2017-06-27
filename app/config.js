@@ -5,6 +5,7 @@ export const firebase = {
 };
 
 export const indexStorageUrl = 'gs://hi-armory-tw/index.json';
+export const armoryIndexStorageUrl = 'gs://hi-armory-tw/armoryIndex.json';
 
 export const enRealmNames = {
   'world-tree': 'World Tree',
@@ -72,7 +73,7 @@ export const classNames = {
   3: ['獵人', 'hunter'],
   4: ['盜賊', 'rogue'],
   5: ['牧師', 'priest'],
-  6: ['死騎', 'death-knight'],
+  6: ['死亡騎士', 'death-knight'],
   7: ['薩滿', 'shaman'],
   8: ['法師', 'mage'],
   9: ['術士', 'warlock'],

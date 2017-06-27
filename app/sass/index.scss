@@ -40,8 +40,10 @@ body {
 		}
 
 		> a {
-			color: black !important;
-			text-decoration: none !important;
+			&, &:focus, &:hover, &:active {
+				color: black;
+				text-decoration: none;
+			}
 		}
 	}
 

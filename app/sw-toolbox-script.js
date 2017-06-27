@@ -67,8 +67,8 @@
     origin: /render-(?:tw|eu|us|kr)\.worldofwarcraft\.com/
   });
 
-  // firebase storage character index
-  toolbox.router.get(/index\.json/, toolbox.fastest, {
+  // firebase storage character/armory index
+  toolbox.router.get(/(index|armoryIndex)\.json/, toolbox.fastest, {
     origin: /firebasestorage\.googleapis\.com/
   });
 }(self));
