@@ -25,7 +25,8 @@
                 md-items="item in $ctrl.indexSearch($ctrl.character)"
                 md-item-text="item.character"
                 md-floating-label="角色名稱"
-                md-menu-class="c-autocomplete-item">
+                md-menu-class="c-autocomplete-item"
+                tabindex="1">
               <md-item-template>
                 <i class="fa fa-history c-autocomplete-item__history-icon" ng-show="item.isHistory"></i><span md-highlight-text="$ctrl.character"
                   md-highlight-flags="i">{{item.display}}</span>

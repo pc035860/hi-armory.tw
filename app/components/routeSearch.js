@@ -21,7 +21,7 @@ const getClassNo = (klassName) => {
 class Ctrl {
   static $inject = [
     '$log', '$scope', 'ga', 'armoryCharIndex', 'armoryQuery', '$state', '$stateParams',
-    '$timeout', 'closeKeyboard', '$document'
+    '$timeout', 'closeKeyboard', '$document', '$mdMedia'
   ];
 
   autocompleteItem;
@@ -35,7 +35,7 @@ class Ctrl {
   /* @ngInject */
   constructor(
     $log, $scope, ga, armoryCharIndex, armoryQuery, $state, $stateParams,
-    $timeout, closeKeyboard, $document
+    $timeout, closeKeyboard, $document, $mdMedia
   ) {
     $scope.ga = ga;
 
@@ -48,7 +48,8 @@ class Ctrl {
       $stateParams,
       $timeout,
       closeKeyboard,
-      $document
+      $document,
+      $mdMedia
     };
 
     this.region = DEFAULT_REGION;
@@ -57,17 +58,17 @@ class Ctrl {
   }
 
   $onInit() {
-    const { $scope, $stateParams, $timeout, $document } = this.__deps;
+    const { $scope, $stateParams, $timeout, $document, $mdMedia } = this.__deps;
 
     if ($stateParams.q) {
       this.character = $stateParams.q;
       this._search(true);
     }
-    else {
-      $timeout(() => {
-        $('input').focus();
-      });
-    }
+    else if (!$mdMedia('xs')) {
+        $timeout(() => {
+          $('input').focus();
+        });
+      }
 
     $scope.$watch(() => this.character, (val, oldVal) => {
       if (val !== oldVal) {
@@ -104,9 +105,15 @@ class Ctrl {
   }
 
   _search(noUpdateHistory = false) {
+    const { $scope } = this.__deps;
+
     this.character = trim(this.character);
 
     if (!this.character || this.character.length < 2) {
+      this.results = null;
+      this.searched = false;
+      this.noResults = false;
+      $scope.$digest();
       return;
     }
 
