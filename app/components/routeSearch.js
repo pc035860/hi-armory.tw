@@ -159,6 +159,14 @@ class Ctrl {
     });
   }
 
+  handleItemChange(item) {
+    const { closeKeyboard, $mdMedia } = this.__deps;
+
+    if ($mdMedia('xs') && item) {
+      closeKeyboard();
+    }
+  }
+
   queryCharacter(realm, character) {
     const { $state } = this.__deps;
     $state.go('index.page', { realm, character });
