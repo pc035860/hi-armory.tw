@@ -65,10 +65,10 @@ class Ctrl {
       this._search(true);
     }
     else if (!$mdMedia('xs')) {
-        $timeout(() => {
-          $('input').focus();
-        });
-      }
+      $timeout(() => {
+        $('input').focus();
+      });
+    }
 
     $scope.$watch(() => this.character, (val, oldVal) => {
       if (val !== oldVal) {
