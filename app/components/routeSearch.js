@@ -113,6 +113,7 @@ class Ctrl {
       this.results = null;
       this.searched = false;
       this.noResults = false;
+      this.loading = false;
       $scope.$digest();
       return;
     }
