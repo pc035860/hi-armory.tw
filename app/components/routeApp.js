@@ -1,6 +1,7 @@
 import angular from 'angular';
 
 import find from 'lodash/find';
+import trim from 'lodash/trim';
 
 import {
   realms as REALMS,
@@ -139,6 +140,29 @@ class Ctrl {
 
     $scope.$watch(() => $mdMedia('xs'), (xs) => {
       this.mqXS = xs;
+    });
+
+    $scope.$watch(() => this.character, (val, oldVal) => {
+      if (val === oldVal) {
+        return;
+      }
+
+      /**
+       * 處理特殊格式: {角色名稱}-{伺服器名稱}
+       */
+      if (/^.+?-.+?$/.test(val)) {
+        const m = this.character.match(/^(.+?)-(.+?)$/);
+
+        const pRealm = trim(m[2]);
+        const pChar = trim(m[1]);
+
+        // 只在 realm 也有 match 的時候做自動帶入
+        if (find(REALMS[this.region], v => v[0] === pRealm)) {
+          this.realm = pRealm;
+          this._updateSelectedRealmItem(this.region, pRealm);
+          this.character = pChar;
+        }
+      }
     });
 
     $scope.$on('$stateChangeSuccess', () => {
