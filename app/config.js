@@ -82,4 +82,39 @@ export const classNames = {
   12: ['惡魔獵人', 'demon-hunter']
 };
 
+export const specNames = {
+  arms: '武器',
+  fury: '狂怒',
+  protection: '防護',
+  holy: '神聖',
+  retribution: '懲戒',
+  'beast-mastery': '野獸控制',
+  marksmanship: '射擊',
+  survival: '生存',
+  assassination: '刺殺',
+  outlaw: '暴徒',
+  subtlety: '敏銳',
+  discipline: '戒律',
+  shadow: '暗影',
+  blood: '血魄',
+  frost: '冰霜',
+  unholy: '穢邪',
+  elemental: '元素',
+  enhancement: '增強',
+  restoration: '恢復',
+  arcane: '祕法',
+  fire: '火焰',
+  affliction: '痛苦',
+  demonology: '惡魔',
+  destruction: '毀滅',
+  brewmaster: '釀酒',
+  windwalker: '御風',
+  mistweaver: '織霧',
+  balance: '平衡',
+  feral: '野性戰鬥',
+  guardian: '守護者',
+  havoc: '災虐',
+  vengeance: '復仇'
+};
+
 export const assultsApi = 'https://us-central1-wow-ap-level.cloudfunctions.net/legionAssultTime';

@@ -1,12 +1,19 @@
 import $ from 'jquery';
 import reverse from 'lodash/reverse';
+import invert from 'lodash/invert';
+
 import memoize from 'memoizee';
 
 import createArtifactStruct from '../utils/wowhead/createArtifactStruct';
 import artifactCalculatorHash from '../utils/wowhead/artifactCalculatorHash';
 import { CHR_SPECS } from '../utils/wowhead/constants';
 
-import { classNames as CLASS_NAMES } from '../config';
+import {
+  classNames as CLASS_NAMES,
+  specNames as SPEC_NAMES
+} from '../config';
+
+const SPEC_NAMES_EN = invert(SPEC_NAMES);
 
 export const NAME = 'parseProfile';
 
@@ -91,7 +98,13 @@ function findActiveTalent(talents) {
 }
 
 function getTalentCalculatorLink(d, talent) {
-  return `https://tw.battle.net/wow/zh/tool/talent-calculator#${d.calcClass}${talent.calcSpec}a!${talent.calcTalent}`;
+  const humanTalents = toHumanTalentStr(talent.calcTalent);
+
+  const enClassName = CLASS_NAMES[d.class][1];
+  const enSpecName = SPEC_NAMES_EN[talent.spec.name];
+
+  const hashParams = `${enClassName}/${enSpecName}/talents=${humanTalents}`;
+  return `https://worldofwarcraft.com/zh-tw/game/talent-calculator#${hashParams}`;
 }
 
 function getPictureSrcs(d) {
