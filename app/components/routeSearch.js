@@ -21,7 +21,7 @@ const getClassNo = (klassName) => {
 class Ctrl {
   static $inject = [
     '$log', '$scope', 'ga', 'armoryCharIndex', 'armoryQuery', '$state', '$stateParams',
-    '$timeout', 'closeKeyboard', '$document', '$mdMedia'
+    '$timeout', 'closeKeyboard', '$document', '$mdMedia', '$location'
   ];
 
   autocompleteItem;
@@ -31,11 +31,12 @@ class Ctrl {
   results;
   searched = false;
   noResults = false;
+  resultsQuery;
 
   /* @ngInject */
   constructor(
     $log, $scope, ga, armoryCharIndex, armoryQuery, $state, $stateParams,
-    $timeout, closeKeyboard, $document, $mdMedia
+    $timeout, closeKeyboard, $document, $mdMedia, $location
   ) {
     $scope.ga = ga;
 
@@ -49,7 +50,9 @@ class Ctrl {
       $timeout,
       closeKeyboard,
       $document,
-      $mdMedia
+      $mdMedia,
+      ga,
+      $location
     };
 
     this.region = DEFAULT_REGION;
@@ -58,7 +61,7 @@ class Ctrl {
   }
 
   $onInit() {
-    const { $scope, $stateParams, $timeout, $document, $mdMedia } = this.__deps;
+    const { $scope, $stateParams, $timeout, $document, $mdMedia, ga, $location } = this.__deps;
 
     if ($stateParams.q) {
       this.character = $stateParams.q;
@@ -69,6 +72,8 @@ class Ctrl {
         $('input').focus();
       });
     }
+
+    ga.pageview($location.path());
 
     $scope.$watch(() => this.character, (val, oldVal) => {
       if (val !== oldVal) {
@@ -118,7 +123,11 @@ class Ctrl {
       return;
     }
 
-    const { armoryQuery, $state, $log, armoryCharIndex } = this.__deps;
+    if (this.resultsQuery && this.resultsQuery.character === this.character) {
+      return;
+    }
+
+    const { armoryQuery, $state, $log, armoryCharIndex, ga } = this.__deps;
 
     if (!noUpdateHistory) {
       $state.go('search', { q: this.character }, { notify: false });
@@ -132,6 +141,8 @@ class Ctrl {
     const region = this.region;
     const character = this.character.toLowerCase();
 
+    ga.event('Search', 'start', `${this.region}-${this.character}`);
+
     armoryQuery(region, character)
     .then((data) => {
       const q = data._query;
@@ -141,6 +152,10 @@ class Ctrl {
       ) {
         return;
       }
+
+      ga.event('Search', 'finish', `${this.region}-${this.character}`);
+
+      this.resultsQuery = q;
 
       this.loading = false;
 
