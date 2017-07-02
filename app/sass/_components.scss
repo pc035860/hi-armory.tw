@@ -454,3 +454,11 @@
 	color: grey;
 	font-size: 18px;
 }
+
+.c-search-error {
+	@extend .c-empty-results;
+
+	&__desc {
+		margin-bottom: 15px;
+	}
+}

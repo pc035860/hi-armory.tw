@@ -68,5 +68,20 @@
     <div class="c-empty-results" ng-if="$ctrl.searched && !$ctrl.loading && $ctrl.noResults">
       查不到「{{::$ctrl.character}}」的角色資訊喔！
     </div>
+
+    <div class="c-search-error" ng-if="$ctrl.searched && !$ctrl.loading && $ctrl.error">
+      <div class="c-search-error__desc">
+        查詢失敗，可能有什麼東西出問題了。
+      </div>
+      <div class="c-search-error__actions">
+        <md-button class="md-primary md-hue-1"
+          ng-click="
+            $ctrl.search({ isRetry: true });
+            $ctrl.closeKeyboard();
+            ga.event('Search Retry', 'click');
+          "
+        >再試一次</md-button>
+      </div>
+    </div>
   </app-content>
 </app>

@@ -38,7 +38,7 @@ function factory(firebase, $q, $timeout, $cacheFactory) {
 
       const val = snapshot.val();
 
-      if (val.status === 'ready') {
+      if (val.status === 'ready' || val.status === 'error') {
         cache.put(key, val);
         $timeout(() => dfd.resolve(val));
         resultsRef.off('value', onResultsValue);
@@ -63,8 +63,14 @@ function factory(firebase, $q, $timeout, $cacheFactory) {
 
       if (val.status === 'ready' &&
           (
-            val.data &&
-            val.dataUpdatedAt + expireDuration > now
+            (  // 查過有資料
+              val.data &&
+              val.dataUpdatedAt + expireDuration > now
+            ) ||
+            (  // 查過沒資料 (只有 status)
+              !val.data &&
+              val.statusUpdatedAt + expireDuration > now
+            )
           )
       ) {
         cache.put(key, val);

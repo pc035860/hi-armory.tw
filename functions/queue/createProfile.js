@@ -7,6 +7,7 @@ const createProfile = (fbRef, initVal) => ({
   STATUS_PROCESSING: 'processing',
   STATUS_READY: 'ready',
   STATUS_NOT_FOUND: 'not found',
+  STATUS_ERROR: 'error',
 
   val() {
     return fbRef.once('value').then(snapshot => snapshot.val());

@@ -70,17 +70,18 @@ module.exports = function armoryQuery(admin) {
         status: resultsProfile.STATUS_READY
       })
       .then(() => {
+        const indexKey = `${region}-${character}`;
         if (data.length > 0) {
           // 查詢有結果才加一筆 index
-          const indexKey = `${region}-${character}`;
           return addIndex(db, indexKey);
         }
-        return true;
+        // 沒結果刪掉 index
+        return removeIndex(db, indexKey);
       });
     })
     .catch((err) => {
       console.error(err);
-      return resultsProfile.status(resultsProfile.STATUS_READY);
+      return resultsProfile.status(resultsProfile.STATUS_ERROR);
     })
     .then(() => {
       return refRunning.remove().then(() => true);

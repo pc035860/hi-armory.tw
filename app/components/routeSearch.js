@@ -29,6 +29,7 @@ class Ctrl {
   region;
   character;
   results;
+  error;
   searched = false;
   noResults = false;
   resultsQuery;
@@ -65,7 +66,7 @@ class Ctrl {
 
     if ($stateParams.q) {
       this.character = $stateParams.q;
-      this._search(true);
+      this._search({ noUpdateHistory: true });
     }
     else if (!$mdMedia('xs')) {
       $timeout(() => {
@@ -109,12 +110,23 @@ class Ctrl {
     closeKeyboard();
   }
 
-  _search(noUpdateHistory = false) {
+  /**
+   * 搜尋角色
+   * @param {object} options {
+   *   //  不用更新 history (網址內容)
+   *   {boolean} noUpdateHistory: false,
+   *
+   *   // 重試查詢，無視與角色名稱與目前相同
+   *   {boolean} isRetry: false
+   * }
+   */
+  _search(options = {}) {
     const { $scope } = this.__deps;
 
     this.character = trim(this.character);
 
     if (!this.character || this.character.length < 2) {
+      this.error = null;
       this.results = null;
       this.searched = false;
       this.noResults = false;
@@ -123,19 +135,23 @@ class Ctrl {
       return;
     }
 
-    if (this.resultsQuery && this.resultsQuery.character === this.character) {
+    if (!options.isRetry &&
+        this.resultsQuery &&
+        this.resultsQuery.character === this.character.toLowerCase()
+    ) {
       return;
     }
 
     const { armoryQuery, $state, $log, armoryCharIndex, ga } = this.__deps;
 
-    if (!noUpdateHistory) {
+    if (!options.noUpdateHistory) {
       $state.go('search', { q: this.character }, { notify: false });
     }
 
     this.loading = true;
     this.searched = true;
     this.results = null;
+    this.error = null;
     this.noResults = false;
 
     const region = this.region;
@@ -153,25 +169,29 @@ class Ctrl {
         return;
       }
 
-      ga.event('Search', 'finish', `${this.region}-${this.character}`);
-
       this.resultsQuery = q;
-
       this.loading = false;
 
-      if (!data || !data.data || data.data.length === 0) {
-        this.noResults = true;
-        return;
-      }
+      if (data.status === 'ready') {
+        ga.event('Search', 'finish', `${this.region}-${this.character}`);
 
-      armoryCharIndex.addHistory(`${this.region}-${this.character}`);
-      this.results = data.data.map((v) => {
-        return {
-          ...v,
-          // add classNo
-          classNo: getClassNo(v.class)
-        };
-      });
+        if (!data || !data.data || data.data.length === 0) {
+          this.noResults = true;
+          return;
+        }
+
+        armoryCharIndex.addHistory(`${this.region}-${this.character}`);
+        this.results = data.data.map((v) => {
+          return {
+            ...v,
+            // add classNo
+            classNo: getClassNo(v.class)
+          };
+        });
+      }
+      else if (data.status === 'error') {
+        this.error = true;
+      }
     });
   }
 
