@@ -1,8 +1,13 @@
 /* eslint no-param-reassign: 0 */
 
 import memoize from 'memoizee';
-import keyBy from 'lodash/keyBy';
-import uniqBy from 'lodash/uniqBy';
+
+import keyBy from 'lodash/fp/keyBy';
+import sortedUniqBy from 'lodash/fp/sortedUniqBy';
+import sortBy from 'lodash/fp/sortBy';
+import uniqBy from 'lodash/fp/uniqBy';
+import flow from 'lodash/flow';
+
 import {
   indexStorageUrl as INDEX_STORAGE_URL,
   armoryIndexStorageUrl as ARMORY_INDEX_STORAGE_URL
@@ -13,6 +18,18 @@ export const NAME = 'armoryCharIndex';
 const HISTORY_MAX = 5;
 // key: armoryCharIndex.history
 const KEY_HISTORY = 'f48de1778787eae6f5f682973491093c';
+
+/**
+ * curried functions
+ */
+const uniqByKey = uniqBy('key');
+const keyByItemKey = keyBy(v => v.key);
+const processJoinedData = flow(
+  // 依角色名稱排序(不考慮 region & realm)
+  sortBy([v => v.character.length, 'character']),
+  // 唯一(character)
+  sortedUniqBy('character')
+);
 
 /* @ngInject */
 function factory(firebase, $q, $http, $log, $window) {
@@ -68,7 +85,7 @@ function factory(firebase, $q, $http, $log, $window) {
         return [...history];
       }
 
-      const historyM = keyBy(history, v => v.key);
+      const historyM = keyByItemKey(history, v => v.key);
       const newData = data.filter(v => !historyM[v.key]);
 
       const join = [...history, ...newData];
@@ -105,7 +122,7 @@ function factory(firebase, $q, $http, $log, $window) {
         this._update(ARMORY_INDEX_STORAGE_URL)
       ])
       .then(() => {
-        this.data = uniqBy(this.data, 'key');
+        this.data = processJoinedData(this.data);
       });
     },
 
@@ -130,7 +147,7 @@ function factory(firebase, $q, $http, $log, $window) {
       item.isHistory = true;
       this.history.unshift(item);
 
-      const newHistory = uniqBy(this.history, 'key');
+      const newHistory = uniqByKey(this.history);
 
       if (newHistory.length > HISTORY_MAX) {
         newHistory.pop();

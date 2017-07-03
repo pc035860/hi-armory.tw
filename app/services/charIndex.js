@@ -1,8 +1,13 @@
 /* eslint no-param-reassign: 0 */
 
 import memoize from 'memoizee';
-import keyBy from 'lodash/keyBy';
-import uniqBy from 'lodash/uniqBy';
+
+import keyBy from 'lodash/fp/keyBy';
+import sortedUniqBy from 'lodash/fp/sortedUniqBy';
+import sortBy from 'lodash/fp/sortBy';
+import uniqBy from 'lodash/fp/uniqBy';
+import flow from 'lodash/flow';
+
 import { indexStorageUrl as INDEX_STORAGE_URL } from '../config';
 
 export const NAME = 'charIndex';
@@ -10,6 +15,18 @@ export const NAME = 'charIndex';
 const HISTORY_MAX = 5;
 // key: charIndex.history
 const KEY_HISTORY = '9e8942c88669e3d480ad683f7fa85ad4';
+
+/**
+ * curried functions
+ */
+const uniqByKey = uniqBy('key');
+const keyByItemKey = keyBy(v => v.key);
+const processJoinedData = flow(
+  // 依角色名稱排序(不考慮 region & realm)
+  sortBy([v => v.character.length, 'character']),
+  // 唯一(key)
+  sortedUniqBy('key')
+);
 
 /* @ngInject */
 function factory(firebase, $q, $http, $log, $window) {
@@ -64,7 +81,7 @@ function factory(firebase, $q, $http, $log, $window) {
         return [...history];
       }
 
-      const historyM = keyBy(history, v => v.key);
+      const historyM = keyByItemKey(history);
       const newData = data.filter(v => !historyM[v.key]);
 
       const join = [...history, ...newData];
@@ -90,7 +107,7 @@ function factory(firebase, $q, $http, $log, $window) {
       return $q.when(ref.getDownloadURL())
       .then(url => $http.get(url))
       .then((res) => {
-        this.data = this._parseData(res.data);
+        this.data = processJoinedData(this._parseData(res.data));
       })
       .catch(err => $log.error(err));
     },
@@ -116,7 +133,7 @@ function factory(firebase, $q, $http, $log, $window) {
       item.isHistory = true;
       this.history.unshift(item);
 
-      const newHistory = uniqBy(this.history, 'key');
+      const newHistory = uniqByKey(this.history);
 
       if (newHistory.length > HISTORY_MAX) {
         newHistory.pop();
