@@ -39,7 +39,9 @@ function factory(firebase, $q, $timeout, $cacheFactory) {
       const val = snapshot.val();
 
       if (val.status === 'ready' || val.status === 'error') {
-        cache.put(key, val);
+        if (val.status === 'ready') {
+          cache.put(key, val);
+        }
         $timeout(() => dfd.resolve(val));
         resultsRef.off('value', onResultsValue);
       }
