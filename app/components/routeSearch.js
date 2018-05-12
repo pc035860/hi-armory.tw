@@ -21,7 +21,7 @@ const getClassNo = (klassName) => {
 class Ctrl {
   static $inject = [
     '$log', '$scope', 'ga', 'armoryCharIndex', 'armoryQuery', '$state', '$stateParams',
-    '$timeout', 'closeKeyboard', '$document', '$mdMedia', '$location'
+    '$timeout', 'closeKeyboard', '$document', '$mdMedia', '$location', 'fixCharacterName'
   ];
 
   autocompleteItem;
@@ -37,7 +37,7 @@ class Ctrl {
   /* @ngInject */
   constructor(
     $log, $scope, ga, armoryCharIndex, armoryQuery, $state, $stateParams,
-    $timeout, closeKeyboard, $document, $mdMedia, $location
+    $timeout, closeKeyboard, $document, $mdMedia, $location, fixCharacterName
   ) {
     $scope.ga = ga;
 
@@ -53,7 +53,8 @@ class Ctrl {
       $document,
       $mdMedia,
       ga,
-      $location
+      $location,
+      fixCharacterName,
     };
 
     this.region = DEFAULT_REGION;
@@ -62,7 +63,7 @@ class Ctrl {
   }
 
   $onInit() {
-    const { $scope, $stateParams, $timeout, $document, $mdMedia, ga, $location } = this.__deps;
+    const { $scope, $stateParams, $timeout, $document, $mdMedia, ga, $location, fixCharacterName } = this.__deps;
 
     if ($stateParams.q) {
       this.character = $stateParams.q;
@@ -121,9 +122,9 @@ class Ctrl {
    * }
    */
   _search(options = {}) {
-    const { $scope } = this.__deps;
+    const { $scope, fixCharacterName } = this.__deps;
 
-    this.character = trim(this.character);
+    this.character = trim(fixCharacterName(this.character));
 
     if (!this.character || this.character.length < 2) {
       this.error = null;

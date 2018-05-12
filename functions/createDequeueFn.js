@@ -39,7 +39,15 @@ module.exports = function createDequeue(admin) {
     const originProfile = createProfile(ref, data_);
 
     const armoryKey = getArmoryKey(data);
-    const newProfile = createProfile(db.ref(`results/${armoryKey}`));
+
+    let newProfile;
+    try {
+      newProfile = createProfile(db.ref(`results/${armoryKey}`));
+    }
+    catch (e) {
+      // 無法建立 profile -> 直接從 queue 裡砍掉
+      return originProfile.remove();
+    }
 
     newProfile.status(newProfile.STATUS_PENDING);
 
