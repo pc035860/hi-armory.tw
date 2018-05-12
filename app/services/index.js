@@ -10,7 +10,8 @@ export default (ngModule) => {
     require('./realmName'),
     require('./wclId'),
     require('./armoryCharIndex'),
-    require('./armoryQuery')
+    require('./armoryQuery'),
+    require('./fixCharacterName'),
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };
