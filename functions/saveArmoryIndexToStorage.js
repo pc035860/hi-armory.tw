@@ -27,7 +27,7 @@ function ns(refPath) {
 module.exports = function saveIndexToStorage(admin) {
   return functions.database.ref(ns('index/{key}')).onWrite((change, context) => {
     if (context.params.key === updatedAtKey) {
-      return undefined;
+      return null;
     }
 
     const db = admin.database();

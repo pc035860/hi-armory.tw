@@ -21,7 +21,7 @@ const gcs = storage({
 module.exports = function saveIndexToStorage(admin) {
   return functions.database.ref('index/{key}').onWrite((change, context) => {
     if (context.params.key === updatedAtKey) {
-      return undefined;
+      return null;
     }
 
     const db = admin.database();

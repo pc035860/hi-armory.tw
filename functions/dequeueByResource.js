@@ -7,19 +7,19 @@ module.exports = function dequeueByResource(admin) {
 
   return functions.database.ref('resource').onWrite((change, context) => {
     if (!change.before.exists()) {
-      return undefined;
+      return null;
     }
 
     // 只在有 resource 回歸時動作
     if (change.before.val() >= change.after.val()) {
-      return undefined;
+      return null;
     }
 
     const firstOneRef = admin.database().ref('queue').limitToFirst(1);
     return firstOneRef.once('value')
     .then((snapshot) => {
       if (!snapshot.exists()) {
-        return undefined;
+        return null;
       }
 
       let data;

@@ -35,12 +35,12 @@ module.exports = function armoryQuery(admin) {
   return functions.database.ref(ns('queue/{key}')).onWrite((change, context) => {
     // 只在第一次建立 dequeue
     if (change.before.exists()) {
-      return undefined;
+      return null;
     }
 
     // 被清掉的時候不動作
     if (!change.after.exists()) {
-      return undefined;
+      return null;
     }
 
     const db = admin.database();
