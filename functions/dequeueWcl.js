@@ -31,19 +31,19 @@ function apiWclParses(region_, realm_, character_) {
 }
 
 module.exports = function dequeueWcl(admin) {
-  return functions.database.ref('queueWcl/{pushId}').onWrite((event) => {
+  return functions.database.ref('queueWcl/{pushId}').onWrite((change, context) => {
     // 只在第一次建立 dequeue
-    if (event.data.previous.exists()) {
+    if (change.before.exists()) {
       return undefined;
     }
 
     // 被清掉的時候不動作
-    if (!event.data.exists()) {
+    if (!change.after.exists()) {
       return undefined;
     }
 
-    const data = normalizeData(event.data.val());
-    const ref = event.data.ref;
+    const data = normalizeData(change.after.val());
+    const ref = change.after.ref;
 
     ref.remove();
 
