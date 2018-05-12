@@ -1,3 +1,6 @@
+// https://twitter.com/inlined/status/982277528751489025
+// require firebase functions for now
+const functions = require('firebase-functions'); // eslint-disable-line
 const admin = require('firebase-admin');
 
 admin.initializeApp();
