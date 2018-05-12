@@ -5,13 +5,13 @@ const createDequeueFn = require('./createDequeueFn');
 module.exports = function dequeueByResource(admin) {
   const dequeue = createDequeueFn(admin);
 
-  return functions.database.ref('resource').onWrite((event) => {
-    if (!event.data.previous.exists()) {
+  return functions.database.ref('resource').onWrite((change, context) => {
+    if (!change.before.exists()) {
       return undefined;
     }
 
     // 只在有 resource 回歸時動作
-    if (event.data.previous.val() >= event.data.val()) {
+    if (change.before.val() >= change.after.val()) {
       return undefined;
     }
 

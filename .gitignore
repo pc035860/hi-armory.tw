@@ -7,4 +7,12 @@ public/bundle.js.map
 dist/
 
 firebase-debug.log
+
+# adminsdk service account
 firebase-adminsdk.json
+
+# default service account
+wow-ap-level-*.json
+
+# firebase shell runtime config
+.runtimeconfig.json
