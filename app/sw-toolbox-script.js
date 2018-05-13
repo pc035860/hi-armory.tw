@@ -49,12 +49,12 @@
    */
 
   // cloud functions legion assult api
-  toolbox.router.get(/\/legionAssultTime/, toolbox.fastest, {
+  toolbox.router.get(/\/api\/legion-assult-time/, toolbox.fastest, {
     cache: {
       name: 'legion-assults-time-86400-fastest',
       maxAgeSeconds: 86400
     },
-    origin: /wow-ap-level\.cloudfunctions\.net/
+    origin: /hi-armory\.tw/
   });
 
   // worldofwarcraft character render

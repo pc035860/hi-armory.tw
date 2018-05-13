@@ -6,6 +6,10 @@
     "public": "dist",
     "rewrites": [
       {
+        "source": "/api/legion-assult-time",
+        "function": "legionAssultTime"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
