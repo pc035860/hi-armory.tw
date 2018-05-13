@@ -1,14 +1,16 @@
-var path = require('path');
+/* eslint global-require: 0, import/no-dynamic-require: 0 */
 
-var gulp = require('gulp');
-var clean = require('gulp-clean');
-var replace = require('gulp-replace');
-var hash = require('gulp-hash');
-var swPrecache = require('sw-precache');
-var mergeStream = require('merge-stream');
-var htmlmin = require('gulp-htmlmin');
+const path = require('path');
 
-var myPath = {
+const gulp = require('gulp');
+const clean = require('gulp-clean');
+const replace = require('gulp-replace');
+const hash = require('gulp-hash');
+const swPrecache = require('sw-precache');
+const mergeStream = require('merge-stream');
+const htmlmin = require('gulp-htmlmin');
+
+const myPath = {
   app: path.resolve(__dirname, 'app'),
   public: path.resolve(__dirname, 'public'),
   dist: path.resolve(__dirname, 'dist'),
@@ -31,7 +33,7 @@ gulp.task('hash-bundle', function () {
 });
 
 gulp.task('copy-public', ['hash-bundle'], function () {
-  var index = gulp.src(path.join(myPath.public, 'index.html'))
+  const index = gulp.src(path.join(myPath.public, 'index.html'))
       .pipe(htmlmin({
         collapseBooleanAttributes:      true,
         collapseWhitespace:             true,
@@ -46,20 +48,20 @@ gulp.task('copy-public', ['hash-bundle'], function () {
       }))
       .pipe(gulp.dest(myPath.dist));
 
-  var others = gulp.src([
-        path.join(myPath.public, 'images', '**'),
-        path.join(myPath.public, 'manifest.json'),
-      ], { base: myPath.public })
+  const others = gulp.src([
+    path.join(myPath.public, 'images', '**'),
+    path.join(myPath.public, 'manifest.json'),
+  ], { base: myPath.public })
       .pipe(gulp.dest(myPath.dist));
 
   return mergeStream(index, others);
 });
 
 gulp.task('copy-sw', function () {
-  var vendor = gulp.src(path.join(myPath.nodeModules, 'sw-toolbox', 'sw-toolbox.js'))
+  const vendor = gulp.src(path.join(myPath.nodeModules, 'sw-toolbox', 'sw-toolbox.js'))
       .pipe(gulp.dest(myPath.dist));
 
-  var script = gulp.src(path.join(myPath.app, 'sw-toolbox-script.js'))
+  const script = gulp.src(path.join(myPath.app, 'sw-toolbox-script.js'))
       .pipe(hash()) // Add hashes to the files' names
       .pipe(gulp.dest(myPath.dist)) // Write the renamed files
       .pipe(hash.manifest('assets-sw-toolbox.json', {
@@ -72,29 +74,31 @@ gulp.task('copy-sw', function () {
 });
 
 gulp.task('update-index', ['copy'], function () {
-  var assets = require(path.join(myPath.dist, 'assets.json'));
+  const assets = require(path.join(myPath.dist, 'assets.json'));
   return gulp.src(path.join(myPath.dist, 'index.html'))
   .pipe(replace('bundle.js', assets['bundle.js']))
   .pipe(gulp.dest(myPath.dist));
 });
 
 gulp.task('generate-service-worker', ['update-index'], function (callback) {
-  var swtAssets = require(path.join(myPath.dist, 'assets-sw-toolbox.json'));
+  const swtAssets = require(path.join(myPath.dist, 'assets-sw-toolbox.json'));
 
-  var staticFileGlobs = [
+  const staticFileGlobs = [
     'images/*.{svg,png,jpg,gif}',
     'index.html',
     'bundle-*.js'
-  ].map(function (v) { return path.join('dist', v); });
+  ].map(function (v) {
+    return path.join('dist', v);
+  });
 
-  var importScripts = [
+  const importScripts = [
     'sw-toolbox.js',
     swtAssets['sw-toolbox-script.js']
   ];
 
   swPrecache.write(path.join(myPath.dist, 'sw.js'), {
-    staticFileGlobs: staticFileGlobs,
-    importScripts: importScripts,
+    staticFileGlobs,
+    importScripts,
     stripPrefix: 'dist/'
   }, callback);
 });
