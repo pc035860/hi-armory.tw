@@ -128,8 +128,12 @@
                   <span class="c-card__fval"><a ng-href="{{$ctrl.pp.artifactCalcLink}}" target="_blank" rel="noopener" ng-click="ga.event('Artifact Calc Link', 'click');">{{$ctrl.pp.totalTraits}}</a></span>
                 </div>
                 <div flex="66" flex-xs="100">
-                  <span class="md-body-1 c-card__fname">7.2 新神器特質</span>
-                  <span class="c-card__fval">{{$ctrl.pp.newTraitsUnlocked ? '已解鎖' : '未解鎖'}}</span>
+                  <span class="md-body-1 c-card__fname">Raider.IO M+ 分數</span>
+                  <span class="c-card__fval">
+                    <md-progress-circular ng-if="$ctrl.rio.isLoading" class="md-primary md-hue-1 c-card__fval__loading" md-diameter="16"></md-progress-circular>
+                    <a ng-href="{{$ctrl.rio.data.profile_url}}" ng-if="!$ctrl.rio.isLoading && $ctrl.rio.data" target="_blank" rel="noopener" ng-click="ga.event('Raider.IO Score', 'click')">{{$ctrl.rio.data.mythic_plus_scores.all}}</a>
+                    <span class="c-card__fval__na" ng-if="!$ctrl.rio.isLoading && !$ctrl.rio.data">無</span>
+                  </span>
                 </div>
               </div>
               <div class="c-card__progress-section">

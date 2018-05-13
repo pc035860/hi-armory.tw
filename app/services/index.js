@@ -12,6 +12,7 @@ export default (ngModule) => {
     require('./armoryCharIndex'),
     require('./armoryQuery'),
     require('./fixCharacterName'),
+    require('./raiderIO')
   ];
   list.forEach(({ default: configure }) => configure(ngModule));
 };
