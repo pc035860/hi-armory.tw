@@ -4,7 +4,7 @@ const path = require('path');
 
 const gulp = require('gulp');
 const clean = require('gulp-clean');
-const replace = require('gulp-replace');
+// const replace = require('gulp-replace');
 const hash = require('gulp-hash');
 const swPrecache = require('sw-precache');
 const mergeStream = require('merge-stream');
@@ -21,19 +21,8 @@ gulp.task('clean', function () {
   return gulp.src(myPath.dist).pipe(clean());
 });
 
-gulp.task('hash-bundle', function () {
-  return gulp.src(path.join(myPath.dist, 'bundle.js'))
-  .pipe(hash()) // Add hashes to the files' names
-  .pipe(gulp.dest(myPath.dist)) // Write the renamed files
-  .pipe(hash.manifest('assets.json', {
-    deleteOld: true,
-    sourceDir: myPath.dist
-  })) // Switch to the manifest file
-  .pipe(gulp.dest(myPath.dist)); // Write the manifest file
-});
-
-gulp.task('copy-public', ['hash-bundle'], function () {
-  const index = gulp.src(path.join(myPath.public, 'index.html'))
+gulp.task('copy-public', function () {
+  const index = gulp.src(path.join(myPath.dist, 'index.html'))
       .pipe(htmlmin({
         collapseBooleanAttributes:      true,
         collapseWhitespace:             true,
@@ -73,20 +62,14 @@ gulp.task('copy-sw', function () {
   return mergeStream(vendor, script);
 });
 
-gulp.task('update-index', ['copy'], function () {
-  const assets = require(path.join(myPath.dist, 'assets.json'));
-  return gulp.src(path.join(myPath.dist, 'index.html'))
-  .pipe(replace('bundle.js', assets['bundle.js']))
-  .pipe(gulp.dest(myPath.dist));
-});
-
-gulp.task('generate-service-worker', ['update-index'], function (callback) {
+gulp.task('generate-service-worker', ['copy'], function (callback) {
   const swtAssets = require(path.join(myPath.dist, 'assets-sw-toolbox.json'));
 
   const staticFileGlobs = [
     'images/*.{svg,png,jpg,gif}',
     'index.html',
-    'bundle-*.js'
+    '*-app.js',
+    '*-styles.css',
   ].map(function (v) {
     return path.join('dist', v);
   });
@@ -105,4 +88,4 @@ gulp.task('generate-service-worker', ['update-index'], function (callback) {
 
 gulp.task('copy', ['copy-public', 'copy-sw']);
 
-gulp.task('dist', ['hash-bundle', 'copy', 'update-index', 'generate-service-worker']);
+gulp.task('dist', ['copy', 'generate-service-worker']);
