@@ -28,7 +28,8 @@ class Ctrl {
     'realmName',
     'wclId',
     '$timeout',
-    'fixCharacterName'
+    'fixCharacterName',
+    'raiderIO'
   ];
 
   __deps;
@@ -63,9 +64,12 @@ class Ctrl {
     realmName,
     wclId,
     $timeout,
-    fixCharacterName
+    fixCharacterName,
+    raiderIO
   ) {
     $scope.ga = ga;
+
+    this.rio = raiderIO;
 
     this.region = DEFAULT_REGION;
     this.fields = 'items,progression,talents';
@@ -82,7 +86,8 @@ class Ctrl {
       rn,
       $scope,
       $timeout,
-      fixCharacterName
+      fixCharacterName,
+      raiderIO
     };
 
     $scope.$watch(
@@ -106,6 +111,8 @@ class Ctrl {
             realm,
             character
           });
+
+          raiderIO.query(region, realm, character);
 
           if (requireNewProfile) {
             closeKeyboard();
@@ -225,7 +232,7 @@ class Ctrl {
    * @param  {object} options   { bool: enqueue  }
    */
   query(options_) {
-    const { $scope, wowProfile, fixCharacterName } = this.__deps;
+    const { $scope, wowProfile, fixCharacterName, raiderIO } = this.__deps;
 
     if ($scope.armoryForm && $scope.armoryForm.$invalid) {
       return;
@@ -270,6 +277,9 @@ class Ctrl {
     }
 
     wowProfile.goToState(srefParams);
+
+    // raiderIO query
+    raiderIO.query(region, realm, character);
   }
 
   reload() {

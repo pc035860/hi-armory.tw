@@ -185,6 +185,16 @@
 				color: darken($color, 3%);
 			}
 		}
+
+		&__loading {
+			position: relative; top: 2px;
+			display: inline-block;
+			margin-left: 10px;
+		}
+
+		&__na {
+			color: lighten(rgba(0,0,0,.54), 50%);
+		}
 	}
 
 	&__progress-section {
