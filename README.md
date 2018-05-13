@@ -113,26 +113,10 @@ yarn install
 ## Develop
 
 ```sh
-# dev server (有顏色)
-node fuse.js
-
-# dev server (沒有顏色)
+# dev server
 npm start
 
 # 接著瀏覽 http://localhost:4444
-```
-
-### 利用 `firebase-tools` 來測試 `html5Mode`
-
-因為 [fuse-box](https://github.com/fuse-box/fuse-box) 自帶的 dev server 沒有提供 rewrites 功能，可以透過 `firebase serve` 來實現。
-
-修改 `firebase.json`，將 `hosting.public` 的值改為 `public`。
-
-```sh
-firebase serve
-
-# 接著瀏覽 http://localhost:5000
-# fuse-box 的 dev server 必須要保持開著才能順利運作
 ```
 
 ## Build & Deploy

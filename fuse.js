@@ -1,9 +1,17 @@
 /* eslint global-require: 0 */
 
 const {
-  FuseBox, BabelPlugin, PostCSS, CSSPlugin, RawPlugin,
-  SassPlugin, HTMLPlugin/* , UglifyJSPlugin */
+  FuseBox,
+  BabelPlugin,
+  PostCSS,
+  CSSPlugin,
+  RawPlugin,
+  SassPlugin,
+  HTMLPlugin,
+  WebIndexPlugin
 } = require('fuse-box');
+
+const history = require('connect-history-api-fallback');
 
 const POST_CSS_PLUGINS = [
   require('postcss-transform-shortcut'),
@@ -11,16 +19,14 @@ const POST_CSS_PLUGINS = [
 ];
 
 // Create FuseBox Instance
-const fuse = new FuseBox({
-  homeDir: 'app/',
+const fuse = FuseBox.init({
+  homeDir: 'app',
   sourcemaps: true,
-  outFile: './public/bundle.js',
+  output: 'dist/$name.js',
+  target: 'browser@es5',
+  cache: true,
   plugins: [
-    [
-      SassPlugin(),
-      PostCSS(POST_CSS_PLUGINS),
-      CSSPlugin({ minify: false })
-    ],
+    [SassPlugin(), PostCSS(POST_CSS_PLUGINS), CSSPlugin()],
 
     RawPlugin(['.html']),
     HTMLPlugin({ useDefault: true }),
@@ -30,18 +36,15 @@ const fuse = new FuseBox({
       config: {
         sourceMaps: true,
         presets: ['es2015', 'stage-2']
-      },
+      }
     }),
-    // UglifyJSPlugin({
-    //   compress: {
-    //     warnings: false
-    //   },
-    //   sourceMap: true
-    // })
+    WebIndexPlugin({
+      template: 'app/index.html'
+    }),
   ],
   shim: {
     jquery: {
-      exports: 'jQuery',
+      exports: 'jQuery'
     },
     angular: {
       exports: 'angular'
@@ -55,4 +58,13 @@ const fuse = new FuseBox({
   }
 });
 
-fuse.devServer('>index.js');
+fuse.dev(null, (server) => {
+  const app = server.httpServer.app;
+  app.use(history());
+});
+fuse
+  .bundle('app')
+  .instructions('> index.js')
+  .hmr()
+  .watch();
+fuse.run();

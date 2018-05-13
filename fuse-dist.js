@@ -1,8 +1,16 @@
 /* eslint global-require: 0 */
 
 const {
-  FuseBox, BabelPlugin, PostCSS, CSSPlugin, RawPlugin,
-  SassPlugin, HTMLPlugin, UglifyJSPlugin, EnvPlugin
+  FuseBox,
+  BabelPlugin,
+  PostCSS,
+  CSSPlugin,
+  RawPlugin,
+  SassPlugin,
+  HTMLPlugin,
+  EnvPlugin,
+  QuantumPlugin,
+  WebIndexPlugin,
 } = require('fuse-box');
 
 const POST_CSS_PLUGINS = [
@@ -11,16 +19,14 @@ const POST_CSS_PLUGINS = [
 ];
 
 // Create FuseBox Instance
-const fuse = new FuseBox({
-  homeDir: 'app/',
-  outFile: './dist/bundle.js',
+const fuse = FuseBox.init({
+  homeDir: 'app',
+  output: 'dist/$name.js',
+  hash: true,
+  target: 'browser@es5',
   sourceMaps: false,
   plugins: [
-    [
-      SassPlugin(),
-      PostCSS(POST_CSS_PLUGINS),
-      CSSPlugin({ minify: true })
-    ],
+    [SassPlugin(), PostCSS(POST_CSS_PLUGINS), CSSPlugin()],
 
     RawPlugin(['.html']),
     HTMLPlugin({ useDefault: true }),
@@ -30,17 +36,21 @@ const fuse = new FuseBox({
       test: /\.js$/, // test is optional
       config: {
         presets: ['es2015', 'stage-2']
-      },
-    }),
-    UglifyJSPlugin({
-      compress: {
-        warnings: false
       }
+    }),
+    WebIndexPlugin({
+      template: 'app/index.html'
+    }),
+    QuantumPlugin({
+      css: true,
+      treeshake: true,
+      uglify: true,
+      bakeApiIntoBundle: 'app'
     })
   ],
   shim: {
     jquery: {
-      exports: 'jQuery',
+      exports: 'jQuery'
     },
     angular: {
       exports: 'angular'
@@ -54,4 +64,5 @@ const fuse = new FuseBox({
   }
 });
 
-fuse.bundle('>index.js');
+fuse.bundle('app').instructions('> index.js');
+fuse.run();
