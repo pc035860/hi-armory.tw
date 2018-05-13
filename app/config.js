@@ -117,4 +117,4 @@ export const specNames = {
   vengeance: '復仇'
 };
 
-export const assultsApi = 'https://us-central1-wow-ap-level.cloudfunctions.net/legionAssultTime';
+export const assultsApi = '/api/legion-assult-time';
