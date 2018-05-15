@@ -221,21 +221,25 @@
 	}
 
 	// 人類
-	&.r1 { .c-card__bg__inner { background-position-y: 23%; } }
+	&.r1 { .c-card__bg__inner { background-position-y: 41%; } }
+	// 夜精靈
+	&.r4, &.r29 { .c-card__bg__inner { background-position-y: 35%; } }
 	// 不死族
-	&.r5 { .c-card__bg__inner { background-position-y: 24%; } }
+	&.r5 { .c-card__bg__inner { background-position-y: 37%; } }
 	// 牛頭人
-	&.r6 { .c-card__bg__inner { background-position-y: 22%; } }
+	&.r6, &.r28 { .c-card__bg__inner { background-position-y: 33%; } }
+	// 食人妖
+	&.r8 { .c-card__bg__inner { background-position-y: 30%; } }
 	// 哥布林
-	&.r9 { .c-card__bg__inner { background-position-y: 40%; } }
+	&.r9 { .c-card__bg__inner { background-position-y: 45%; } }
 	// 血精靈
-	&.r10 { .c-card__bg__inner { background-position-y: 18%; } }
+	&.r10, &.r27 { .c-card__bg__inner { background-position-y: 39%; } }
 	// 德萊尼
-	&.r11 { .c-card__bg__inner { background-position-y: 16%; } }
+	&.r11, &.r30 { .c-card__bg__inner { background-position-y: 34%; } }
 	// 狼人
-	&.r22 { .c-card__bg__inner { background-position-y: 20%; } }
+	&.r22 { .c-card__bg__inner { background-position-y: 37%; } }
 	// 熊貓人
-	&.r26 { .c-card__bg__inner { background-position-y: 25%; } }
+	&.r26 { .c-card__bg__inner { background-position-y: 32%; } }
 
 	&--not-found {
 		.c-card__close {
