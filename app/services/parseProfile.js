@@ -111,7 +111,7 @@ function getPictureSrcs(d) {
   const renderUrlBase = 'https://render-tw.worldofwarcraft.com/character/';
   return {
     thumbnail: `${renderUrlBase}${d.thumbnail}`,
-    profile: `${renderUrlBase}${d.thumbnail.replace(/avatar/, 'profilemain')}`
+    profile: `${renderUrlBase}${d.thumbnail.replace(/avatar/, 'main')}`
   };
 }
 
