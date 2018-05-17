@@ -221,25 +221,78 @@
 	}
 
 	// 人類
-	&.r1 { .c-card__bg__inner { background-position-y: 41%; } }
-	// 夜精靈
-	&.r4, &.r29 { .c-card__bg__inner { background-position-y: 35%; } }
+	&.r1 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 37%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 41%; }
+		}
+	}
+	// 矮人
+	&.r3 { .c-card__bg__inner { background-position-y: 44%; } }
+	// 夜精靈 + 虛空
+	&.r4, &.r29 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 29%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 35%; }
+		}
+	}
 	// 不死族
 	&.r5 { .c-card__bg__inner { background-position-y: 37%; } }
-	// 牛頭人
-	&.r6, &.r28 { .c-card__bg__inner { background-position-y: 33%; } }
+	// 牛頭人 + 高嶺
+	&.r6, &.r28 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 35%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 32%; }
+		}
+	}
+	// 地精
+	&.r7 { .c-card__bg__inner { background-position-y: 50%; } }
 	// 食人妖
 	&.r8 { .c-card__bg__inner { background-position-y: 30%; } }
 	// 哥布林
-	&.r9 { .c-card__bg__inner { background-position-y: 45%; } }
-	// 血精靈
-	&.r10, &.r27 { .c-card__bg__inner { background-position-y: 39%; } }
-	// 德萊尼
-	&.r11, &.r30 { .c-card__bg__inner { background-position-y: 34%; } }
+	&.r9 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 50%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 46%; }
+		}
+	}
+	// 血精靈 + 夜裔
+	&.r10, &.r27 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 35%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 39%; }
+		}
+	}
+	// 德萊尼 + 光鑄
+	&.r11, &.r30 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 29%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 32%; }
+		}
+	}
 	// 狼人
-	&.r22 { .c-card__bg__inner { background-position-y: 37%; } }
+	&.r22 { .c-card__bg__inner { background-position-y: 34%; } }
 	// 熊貓人
-	&.r26 { .c-card__bg__inner { background-position-y: 32%; } }
+	&.r26 {
+		&.g0 {
+			.c-card__bg__inner { background-position-y: 32%; }
+		}
+		&.g1 {
+			.c-card__bg__inner { background-position-y: 38%; }
+		}
+	}
 
 	&--not-found {
 		.c-card__close {
