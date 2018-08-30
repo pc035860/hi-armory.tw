@@ -29,6 +29,7 @@
     "gulp-hash": "^4.1.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-replace": "^0.5.4",
+    "local-web-server": "^2.6.0",
     "merge-stream": "^1.0.1",
     "node-sass": "^4.5.2",
     "npm-run-all": "^4.0.2",
@@ -44,7 +45,8 @@
     "dist:clean": "gulp clean",
     "dist:bundle": "cross-env NODE_ENV=production node fuse-dist.js",
     "dist:index": "gulp dist",
-    "dist": "run-s dist:clean dist:bundle dist:index"
+    "dist": "run-s dist:clean dist:bundle dist:index",
+    "preview": "ws -d ./dist --spa index.html -p 5000"
   },
   "repository": {
     "type": "git",
