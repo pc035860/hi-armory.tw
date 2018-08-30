@@ -17,6 +17,14 @@ const SPEC_NAMES_EN = invert(SPEC_NAMES);
 
 export const NAME = 'parseProfile';
 
+function findHeartOfAzeroth(d) {
+  let heart;
+  if (d.items.neck.id === 158075) {
+    heart = d.items.neck;
+  }
+  return heart;
+}
+
 function findArtifact(d) {
   let artifact;
   $.each(d.items, function (k, v) {
@@ -135,9 +143,10 @@ function factory() {
     const d = profileData;
 
     const artifact = findArtifact(d);
+    const heart = findHeartOfAzeroth(d);
     const talent = findActiveTalent(d.talents);
 
-    const base = {
+    let base = {
       talentName: talent.spec.name,
       talentStr: toHumanTalentStr(talent.calcTalent),
       talentCalcLink: getTalentCalculatorLink(d, talent),
@@ -152,13 +161,21 @@ function factory() {
     };
 
     if (artifact) {
-      return {
+      base = {
         ...base,
 
         artifactIlv: artifact.itemLevel,
         newTraitsUnlocked: !!artifact.artifactTraits[17],
         totalTraits: calcTotalTraits(artifact),
         artifactCalcLink: getArtifactCalculatorLink(artifact)
+      };
+    }
+
+    if (heart) {
+      base = {
+        ...base,
+
+        azeriteLevel: heart.azeriteItem.azeriteLevel
       };
     }
 
