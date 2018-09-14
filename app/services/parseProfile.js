@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import reverse from 'lodash/reverse';
 import invert from 'lodash/invert';
+import find from 'lodash/find';
 
 import memoize from 'memoizee';
 
@@ -14,6 +15,10 @@ import {
 } from '../config';
 
 const SPEC_NAMES_EN = invert(SPEC_NAMES);
+
+const CURRENT_RAID_IDS = [
+  9389
+];
 
 export const NAME = 'parseProfile';
 
@@ -83,8 +88,12 @@ function getExpStr(progressionRaid, includes_) {
   return str.slice(0, -1);
 }
 
+function getRaid(raids, id) {
+  return find(raids, ['id', id]);
+}
+
 function getExpStrList(progression) {
-  const raids = reverse(progression.raids.slice(-3));
+  const raids = CURRENT_RAID_IDS.map(id => getRaid(progression.raids, id));
   return raids.map(raid => ({
     name: raid.name,
     str: getExpStr(raid)
