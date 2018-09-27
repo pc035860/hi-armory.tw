@@ -338,7 +338,7 @@ class Ctrl {
     });
   }
 
-  outbound(target) {
+  outboundLink(target) {
     const { $window, rn, ga } = this.__deps;
 
     const enRealmName = rn.toEn(this.realm);
@@ -355,17 +355,13 @@ class Ctrl {
         link = `https://www.wowprogress.com/character/${this.region}/${enRealmName}/${character}`;
         break;
       case 'warcraftlogs':
-        link = `https://www.warcraftlogs.com/rankings/character/${this.wclId.$value}/latest/`;
+        link = `https://www.warcraftlogs.com/character/${this.region}/${realm}/${character}`;
         break;
       default:
         break;
     }
 
-    if (link) {
-      $window.open(link);
-    }
-
-    ga.event('Outbound Link', 'click', target);
+    return link;
   }
 
   static getRealmItem(local, preEn) {

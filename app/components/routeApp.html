@@ -168,15 +168,27 @@
 
                   <md-fab-actions>
                     <md-button aria-label="英雄榜" class="md-fab md-raised md-mini"
-                      ng-click="$ctrl.outbound('armory')" title="前往 英雄榜">
+                      target="_blank" rel="noopener noreferrer"
+                      ng-href="{{ $ctrl.outboundLink('armory') }}"
+                      ng-click="ga.event('Outbound Link', 'click', 'armory');"
+                      title="英雄榜"
+                    >
                       <span>英雄</span>
                     </md-button>
                     <md-button aria-label="WoWProgress" class="md-fab md-raised md-mini"
-                      ng-click="$ctrl.outbound('wowprogress')" title="前往 WoWProgress">
+                      target="_blank" rel="noopener noreferrer"
+                      ng-href="{{ $ctrl.outboundLink('wowprogress') }}"
+                      ng-click="ga.event('Outbound Link', 'click', 'wowprogress');"
+                      title="WoWProgress"
+                    >
                       <span>WP</span>
                     </md-button>
-                    <md-button ng-if="$ctrl.wclId.$value" aria-label="Warcraft Logs" class="md-fab md-raised md-mini ng-anim"
-                      ng-click="$ctrl.outbound('warcraftlogs')" title="前往 Warcraft Logs">
+                    <md-button aria-label="Warcraft Logs" class="md-fab md-raised md-mini ng-anim"
+                      target="_blank" rel="noopener noreferrer"
+                      ng-href="{{ $ctrl.outboundLink('warcraftlogs') }}"
+                      ng-click="ga.event('Outbound Link', 'click', 'warcraftlogs');"
+                      title="Warcraft Logs"
+                    >
                       <span>WCL</span>
                     </md-button>
                   </md-fab-actions>
