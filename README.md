@@ -44,6 +44,8 @@ export const firebase = {
 
 以下的 cloud functions 的環境設定必須完成才能運作
 
+**暫時保持使用一組 API**
+
 ```json
 {
   "project": {
@@ -53,11 +55,9 @@ export const firebase = {
   "resource": {
     "total": "10"
   },
-  "bnetapi": {
-    "key1": "{key1}",
-    "key2": "{key2}",
-    "key3": "{key3}",
-    ...
+  "blizzapi": {
+    "id1": "{client id 1}",
+    "secret1": "{client secret 1}"
   },
   "wclapi": {
   	"key": "{key}"
@@ -70,7 +70,8 @@ export const firebase = {
 | project.id     | firebase project id                            |
 | project.bucket | firebase storage bucket name                   |
 | resource.total | 同時可以運行的 bnet api request 數量           |
-| bnetapi.key{n} | n = 1..10。至多可以設定10組 battle.net API key |
+| blizzapi.id1 | 新版 develop.battle.net API client id |
+| blizzapi.secret1 | 新版 develop.battle.net API client secret |
 | wclapi.key     | Warcraft Logs API key                          |
 
 設定方法
