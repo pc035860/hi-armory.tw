@@ -22,23 +22,6 @@ module.exports = function getToken(db) {
    * - 無: 重拿
    */
 
-  const load = () => {
-    ref.once('value').then((snapshot) => {
-      // 不存在
-      if (!snapshot.extists()) {
-        return null;
-      }
-
-      // 過期
-      const { expiresAt, token } = snapshot.val();
-      if (expiresAt <= +new Date()) {
-        return null;
-      }
-
-      return token;
-    });
-  };
-
   const fetchAndSave = () => {
     const oauthUrl = 'https://us.battle.net/oauth/token';
     const body = 'grant_type=client_credentials';
@@ -63,6 +46,23 @@ module.exports = function getToken(db) {
         ref.update(d);
         return d.token;
       });
+  };
+
+  const load = () => {
+    return ref.once('value').then((snapshot) => {
+      // 不存在
+      if (!snapshot.exists()) {
+        return null;
+      }
+
+      // 過期
+      const { expiresAt, token } = snapshot.val();
+      if (expiresAt <= +new Date()) {
+        return null;
+      }
+
+      return token;
+    });
   };
 
   return load().then((loadToken) => {

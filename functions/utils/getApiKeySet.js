@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 
-const BLIZZARD_API = functions.config.blizzapi;
+const BLIZZARD_API = functions.config().blizzapi;
 
 module.exports = function getApiKeySet() {
   return {
