@@ -1,20 +1,17 @@
-const bindApiKey = require('./bindApiKey');
-
 const regionLocaleMap = {
   tw: 'zh_TW',
   us: 'en_US',
   eu: 'en_GB'
 };
 
-module.exports = function createApiUrl(data) {
+module.exports = function createApiUrl(data, token) {
   const { region, realm, character, fields } = data;
 
-
-  let rawUrl = `https://${region.toLowerCase()}.api.battle.net/wow/character/${encodeURIComponent(realm)}/${encodeURIComponent(character)}?locale=${regionLocaleMap[region]}`;
+  let rawUrl = `https://${region.toLowerCase()}.api.blizzard.com/wow/character/${encodeURIComponent(realm)}/${encodeURIComponent(character)}?locale=${regionLocaleMap[region]}`;
 
   if (fields) {
     rawUrl += `&fields=${fields}`;
   }
 
-  return bindApiKey(rawUrl);
+  return `${rawUrl}&access_token=${token}`;
 };

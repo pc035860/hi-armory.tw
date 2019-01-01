@@ -1,10 +1,12 @@
 /* eslint no-console: 0 */
 
 const functions = require('firebase-functions');
+
 const axios = require('axios');
 
 const createApiUrl = require('./utils/createApiUrl');
 const getArmoryKey = require('./utils/getArmoryKey');
+const getToken = require('./utils/getToken');
 const createProfile = require('./queue/createProfile');
 const createResource = require('./queue/createResource');
 
@@ -62,8 +64,12 @@ module.exports = function createDequeue(admin) {
         originProfile.remove();
         newProfile.status(newProfile.STATUS_PROCESSING);
 
-        const apiUrl = createApiUrl(data);
-        return axios.get(apiUrl).then(
+        return getToken(db)
+        .then((token) => {
+          const apiUrl = createApiUrl(data, token);
+          return axios.get(apiUrl);
+        })
+        .then(
           (res) => {
             return resource.release().then(() => {
               console.log('[resource released] api query success');
