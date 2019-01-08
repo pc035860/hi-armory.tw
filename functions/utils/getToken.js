@@ -57,7 +57,8 @@ module.exports = function getToken(db) {
 
       // 過期
       const { expiresAt, token } = snapshot.val();
-      if (expiresAt <= +new Date()) {
+      const buffer = 300 * 1000;
+      if (expiresAt - buffer <= +new Date()) {
         return null;
       }
 
