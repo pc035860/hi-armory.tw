@@ -85,6 +85,8 @@ module.exports = function createDequeue(admin) {
             });
           },
           (err) => {
+            console.log('[debug] req error', err);
+
             return resource.release().then(() => {
               console.log('[resource released] api query fail');
               if (err.response.status === 404) {
