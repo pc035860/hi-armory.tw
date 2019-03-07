@@ -57,6 +57,15 @@
     origin: /hi-armory\.tw/
   });
 
+  // cloud functions bfa assult api
+  toolbox.router.get(/\/api\/bfa-assult-time/, toolbox.fastest, {
+    cache: {
+      name: 'bfa-assults-time-86400-fastest',
+      maxAgeSeconds: 86400
+    },
+    origin: /hi-armory\.tw/
+  });
+
   // worldofwarcraft character render
   toolbox.router.get(/character\/(.*?)\.jpg/, toolbox.fastest, {
     cache: {

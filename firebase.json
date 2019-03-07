@@ -10,6 +10,10 @@
         "function": "legionAssultTime"
       },
       {
+        "source": "/api/bfa-assult-time",
+        "function": "bfaAssultTime"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

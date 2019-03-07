@@ -387,13 +387,22 @@
 	// 	animation: fadeIn .3s both;
 	// }
 }
+.c-assults-switch {
+	display: block;
+	max-width: 320px;
+	margin: 0 auto;
+
+	md-switch {
+		margin: 5px 0;
+	}
+}
 .c-legion-assults {
 	&.ng-hide-remove {
 		animation: fadeIn .3s both;
 	}
 
 	&__content {
-		max-width: 320px;
+		max-width: 330px;
 		margin: 0 auto;
 	}
 
@@ -408,7 +417,8 @@
 			&::before {
 				content: 'Beta';
 
-				display: inline-block;
+				// display: inline-block;
+				display: none;
 
 				position: absolute;
 				z-index: 1;

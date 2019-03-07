@@ -73,6 +73,8 @@ export const firebase = {
 | blizzapi.id1 | 新版 develop.battle.net API client id |
 | blizzapi.secret1 | 新版 develop.battle.net API client secret |
 | wclapi.key     | Warcraft Logs API key                          |
+| legionassult.base  | 軍團入侵時間的基底(此前某次的開始時間)        |
+| bfaassult.base     | 衝突戰時間的基底(此前某次的開始時間)          |
 
 設定方法
 

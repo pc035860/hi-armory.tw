@@ -1,0 +1,32 @@
+<div class="c-legion-assults ng-anim" ng-show="$ctrl.isReady"
+  ng-class="{'c-legion-assults--is-assulting': $ctrl.assulting}">
+  <div class="c-legion-assults__content">
+    <md-card>
+      <md-card-content>
+        <h4 class="c-legion-assults__heading">
+          <span>衝突戰情報</span>
+        </h4>
+        <div class="c-legion-assults__current">
+          <div ng-if="!$ctrl.assulting">
+            士兵休息中 (¦3[▓▓]
+          </div>
+          <div ng-if="$ctrl.assulting">
+            衝突戰於 <time-diff time="$ctrl.assulting.end" mode="duration"></time-diff> 後結束
+          </div>
+        </div>
+        <div class="c-legion-assults__upcoming">
+          <p>- 接下來的衝突戰時間 -</p>
+          <ul class="c-legion-assults__upcoming__list">
+            <li ng-repeat="next in $ctrl.upcoming track by $index">
+              <div ng-if="$index == 0">
+                <time-diff time="next.start" mode="duration"></time-diff>後
+                (<time-diff time="next.start" mode="calendar"></time-diff>)
+              </div>
+              <time-diff time="next.start" mode="calendar" ng-if="$index != 0"></time-diff>
+            </li>
+          </ul>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

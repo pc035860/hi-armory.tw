@@ -10,6 +10,7 @@ export const NAME = 'routeApp';
 
 const AUTO_REQUERY_DIFF = 86400 * 1000; // auto re-query
 
+const KEY_BFA_ASSULT = 'bfaAssult';
 const DEFAULT_REGION = 'tw';
 
 class Ctrl {
@@ -47,6 +48,7 @@ class Ctrl {
   reloading;
   pp; // parsedProfile
   pd; // profile.data
+  bfaAssult;
 
   /* @ngInject */
   constructor(
@@ -74,6 +76,14 @@ class Ctrl {
     this.region = DEFAULT_REGION;
     this.fields = 'items,progression,talents';
     this.REALMS = REALMS;
+
+    this.bfaAssult = (() => {
+      const saved = $window.localStorage.getItem(KEY_BFA_ASSULT);
+      if (!saved || saved === 'true') {
+        return true;
+      }
+      return false;
+    })();
 
     const rn = realmName(this.region);
 
@@ -215,6 +225,12 @@ class Ctrl {
         }
       }
     );
+
+    $scope.$watch(() => this.bfaAssult, (val, oldVal) => {
+      if (val !== oldVal) {
+        $window.localStorage.setItem(KEY_BFA_ASSULT, val ? 'true' : 'false');
+      }
+    });
 
     $scope.$on('$stateChangeSuccess', () => {
       ga.pageview($location.path());

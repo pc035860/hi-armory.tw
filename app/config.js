@@ -118,3 +118,4 @@ export const specNames = {
 };
 
 export const assultsApi = '/api/legion-assult-time';
+export const bfaAssultsApi = '/api/bfa-assult-time';

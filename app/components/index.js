@@ -6,6 +6,7 @@ export default (ngModule) => {
     require('./statusText'),
     require('./haReload'),
     require('./legionAssults'),
+    require('./bfaAssults'),
     require('./app'),
 
     require('./routeApp'),

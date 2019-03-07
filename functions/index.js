@@ -10,5 +10,6 @@ exports.dequeueByResource = require('./dequeueByResource')(admin);
 exports.saveIndexToStorage = require('./saveIndexToStorage')(admin);
 exports.dequeueWcl = require('./dequeueWcl')(admin);
 exports.legionAssultTime = require('./legionAssultTime')();
+exports.bfaAssultTime = require('./bfaAssultTime')();
 exports.armoryQuery = require('./armoryQuery')(admin);
 exports.saveArmoryIndexToStorage = require('./saveArmoryIndexToStorage')(admin);
