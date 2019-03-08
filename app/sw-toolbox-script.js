@@ -60,7 +60,7 @@
   // cloud functions bfa assult api
   toolbox.router.get(/\/api\/bfa-assult-time/, toolbox.fastest, {
     cache: {
-      name: 'bfa-assults-time-86400-fastest',
+      name: 'bfa-assults-time-86400-fastest-v2',
       maxAgeSeconds: 86400
     },
     origin: /hi-armory\.tw/
