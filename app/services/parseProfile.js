@@ -17,6 +17,7 @@ import {
 const SPEC_NAMES_EN = invert(SPEC_NAMES);
 
 const CURRENT_RAID_IDS = [
+  10057,
   8670,
   9389
 ];
