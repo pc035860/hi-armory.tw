@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import reverse from 'lodash/reverse';
 import invert from 'lodash/invert';
 import find from 'lodash/find';
 
@@ -95,7 +94,7 @@ function getRaid(raids, id) {
 }
 
 function getExpStrList(progression) {
-  const raids = CURRENT_RAID_IDS.map(id => getRaid(progression.raids, id));
+  const raids = CURRENT_RAID_IDS.map(id => getRaid(progression.raids, id)).filter(Boolean);
   return raids.map(raid => ({
     name: raid.name,
     str: getExpStr(raid)
