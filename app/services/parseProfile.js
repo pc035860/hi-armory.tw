@@ -16,9 +16,10 @@ import {
 const SPEC_NAMES_EN = invert(SPEC_NAMES);
 
 const CURRENT_RAID_IDS = [
-  10057,
-  8670,
-  9389
+  10425,  // 永恆宮殿
+  10057,  // 風暴邪淵
+  8670,   // 達薩亞洛之戰
+  9389    // 奧迪爾
 ];
 
 export const NAME = 'parseProfile';
