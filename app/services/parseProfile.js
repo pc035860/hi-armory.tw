@@ -16,6 +16,7 @@ import {
 const SPEC_NAMES_EN = invert(SPEC_NAMES);
 
 const CURRENT_RAID_IDS = [
+  10522,  // 奈奧羅薩
   10425,  // 永恆宮殿
   10057,  // 風暴邪淵
   8670,   // 達薩亞洛之戰
