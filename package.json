@@ -34,7 +34,7 @@
     "gulp-replace": "^0.5.4",
     "local-web-server": "^2.6.0",
     "merge-stream": "^1.0.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "npm-run-all": "^4.0.2",
     "path": "^0.12.7",
     "postcss": "^5.2.16",
